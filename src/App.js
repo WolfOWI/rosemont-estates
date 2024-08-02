@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-// 1. import `ChakraProvider` component
 import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./styles/theme";
 
 // Pages
 import LogInPage from "./pages/LogInPage";
@@ -17,7 +16,7 @@ import AdminRentDash from "./pages/AdminRentDash";
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Router>
         <Routes>
           <Route path="/" element={<LogInPage />} />
