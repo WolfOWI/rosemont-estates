@@ -4,7 +4,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 function LogInPage() {
   return (
     <>
-      <h1 className="text-green-700 font-main text-5xl">Log In Page</h1>
+      <h1 className="text-beige-0 font-main text-5xl">Log In Page</h1>
       <BedOutlined />
       <Tabs>
         <TabList>
