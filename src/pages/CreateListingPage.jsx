@@ -1,5 +1,12 @@
+import Navbar from "../components/navigation/Navbar";
+
 function CreateListingPage() {
-  return <div> Create Listing Page </div>;
+  return (
+    <>
+      <Navbar />
+      <div>Create Listing Page</div>
+    </>
+  );
 }
 
 export default CreateListingPage;

@@ -11,6 +11,8 @@ import {
   MenuList,
   MenuItem,
   IconButton,
+  Spacer,
+  HStack,
 } from "@chakra-ui/react";
 import {
   AddHomeOutlined,
@@ -25,13 +27,31 @@ function Navbar() {
   return (
     <Box px={4} bg="thorn.M1" h={16}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Link to="/">
+        <Link to="/home">
           <NavLogo />
         </Link>
 
+        {/* TODO Delete Later */}
         <Flex>
-          <IconButton variant="lightFilled" icon={<AddHomeOutlined />} />
-          <div className="w-2">{/* Spacer */}</div>
+          <Button as={Link} to="/">
+            Log In
+          </Button>
+          <Button as={Link} to="/signup">
+            Sign Up
+          </Button>
+          <Button as={Link} to="/listings">
+            Listings
+          </Button>
+          <Button as={Link} to="/detail">
+            Detail
+          </Button>
+          <Button as={Link} to="/admin-listings">
+            Admin
+          </Button>
+        </Flex>
+
+        <HStack spacing={2}>
+          <IconButton as={Link} to="/add" variant="lightFilled" icon={<AddHomeOutlined />} />
           <Menu>
             <MenuButton as={Button} variant="lightOutline" rightIcon={<ArrowDropDown />}>
               Jane Doe
@@ -43,7 +63,7 @@ function Navbar() {
               <MenuItem icon={<LogoutOutlined />}>Log Out</MenuItem>
             </MenuList>
           </Menu>
-        </Flex>
+        </HStack>
       </Flex>
     </Box>
   );

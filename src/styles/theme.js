@@ -1,4 +1,4 @@
-import { border, extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 
 // Button component
 // -----------------------------------
@@ -71,6 +71,7 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
+        fontFamily: "Libre Baskerville",
         bg: "beige.0",
         color: "thorn.M1",
       },
@@ -95,6 +96,10 @@ const theme = extendTheme({
       0: "#115246",
       M1: "#0c3931",
       M2: "#07211c",
+    },
+    warmgray: {
+      800: "#292524",
+      600: "#57534E",
     },
   },
 });
