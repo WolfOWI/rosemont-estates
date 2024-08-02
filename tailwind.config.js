@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        main: ["Libre Baskerville", "serif"],
+        alt: ["Averia Serif Libre", "serif"],
+      },
+    },
   },
   plugins: [],
 };
