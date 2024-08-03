@@ -11,7 +11,6 @@ import {
   MenuList,
   MenuItem,
   IconButton,
-  Spacer,
   HStack,
 } from "@chakra-ui/react";
 import {
@@ -25,7 +24,7 @@ import NavLogo from "./NavLogo";
 
 function Navbar() {
   return (
-    <Box px={4} bg="thorn.M1" h={16}>
+    <Box px={4} bg="thorn.M2" h={16}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Link to="/home">
           <NavLogo />

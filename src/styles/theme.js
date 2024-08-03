@@ -96,6 +96,26 @@ const Input = {
   },
 };
 
+const Textarea = {
+  variants: {
+    outline: {
+      borderWidth: "2px",
+      bg: "beige.M1",
+      borderColor: "beige.M1",
+      borderRadius: "xl",
+      _hover: {
+        borderColor: "beige.M2",
+      },
+      _focus: {
+        bg: "transparent",
+        borderColor: "thorn.0",
+        boxShadow: "0 0 0 1px thorn.0",
+        ring: "thorn.0",
+      },
+    },
+  },
+};
+
 const Radio = {
   baseStyle: {
     control: {
@@ -120,22 +140,65 @@ const Radio = {
   },
 };
 
+const Checkbox = {
+  baseStyle: {
+    control: {
+      bg: "beige.M2",
+      borderColor: "beige.M2",
+      padding: 3,
+      borderRadius: "md",
+      _checked: {
+        bg: "thorn.0",
+        borderColor: "thorn.0",
+        _hover: {
+          bg: "thorn.P3",
+          borderColor: "thorn.P3",
+        },
+      },
+      _focus: {
+        borderColor: "thorn.0",
+        boxShadow: "0 0 0 1px thorn.0",
+      },
+      _hover: {
+        borderColor: "thorn.0",
+      },
+    },
+    // label: {
+    //   color: "warmgray.800",
+    // },
+  },
+};
+
 const theme = extendTheme({
   components: {
     Button,
     Menu,
     FormControl,
     Input,
+    Textarea,
     Radio,
+    Checkbox,
   },
   styles: {
     global: {
       h1: {
         color: "warmgray.800",
+        fontSize: "5xl",
+        fontWeight: "bold",
+      },
+      h2: {
+        color: "warmgray.800",
+        fontSize: "4xl",
+        fontWeight: "bold",
+      },
+      h3: {
+        color: "warmgray.800",
+        fontSize: "2xl",
+        fontWeight: "bold",
       },
       body: {
         fontFamily: "Libre Baskerville",
-        bg: "beige.0",
+        bg: "beige.M1",
         color: "warmgray.600",
       },
       a: {

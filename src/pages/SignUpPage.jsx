@@ -31,7 +31,7 @@ function SignUpPage() {
     <>
       {/* TODO Delete Navbar */}
       <Navbar />
-      <div className="flex w-full h-full">
+      <div className="flex w-full h-full bg-beige-0">
         <div className="flex justify-center items-center h-screen w-[45%] relative bg-thorn-M1 overflow-hidden">
           <img
             src={rosemontEmblemLogo}
@@ -41,8 +41,8 @@ function SignUpPage() {
           <img src={plantWallImg} alt="" className="object-cover h-full w-full blur-sm z-0" />
         </div>
         <div className="flex flex-col w-[40%] h-screen pl-24 pt-32">
-          <h1 className="text-5xl font-bold mb-2">Your Gateway to Luxury</h1>
-          <p className=" mb-8">
+          <h1>Your Gateway to Luxury</h1>
+          <p className="mb-8">
             Join our exclusive community to gain access to unparalleled luxury homes, crafted for
             the sophisticated homeowner.
           </p>

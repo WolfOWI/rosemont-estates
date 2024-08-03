@@ -11,10 +11,10 @@ function LogInPage() {
     <>
       {/* TODO Delete Navbar */}
       <Navbar />
-      <div className="flex justify-end w-full h-full">
+      <div className="flex justify-end w-full h-full bg-beige-0">
         <div className="flex flex-col justify-center items-end w-[30%] h-screen pr-24">
-          <h1 className="text-5xl font-bold mb-2">Welcome Back</h1>
-          <p className=" mb-8">Please enter your details below</p>
+          <h1>Welcome Back</h1>
+          <p className="mb-8">Please enter your details below</p>
           <Box as="form" w="full">
             <VStack spacing={4} align="stretch">
               <FormControl id="email" isRequired>

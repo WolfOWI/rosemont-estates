@@ -1,10 +1,394 @@
+import React, { useState } from "react";
 import Navbar from "../components/navigation/Navbar";
 
+import {
+  useRadioGroup,
+  VStack,
+  HStack,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  Button,
+  Select,
+  CheckboxGroup,
+  Checkbox,
+} from "@chakra-ui/react";
+
+import {
+  AddHomeOutlined,
+  CheckCircleOutlineOutlined,
+  HouseOutlined,
+  ImageOutlined,
+  UploadFileOutlined,
+  PaymentsOutlined,
+  MeetingRoomOutlined,
+  BedOutlined,
+  ShowerOutlined,
+  KitchenOutlined,
+  RestaurantOutlined,
+  FitnessCenterOutlined,
+  ImportContactsOutlined,
+  FoundationOutlined,
+  DirectionsCarOutlined,
+  ParkOutlined,
+  PoolOutlined,
+  SportsTennisOutlined,
+  DeckOutlined,
+  LocalFloristOutlined,
+  SpaOutlined,
+  NatureOutlined,
+  OtherHousesOutlined,
+  WifiOutlined,
+  AcUnitOutlined,
+  LocalFireDepartmentOutlined,
+  VideocamOutlined,
+  SolarPowerOutlined,
+  YardOutlined,
+  WaterDropOutlined,
+  WbTwilightOutlined,
+  OutdoorGrillOutlined,
+  FenceOutlined,
+} from "@mui/icons-material";
+
+import RadioCard from "../components/input/RadioCard";
+
 function CreateListingPage() {
+  const pricingOptions = ["For Sale", "To Rent"];
+  const [selectedOption, setSelectedOption] = useState("For Sale");
+
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: "sellType",
+    defaultValue: "For Sale",
+    onChange: setSelectedOption,
+  });
+
+  const group = getRootProps();
+
   return (
     <>
       <Navbar />
-      <div>Create Listing Page</div>
+      <div className="flex justify-center mt-8">
+        <div className="w-[90%] flex flex-col">
+          {/* Top Section */}
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center">
+              <AddHomeOutlined sx={{ fontSize: 80, color: "#C3BDAE" }} />
+              <h2 className="mt-2 ml-4">New Property</h2>
+            </div>
+            <Button size="lg" mt={4} rightIcon={<CheckCircleOutlineOutlined />}>
+              Submit
+            </Button>
+          </div>
+          {/* Content */}
+          <div className="flex justify-between mb-16">
+            {/* Left */}
+            <div className="flex flex-col w-[32%]">
+              {/* Property Details */}
+              <div className="flex flex-col bg-beige-0 px-8 pb-8 pt-7 rounded-3xl mb-5">
+                <HStack spacing={2} align="center" mb={2}>
+                  <HouseOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
+                  <h3>Property Details</h3>
+                </HStack>
+                <VStack spacing={4} align="stretch">
+                  <FormControl isRequired>
+                    <FormLabel>Title</FormLabel>
+                    <Input type="email" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Description</FormLabel>
+                    <Textarea />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Address</FormLabel>
+                    <Input type="text" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>House Style</FormLabel>
+                    <Select placeholder="Select Style">
+                      <option value="colonial">American Colonial</option>
+                      <option value="chateau">French Château</option>
+                      <option value="gothic">Gothic</option>
+                      <option value="villa">Italian Villa</option>
+                      <option value="modern">Modern</option>
+                      <option value="neoclassical">Neoclassical</option>
+                      <option value="framed">Timber-Framed</option>
+                      <option value="victorian">Victorian</option>
+                    </Select>
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Available From</FormLabel>
+                    <Input type="date" />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Real Estate Agent</FormLabel>
+                    <Select placeholder="Select Agency">
+                      <option value="aida">AIDA</option>
+                      <option value="engelandvolkers">Engel and Völkers</option>
+                      <option value="pamgolding">Pam Golding Properties</option>
+                      <option value="rawson">Rawson</option>
+                      <option value="realnet">RealNet</option>
+                      <option value="remax">RE/MAX South Africa</option>
+                      <option value="seeff">Seeff</option>
+                      <option value="tsungai">Tsungai Estates</option>
+                    </Select>
+                  </FormControl>
+                </VStack>
+              </div>
+              {/* Imagery */}
+              <div className="flex flex-col bg-beige-0 px-8 pb-8 pt-7 rounded-3xl">
+                <HStack spacing={2} align="center" mb={2}>
+                  <ImageOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
+                  <h3>Imagery</h3>
+                </HStack>
+                <VStack spacing={4} align="stretch">
+                  <FormControl isRequired>
+                    <FormLabel>Images</FormLabel>
+                    <Input />
+                  </FormControl>
+                  <Button size="lg" mt={4} leftIcon={<UploadFileOutlined />}>
+                    Upload (Max 5)
+                  </Button>
+                </VStack>
+              </div>
+            </div>
+            {/* Middle */}
+            <div className="flex flex-col w-[32%]">
+              {/* Pricing */}
+              <div className="flex flex-col bg-beige-0 px-8 pb-8 pt-7 rounded-3xl mb-5">
+                <HStack spacing={2} align="center" mb={2}>
+                  <PaymentsOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
+                  <h3>Pricing</h3>
+                </HStack>
+                <VStack spacing={4} align="stretch">
+                  <HStack {...group} spacing={4} width="100%">
+                    {pricingOptions.map((value) => {
+                      const radio = getRadioProps({ value });
+                      return (
+                        <RadioCard key={value} {...radio} flex="1">
+                          {value}
+                        </RadioCard>
+                      );
+                    })}
+                  </HStack>
+                  <FormControl isRequired>
+                    <HStack>
+                      <Input type="number" flex="1" />
+                      {selectedOption === "To Rent" && <p className="text-sm">per month</p>}
+                    </HStack>
+                  </FormControl>
+                </VStack>
+              </div>
+              {/* Interior */}
+              <div className="flex flex-col bg-beige-0 px-8 pb-8 pt-7 rounded-3xl mb-5">
+                <HStack spacing={2} align="center" mb={2}>
+                  <MeetingRoomOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
+                  <h3>Interior</h3>
+                </HStack>
+                <VStack spacing={4} align="stretch">
+                  <FormControl isRequired>
+                    <FormLabel>Total Floors</FormLabel>
+                    <Input type="number" />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Floor Size</FormLabel>
+                    <Input type="number" />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Rooms</FormLabel>
+                    <VStack align="start">
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <BedOutlined />
+                        <p>Bedrooms</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <ShowerOutlined />
+                        <p>Bathrooms</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <KitchenOutlined />
+                        <p>Kitchens</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <RestaurantOutlined />
+                        <p>Dining Rooms</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <FitnessCenterOutlined />
+                        <p>Gymnasiums</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <ImportContactsOutlined />
+                        <p>Billiard Rooms</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <FoundationOutlined />
+                        <p>Basements</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <DirectionsCarOutlined />
+                        <p>Garages</p>
+                      </HStack>
+                    </VStack>
+                  </FormControl>
+                </VStack>
+              </div>
+            </div>
+            {/* Right */}
+            <div className="flex flex-col w-[32%]">
+              {/* Exterior */}
+              <div className="flex flex-col bg-beige-0 px-8 pb-8 pt-7 rounded-3xl mb-5">
+                <HStack spacing={2} align="center" mb={2}>
+                  <ParkOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
+                  <h3>Exterior</h3>
+                </HStack>
+                <VStack spacing={4} align="stretch">
+                  <FormControl isRequired>
+                    <FormLabel>Lot Size</FormLabel>
+                    <Input type="number" />
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Exterior Spaces</FormLabel>
+                    <VStack align="start">
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <PoolOutlined />
+                        <p>Swimming Pools</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <SportsTennisOutlined />
+                        <p>Sports Courts</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <DeckOutlined />
+                        <p>Decks</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <LocalFloristOutlined />
+                        <p>Flower Gardens</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <SpaOutlined />
+                        <p>Vegetable Gardens</p>
+                      </HStack>
+                      <HStack>
+                        <Input type="number" w={10} p={0} textAlign="center" />
+                        <NatureOutlined />
+                        <p>Orchards</p>
+                      </HStack>
+                    </VStack>
+                  </FormControl>
+                </VStack>
+              </div>
+              {/* Features */}
+              <div className="flex flex-col bg-beige-0 px-8 pb-8 pt-7 rounded-3xl mb-5">
+                <HStack spacing={2} align="center" mb={2}>
+                  <OtherHousesOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
+                  <h3>Features</h3>
+                </HStack>
+                <VStack spacing={4} align="stretch">
+                  <FormControl isRequired>
+                    <FormLabel>Interior</FormLabel>
+                    <VStack align="start">
+                      <CheckboxGroup>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <WifiOutlined />
+                            <p>Internet Connection</p>
+                          </HStack>
+                          <Checkbox value="internet"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <AcUnitOutlined />
+                            <p>Air Conditioning</p>
+                          </HStack>
+                          <Checkbox value="aircon"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <LocalFireDepartmentOutlined />
+                            <p>Central Heating</p>
+                          </HStack>
+                          <Checkbox value="heating"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <VideocamOutlined />
+                            <p>Security System</p>
+                          </HStack>
+                          <Checkbox value="securitysys"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <SolarPowerOutlined />
+                            <p>Solar Panels</p>
+                          </HStack>
+                          <Checkbox value="solar"></Checkbox>
+                        </div>
+                      </CheckboxGroup>
+                    </VStack>
+                  </FormControl>
+                  <FormControl isRequired>
+                    <FormLabel>Exterior</FormLabel>
+                    <VStack align="start">
+                      <CheckboxGroup>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <YardOutlined />
+                            <p>Garden Services</p>
+                          </HStack>
+                          <Checkbox value="gardenserv"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <WaterDropOutlined />
+                            <p>Irrigation System</p>
+                          </HStack>
+                          <Checkbox value="irrigation"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <WbTwilightOutlined />
+                            <p>Outdoor Lighting</p>
+                          </HStack>
+                          <Checkbox value="outLighting"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <OutdoorGrillOutlined />
+                            <p>Outdoor Boma</p>
+                          </HStack>
+                          <Checkbox value="boma"></Checkbox>
+                        </div>
+                        <div className="w-full flex flex-row justify-between">
+                          <HStack>
+                            <FenceOutlined />
+                            <p>Gated Community</p>
+                          </HStack>
+                          <Checkbox value="gatedCommunity"></Checkbox>
+                        </div>
+                      </CheckboxGroup>
+                    </VStack>
+                  </FormControl>
+                </VStack>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
