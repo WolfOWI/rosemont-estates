@@ -49,6 +49,7 @@ import {
   WbTwilightOutlined,
   OutdoorGrillOutlined,
   FenceOutlined,
+  DeleteForeverOutlined,
 } from "@mui/icons-material";
 
 import RadioCard from "../components/input/RadioCard";
@@ -76,9 +77,14 @@ function CreateListingPage() {
               <AddHomeOutlined sx={{ fontSize: 80, color: "#C3BDAE" }} />
               <h2 className="mt-2 ml-4">New Property</h2>
             </div>
-            <Button size="lg" mt={4} rightIcon={<CheckCircleOutlineOutlined />}>
-              Submit
-            </Button>
+            <HStack>
+              <Button variant="colorOutline" size="lg" mt={4} leftIcon={<DeleteForeverOutlined />}>
+                Clear
+              </Button>
+              <Button size="lg" mt={4} rightIcon={<CheckCircleOutlineOutlined />}>
+                Submit
+              </Button>
+            </HStack>
           </div>
           {/* Content */}
           <div className="flex justify-between mb-16">
@@ -95,7 +101,7 @@ function CreateListingPage() {
                     <FormLabel>Title</FormLabel>
                     <Input type="email" />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Description</FormLabel>
                     <Textarea />
                   </FormControl>
@@ -103,7 +109,7 @@ function CreateListingPage() {
                     <FormLabel>Address</FormLabel>
                     <Input type="text" />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>House Style</FormLabel>
                     <Select placeholder="Select Style">
                       <option value="colonial">American Colonial</option>
@@ -120,7 +126,7 @@ function CreateListingPage() {
                     <FormLabel>Available From</FormLabel>
                     <Input type="date" />
                   </FormControl>
-                  <FormControl>
+                  <FormControl isRequired>
                     <FormLabel>Real Estate Agent</FormLabel>
                     <Select placeholder="Select Agency">
                       <option value="aida">AIDA</option>
@@ -172,8 +178,8 @@ function CreateListingPage() {
                     })}
                   </HStack>
                   <FormControl isRequired>
-                    <HStack>
-                      <Input type="number" flex="1" />
+                    <HStack spacing={4}>
+                      <Input type="number" flex="1" placeholder="ZAR" />
                       {selectedOption === "To Rent" && <p className="text-sm">per month</p>}
                     </HStack>
                   </FormControl>
@@ -188,11 +194,17 @@ function CreateListingPage() {
                 <VStack spacing={4} align="stretch">
                   <FormControl isRequired>
                     <FormLabel>Total Floors</FormLabel>
-                    <Input type="number" />
+                    <HStack spacing={4}>
+                      <Input type="number" flex="1" />
+                      <p className="text-sm">floor(s)</p>
+                    </HStack>
                   </FormControl>
                   <FormControl isRequired>
                     <FormLabel>Floor Size</FormLabel>
-                    <Input type="number" />
+                    <HStack spacing={4}>
+                      <Input type="number" flex="1" />
+                      <p className="text-sm">square meters</p>
+                    </HStack>
                   </FormControl>
                   <FormControl isRequired>
                     <FormLabel>Rooms</FormLabel>
@@ -253,7 +265,10 @@ function CreateListingPage() {
                 <VStack spacing={4} align="stretch">
                   <FormControl isRequired>
                     <FormLabel>Lot Size</FormLabel>
-                    <Input type="number" />
+                    <HStack spacing={4}>
+                      <Input type="number" flex="1" />
+                      <p className="text-sm">square meters</p>
+                    </HStack>
                   </FormControl>
                   <FormControl isRequired>
                     <FormLabel>Exterior Spaces</FormLabel>

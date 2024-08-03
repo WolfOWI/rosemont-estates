@@ -14,6 +14,17 @@ const Button = {
         color: "beige.0",
       },
     },
+    colorOutline: {
+      bg: "transparent",
+      color: "thorn.0",
+      border: "2px solid",
+      borderColor: "thorn.0",
+      _hover: {
+        color: "beige.0",
+        bg: "thorn.P2",
+        borderColor: "thorn.P2",
+      },
+    },
     lightFilled: {
       bg: "beige.0",
       color: "thorn.0",
@@ -90,6 +101,9 @@ const Input = {
           borderColor: "thorn.0",
           boxShadow: "0 0 0 1px thorn.0",
           ring: "thorn.0",
+        },
+        _placeholder: {
+          color: "beige.M3",
         },
       },
     },
@@ -169,6 +183,34 @@ const Checkbox = {
   },
 };
 
+const Select = {
+  variants: {
+    outline: {
+      field: {
+        borderWidth: "2px",
+        bg: "beige.M1",
+        borderColor: "beige.M1",
+        borderRadius: "xl",
+        _hover: {
+          borderColor: "beige.M2",
+        },
+        _focus: {
+          bg: "transparent",
+          borderColor: "thorn.0",
+          boxShadow: "0 0 0 1px thorn.0",
+          ring: "thorn.0",
+        },
+      },
+      icon: {
+        color: "thorn.0",
+      },
+    },
+  },
+  defaultProps: {
+    variant: "outline",
+  },
+};
+
 const theme = extendTheme({
   components: {
     Button,
@@ -178,6 +220,7 @@ const theme = extendTheme({
     Textarea,
     Radio,
     Checkbox,
+    Select,
   },
   styles: {
     global: {
