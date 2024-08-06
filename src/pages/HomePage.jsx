@@ -1,5 +1,11 @@
+import Navbar from "../components/navigation/Navbar";
+
 function HomePage() {
-  return <div>Home Page</div>;
+  return (
+    <>
+      <Navbar transparent="true" />
+    </>
+  );
 }
 
 export default HomePage;
