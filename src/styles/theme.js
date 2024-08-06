@@ -107,6 +107,13 @@ const Input = {
         },
       },
     },
+    searchbar: {
+      field: {
+        _placeholder: {
+          color: "beige.M3",
+        },
+      },
+    },
   },
 };
 
@@ -177,9 +184,6 @@ const Checkbox = {
         borderColor: "thorn.0",
       },
     },
-    // label: {
-    //   color: "warmgray.800",
-    // },
   },
 };
 
@@ -203,6 +207,25 @@ const Select = {
       },
       icon: {
         color: "thorn.0",
+      },
+    },
+    filled: {
+      field: {
+        borderWidth: "2px",
+        bg: "thorn.0",
+        color: "beige.0",
+        borderColor: "thorn.0",
+        borderRadius: "xl",
+        _hover: {
+          borderColor: "thorn.P2",
+          bg: "thorn.P2",
+        },
+        _focus: {
+          boxShadow: "0 0 0 1px thorn.0",
+        },
+      },
+      icon: {
+        color: "beige.0",
       },
     },
   },
