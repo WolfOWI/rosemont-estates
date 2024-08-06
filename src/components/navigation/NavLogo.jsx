@@ -19,7 +19,9 @@ function NavLogo() {
     logoSize = "h-8";
   }
 
-  return <Image src={logoSrc} alt="Rosemont Estates Logo" className={logoSize} />;
+  return (
+    <Image src={logoSrc} alt="Rosemont Estates Logo" className={`${logoSize} relative z-20`} />
+  );
 }
 
 export default NavLogo;
