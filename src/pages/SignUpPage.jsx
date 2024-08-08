@@ -37,7 +37,7 @@ function SignUpPage() {
           />
           <img src={plantWallImg} alt="" className="object-cover h-full w-full blur-sm z-0" />
         </div>
-        <div className="flex flex-col lg:justify-center lg:items-start lg:w-[50%] xl:w-[70%] 2xl:w-[54%] h-screen px-4 sm:px-8 md:px-8 py-8 2xl:pr-24">
+        <div className="flex flex-col lg:justify-center lg:items-start lg:w-[50%] xl:w-[70%] 2xl:w-[50%] h-screen px-4 sm:px-8 md:px-8 py-8 2xl:pr-24">
           <h1>Your Gateway to Luxury</h1>
           <p className="mb-8">
             Join our exclusive community to gain access to unparalleled luxury homes, crafted for
