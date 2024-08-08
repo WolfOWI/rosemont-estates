@@ -12,12 +12,9 @@ import {
   Stack,
   VStack,
   Button,
-  Text,
   IconButton,
 } from "@chakra-ui/react";
 import { VisibilityOutlined, VisibilityOffOutlined } from "@mui/icons-material";
-
-// TODO Delete Later (Temporary)
 import Navbar from "../components/navigation/Navbar";
 import plantWallImg from "../assets/images/plant-wall-1.jpg";
 import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
@@ -29,18 +26,18 @@ function SignUpPage() {
 
   return (
     <>
-      {/* TODO Delete Navbar */}
+      {/* TODO Delete Navbar Later */}
       <Navbar />
-      <div className="flex w-full h-full bg-beige-0">
-        <div className="flex justify-center items-center h-screen w-[45%] relative bg-thorn-M1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row justify-start w-full h-full bg-beige-0">
+        <div className="hidden sm:flex justify-center items-center h-52 lg:h-screen w-full lg:w-[45%] relative bg-thorn-M1 overflow-hidden">
           <img
             src={rosemontEmblemLogo}
             alt=""
-            className="absolute w-[60%] z-10 translate-y-[-50px]"
+            className="absolute w-[20%] lg:w-[60%] z-10 lg:translate-y-[-50px]"
           />
           <img src={plantWallImg} alt="" className="object-cover h-full w-full blur-sm z-0" />
         </div>
-        <div className="flex flex-col w-[40%] h-screen pl-24 pt-32">
+        <div className="flex flex-col lg:justify-center lg:items-start lg:w-[50%] xl:w-[70%] 2xl:w-[54%] h-screen px-4 sm:px-8 md:px-8 py-8 2xl:pr-24">
           <h1>Your Gateway to Luxury</h1>
           <p className="mb-8">
             Join our exclusive community to gain access to unparalleled luxury homes, crafted for
