@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, FormControl, FormLabel, Input, VStack, Button, Text } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Input, VStack, Button } from "@chakra-ui/react";
 
 // TODO Delete Later (Temporary)
 import Navbar from "../components/navigation/Navbar";
@@ -9,9 +9,10 @@ import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
 function LogInPage() {
   return (
     <>
-      {/* TODO Delete Navbar */}
+      {/* TODO Delete Navbar Later */}
       <Navbar />
       <div className="flex flex-col lg:flex-row-reverse justify-start w-full h-full bg-beige-0">
+        {/* Rosemont Emblem Picture */}
         <div className="hidden sm:flex justify-center items-center h-52 lg:h-screen w-full lg:w-[45%] relative bg-thorn-M1 overflow-hidden">
           <img
             src={rosemontEmblemLogo}
@@ -20,6 +21,7 @@ function LogInPage() {
           />
           <img src={plantWallImg} alt="" className="object-cover h-full w-full blur-sm z-0" />
         </div>
+        {/* Login Form */}
         <div className="flex flex-col lg:justify-center lg:items-end lg:w-[50%] 2xl:w-[38%] h-screen px-4 sm:px-16 py-8 2xl:pr-24">
           <h1>Welcome Back</h1>
           <p className="mb-8">Please enter your details below</p>

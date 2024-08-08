@@ -29,6 +29,7 @@ function SignUpPage() {
       {/* TODO Delete Navbar Later */}
       <Navbar />
       <div className="flex flex-col lg:flex-row justify-start w-full h-full bg-beige-0">
+        {/* Rosemont Emblem Picture */}
         <div className="hidden sm:flex justify-center items-center h-52 lg:h-screen w-full lg:w-[45%] relative bg-thorn-M1 overflow-hidden">
           <img
             src={rosemontEmblemLogo}
@@ -37,6 +38,7 @@ function SignUpPage() {
           />
           <img src={plantWallImg} alt="" className="object-cover h-full w-full blur-sm z-0" />
         </div>
+        {/* Sign Up Form */}
         <div className="flex flex-col lg:justify-center lg:items-start lg:w-[50%] xl:w-[70%] 2xl:w-[50%] h-screen px-4 sm:px-8 md:px-8 py-8 2xl:pr-24">
           <h1>Your Gateway to Luxury</h1>
           <p className="mb-8">
