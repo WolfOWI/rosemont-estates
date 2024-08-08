@@ -11,8 +11,16 @@ function LogInPage() {
     <>
       {/* TODO Delete Navbar */}
       <Navbar />
-      <div className="flex justify-end w-full h-full bg-beige-0">
-        <div className="flex flex-col justify-center items-end w-[30%] h-screen pr-24">
+      <div className="flex flex-col lg:flex-row-reverse justify-start w-full h-full bg-beige-0">
+        <div className="hidden sm:flex justify-center items-center h-52 lg:h-screen w-full lg:w-[45%] relative bg-thorn-M1 overflow-hidden">
+          <img
+            src={rosemontEmblemLogo}
+            alt=""
+            className="absolute w-[20%] lg:w-[60%] z-10 lg:translate-y-[-50px]"
+          />
+          <img src={plantWallImg} alt="" className="object-cover h-full w-full blur-sm z-0" />
+        </div>
+        <div className="flex flex-col lg:justify-center lg:items-end lg:w-[50%] 2xl:w-[38%] h-screen px-4 sm:px-16 py-8 2xl:pr-24">
           <h1>Welcome Back</h1>
           <p className="mb-8">Please enter your details below</p>
           <Box as="form" w="full">
@@ -33,14 +41,6 @@ function LogInPage() {
               </p>
             </VStack>
           </Box>
-        </div>
-        <div className="flex justify-center items-center h-screen w-[45%] relative bg-thorn-M1 overflow-hidden">
-          <img
-            src={rosemontEmblemLogo}
-            alt=""
-            className="absolute w-[60%] z-10 translate-y-[-50px]"
-          />
-          <img src={plantWallImg} alt="" className="object-cover h-full w-full blur-sm z-0" />
         </div>
       </div>
     </>

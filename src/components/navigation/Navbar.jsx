@@ -32,6 +32,7 @@ function Navbar({ transparent }) {
 
         {/* TODO Delete Later */}
         <Flex>
+          <p className="text-white">Delete Later</p>
           <Button as={Link} to="/">
             Log In
           </Button>
