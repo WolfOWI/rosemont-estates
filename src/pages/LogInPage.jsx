@@ -11,12 +11,15 @@ function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Handle Log in submit button
+  // Handle Log in (submit) button
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
-      .post("http://localhost/rosemont/backend/api/login.php", { email, password })
+      .post("http://localhost/rosemont/backend/api/login.php", {
+        email: email,
+        password: password,
+      })
       .then((response) => {
         alert(response.data.message);
       })
