@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Flex,
@@ -20,6 +21,11 @@ import plantWallImg from "../assets/images/plant-wall-1.jpg";
 import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
 
 function SignUpPage() {
+  // Form Variables
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+
+  // Password Visibility
   const [showPassword, setShowPassword] = useState(false);
 
   const handlePasswordVisibility = () => setShowPassword(!showPassword);

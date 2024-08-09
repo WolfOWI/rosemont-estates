@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, FormControl, FormLabel, Input, VStack, Button } from "@chakra-ui/react";
+import axios from "axios";
 
 // TODO Delete Later (Temporary)
 import Navbar from "../components/navigation/Navbar";
@@ -7,6 +8,24 @@ import plantWallImg from "../assets/images/plant-wall-1.jpg";
 import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
 
 function LogInPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Send a POST request to the PHP script using Axios
+    axios
+      .post("http://localhost/rosemont/backend/api/login.php", { email, password })
+      .then((response) => {
+        // Handle the response from PHP
+        alert(response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <>
       {/* TODO Delete Navbar Later */}
@@ -25,17 +44,21 @@ function LogInPage() {
         <div className="flex flex-col lg:justify-center lg:items-end lg:w-[50%] 2xl:w-[38%] h-screen px-4 sm:px-16 py-8 2xl:pr-24">
           <h1>Welcome Back</h1>
           <p className="mb-8">Please enter your details below</p>
-          <Box as="form" w="full">
+          <Box as="form" w="full" onSubmit={handleSubmit}>
             <VStack spacing={4} align="stretch">
               <FormControl id="email" isRequired>
                 <FormLabel>Email Address</FormLabel>
-                <Input type="email" />
+                <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </FormControl>
-              <Button size="lg" mt={4}>
+              <Button size="lg" mt={4} type="submit">
                 Log In
               </Button>
               <p>
