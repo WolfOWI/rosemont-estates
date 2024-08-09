@@ -27,6 +27,7 @@ function SignUpPage() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
   // TODO UserType useState
 
   // Password Visibility
@@ -43,6 +44,7 @@ function SignUpPage() {
         phone: phone,
         email: email,
         password: password,
+        userType: userType,
       })
       .then((response) => {
         alert(response.data.message);
@@ -130,9 +132,9 @@ function SignUpPage() {
               </FormControl>
               <FormControl as="fieldset">
                 <FormLabel as="legend">I would like to</FormLabel>
-                <RadioGroup defaultValue="buy">
+                <RadioGroup value={userType} onChange={setUserType}>
                   <Stack spacing={4} direction="row">
-                    <Radio value="customer">buy, rent or sell a home</Radio>
+                    <Radio value="user">buy, rent or sell a home</Radio>
                     <Radio value="agent">join my real estate agency group.</Radio>
                   </Stack>
                 </RadioGroup>

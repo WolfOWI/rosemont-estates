@@ -29,35 +29,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Get values from the form
-$firstName = $data['firstName'] ?? null;
-$lastName = $data['lastName'] ?? null;
-$phone = $data['phone'] ?? null;
-$email = $data['email'] ?? null;
-$password = $data['password'] ?? null;
+$firstName = $data['firstName'];
+$lastName = $data['lastName'];
+$phone = $data['phone'];
+$email = $data['email'];
+$password = $data['password'];
+$userType = $data['userType'];
 
-// Ensure all values are provided
-if (!$firstName || !$lastName || !$phone || !$email || !$password) {
-    echo json_encode(["message" => "All fields are required."]);
-    http_response_code(400); // Bad Request
-    exit;
-}
+
+
 
 // If form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // SQL Statement
-    $sql = "INSERT INTO user (firstName, lastName, phone, email, password) VALUES (?, ?, ?, ?, ?)";
 
-    // Prepare SQL statement for execution
+    // Standard user or agent entity?
+    if ($userType === "user") {
+        // User Create SQL Statement
+        $sql = "INSERT INTO user (firstName, lastName, phone, email, password) VALUES (?, ?, ?, ?, ?)";
+    }
+    else if ($userType === "agent") {
+        // Agent Create SQL Statement (Default of realEstateId 1, which means 'none')
+        $sql = "INSERT INTO agent (realEstateId, firstName, lastName, phone, email, password) VALUES (1, ?, ?, ?, ?, ?)";
+        
+    }
+
+    // Prepare SQL statement
     $stmt = $conn->prepare($sql);
 
     // Add form values to statement
     $stmt->bind_param("sssss", $firstName, $lastName, $phone, $email, $password);
+    
 
     // TODO Check if email & phone exists?
 
     // If statement was successfully executed
     if ($stmt->execute()) {
-        echo json_encode(["message" => "Registration Successful"]);
+        echo json_encode(["message" => "Registration Successful!"]);
+        
     } else {
         echo json_encode(["message" => "Error: " . $sql . " " . $conn->error]);
     }

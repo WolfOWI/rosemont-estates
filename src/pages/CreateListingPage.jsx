@@ -129,14 +129,14 @@ function CreateListingPage() {
                   <FormControl isRequired>
                     <FormLabel>Real Estate Agent</FormLabel>
                     <Select placeholder="Select Agency">
-                      <option value="aida">AIDA</option>
-                      <option value="engelandvolkers">Engel and Völkers</option>
-                      <option value="pamgolding">Pam Golding Properties</option>
-                      <option value="rawson">Rawson</option>
-                      <option value="realnet">RealNet</option>
-                      <option value="remax">RE/MAX South Africa</option>
-                      <option value="seeff">Seeff</option>
-                      <option value="tsungai">Tsungai Estates</option>
+                      <option value="2">AIDA</option>
+                      <option value="3">Engel and Völkers</option>
+                      <option value="4">Pam Golding Properties</option>
+                      <option value="5">Rawson</option>
+                      <option value="6">RealNet</option>
+                      <option value="7">RE/MAX South Africa</option>
+                      <option value="8">Seeff</option>
+                      <option value="9">Tsungai Holdings</option>
                     </Select>
                   </FormControl>
                 </VStack>
