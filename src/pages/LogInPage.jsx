@@ -9,6 +9,13 @@ import {
   RadioGroup,
   Radio,
   HStack,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -22,6 +29,13 @@ function LogInPage() {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
 
+  // Alert Dialog
+  const [alertIsOpen, setAlertIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const cancelRef = React.useRef();
+
+  const onClose = () => setAlertIsOpen(false);
+
   // Handle Log in (submit) button
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,10 +47,13 @@ function LogInPage() {
         userType: userType,
       })
       .then((response) => {
-        alert(response.data.message);
+        // alert(response.data.message);
+        setAlertMessage(response.data.message);
+        setAlertIsOpen(true);
       })
       .catch((error) => {
-        console.error("Login Error: ", error);
+        setAlertMessage("An error occurred during login. Please try again. Error: " + error);
+        setAlertIsOpen(true);
       });
   };
 
@@ -91,6 +108,23 @@ function LogInPage() {
           </Box>
         </div>
       </div>
+      <AlertDialog isOpen={alertIsOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Login Message
+            </AlertDialogHeader>
+
+            <AlertDialogBody>{alertMessage}</AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Ok
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 }
