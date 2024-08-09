@@ -28,7 +28,6 @@ function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
-  // TODO UserType useState
 
   // Password Visibility
   const [showPassword, setShowPassword] = useState(false);

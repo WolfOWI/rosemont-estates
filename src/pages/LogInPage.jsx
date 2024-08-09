@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Box, FormControl, FormLabel, Input, VStack, Button } from "@chakra-ui/react";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  VStack,
+  Button,
+  RadioGroup,
+  Radio,
+  HStack,
+} from "@chakra-ui/react";
 import axios from "axios";
 
 // TODO Delete Later (Temporary)
@@ -10,6 +20,7 @@ import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
 function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
 
   // Handle Log in (submit) button
   const handleSubmit = (e) => {
@@ -19,6 +30,7 @@ function LogInPage() {
       .post("http://localhost/rosemont/backend/api/login.php", {
         email: email,
         password: password,
+        userType: userType,
       })
       .then((response) => {
         alert(response.data.message);
@@ -59,6 +71,15 @@ function LogInPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+              </FormControl>
+              <FormControl as="fieldset">
+                <RadioGroup value={userType} onChange={setUserType}>
+                  <HStack align="center" spacing={6}>
+                    <p>I am a</p>
+                    <Radio value="user">customer/seller</Radio>
+                    <Radio value="agent">real estate agent.</Radio>
+                  </HStack>
+                </RadioGroup>
               </FormControl>
               <Button size="lg" mt={4} type="submit">
                 Log In
