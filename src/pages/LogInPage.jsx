@@ -11,18 +11,17 @@ function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Handle Log in submit button
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Send a POST request to the PHP script using Axios
     axios
       .post("http://localhost/rosemont/backend/api/login.php", { email, password })
       .then((response) => {
-        // Handle the response from PHP
         alert(response.data.message);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Login Error: ", error);
       });
   };
 

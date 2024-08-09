@@ -23,12 +23,34 @@ import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
 function SignUpPage() {
   // Form Variables
   const [firstName, setFirstName] = useState("");
-  const [lastName, setlastName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // TODO UserType useState
 
   // Password Visibility
   const [showPassword, setShowPassword] = useState(false);
-
   const handlePasswordVisibility = () => setShowPassword(!showPassword);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("http://localhost/rosemont/backend/api/signup.php", {
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        alert(response.data.message);
+      })
+      .catch((error) => {
+        console.log("Sign Up Error: ", error);
+      });
+  };
 
   return (
     <>
@@ -51,32 +73,52 @@ function SignUpPage() {
             Join our exclusive community to gain access to unparalleled luxury homes, crafted for
             the sophisticated homeowner.
           </p>
-          <Box as="form" w="full">
+          <Box as="form" w="full" onSubmit={handleSubmit}>
             <VStack spacing={4} align="stretch">
               <Flex>
-                <FormControl id="first-name" isRequired mr={2}>
+                <FormControl id="firstName" isRequired mr={2}>
                   <FormLabel>First Name</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
                 </FormControl>
-                <FormControl id="last-name" isRequired ml={2}>
+                <FormControl id="lastName" isRequired ml={2}>
                   <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
+                  />
                 </FormControl>
               </Flex>
               <Flex>
                 <FormControl id="phone" isRequired mr={2}>
                   <FormLabel>Phone Number</FormLabel>
-                  <Input type="tel" />
+                  <Input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                    }}
+                  />
                 </FormControl>
                 <FormControl id="email" isRequired ml={2}>
                   <FormLabel>Email Address</FormLabel>
-                  <Input type="email" />
+                  <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </FormControl>
               </Flex>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
-                  <Input type={showPassword ? "text" : "password"} />
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                   <InputRightElement>
                     <IconButton
                       icon={showPassword ? <VisibilityOffOutlined /> : <VisibilityOutlined />}
@@ -95,7 +137,7 @@ function SignUpPage() {
                   </Stack>
                 </RadioGroup>
               </FormControl>
-              <Button size="lg" mt={4}>
+              <Button size="lg" mt={4} type="submit">
                 Sign Up
               </Button>
               <p>
