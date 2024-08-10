@@ -22,7 +22,7 @@ import HomeInfoIconText from "../buildingblocks/HomeInfoIconText";
 
 function PropertyAccordion({ property }) {
   return (
-    <Accordion allowToggle bg="beige.P1" borderRadius="3xl">
+    <Accordion allowToggle bg="beige.0" borderRadius="3xl">
       <AccordionItem border="none" p={4} mb={4}>
         {({ isExpanded }) => (
           <>
@@ -42,7 +42,7 @@ function PropertyAccordion({ property }) {
                   } transition-all duration-250`}
                 />
                 <VStack align="start" spacing={1}>
-                  <h3>{property.title}</h3>
+                  <h3 className="text-thorn-0">{property.title}</h3>
                   <HStack spacing={4}>
                     <p>{property.style}</p>
                     <p>Available: {property.availableDate}</p>

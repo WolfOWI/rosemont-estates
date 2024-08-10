@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { border, extendTheme } from "@chakra-ui/react";
 
 // Button component
 const Button = {
@@ -244,6 +244,34 @@ const Select = {
   },
 };
 
+const Popover = {
+  baseStyle: {
+    header: {
+      fontWeight: "bold",
+      fontSize: 18,
+      border: "none",
+    },
+    content: {
+      bg: "beige.P2",
+      boxShadow: "lg",
+      borderRadius: "2xl",
+      border: "none",
+      w: "400px",
+    },
+    arrow: {
+      bg: "beige.P2",
+    },
+    closeButton: {
+      fontSize: "16px",
+      margin: "8px",
+      color: "thorn.0",
+      _hover: {
+        color: "thorn.P2",
+      },
+    },
+  },
+};
+
 const theme = extendTheme({
   components: {
     Button,
@@ -254,6 +282,7 @@ const theme = extendTheme({
     Radio,
     Checkbox,
     Select,
+    Popover,
   },
   styles: {
     global: {

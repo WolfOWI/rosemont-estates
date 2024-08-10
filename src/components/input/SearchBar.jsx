@@ -3,8 +3,8 @@ import { SearchOutlined } from "@mui/icons-material";
 
 function SearchBar() {
   return (
-    <div className="flex items-center relative w-[40%]">
-      <div className="flex items-center bg-beige-P2 rounded-xl transition border-2 hover:border-thorn-0 w-[100%]">
+    <div className="flex items-center relative w-full">
+      <div className="flex items-center bg-beige-P2 rounded-xl transition border-2 hover:border-thorn-0 w-[100%] h-[80px]">
         <Input
           variant="searchbar"
           type="text"
@@ -17,7 +17,7 @@ function SearchBar() {
           <option value="both">All</option>
         </Select>
       </div>
-      <IconButton icon={<SearchOutlined />} height="full" padding="24px" className="!ml-2" />
+      <IconButton icon={<SearchOutlined fontSize="large" />} height="80px" width="80px" ml={2} />
     </div>
   );
 }
