@@ -3,9 +3,6 @@ import {
   VStack,
   HStack,
   FormControl,
-  FormLabel,
-  NumberInput,
-  NumberInputField,
   RangeSlider,
   RangeSliderTrack,
   RangeSliderFilledTrack,
@@ -14,14 +11,8 @@ import {
   CheckboxGroup,
   Input,
   InputGroup,
-  InputLeftAddon,
-  Select,
-  IconButton,
   InputLeftElement,
   InputRightElement,
-  PopoverFooter,
-  Button,
-  Switch,
 } from "@chakra-ui/react";
 import { PriceCheckOutlined, BedOutlined, HouseOutlined, StarOutline } from "@mui/icons-material";
 import Navbar from "../components/navigation/Navbar";
