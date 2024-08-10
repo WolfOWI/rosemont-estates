@@ -19,12 +19,17 @@ import {
   IconButton,
   InputLeftElement,
   InputRightElement,
+  PopoverFooter,
+  Button,
+  Switch,
 } from "@chakra-ui/react";
 import { PriceCheckOutlined, BedOutlined, HouseOutlined, StarOutline } from "@mui/icons-material";
 import Navbar from "../components/navigation/Navbar";
 import heroImg from "../assets/images/plant-wall-1.jpg";
 import SearchBar from "../components/input/SearchBar";
 import PopoverForm from "../components/input/PopoverForm";
+import RoomIconText from "../components/buildingblocks/RoomIconText";
+import FeatureIconText from "../components/buildingblocks/FeatureIconText";
 
 function HomePage() {
   const [priceRange, setPriceRange] = useState([0, 150]);
@@ -130,31 +135,121 @@ function HomePage() {
               </PopoverForm>
 
               {/* Interior Filter */}
-              <PopoverForm label="Interior" icon={<BedOutlined />}>
-                <InputGroup>
-                  <InputLeftAddon>Max Price</InputLeftAddon>
-                  <Input type="tel" placeholder="phone number" />
-                </InputGroup>
-                <Input label="Bedrooms" id="bedrooms" type="number" />
-                <Input label="Bathrooms" id="bathrooms" type="number" />
+              <PopoverForm label="Interior" icon={<BedOutlined />} title="Rooms">
+                <FormControl>
+                  <VStack align="start">
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="bed" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="bath" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="kitchen" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="dining" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="gym" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="billiard" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="basement" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="garage" />
+                    </HStack>
+                  </VStack>
+                </FormControl>
               </PopoverForm>
 
               {/* Exterior Filter */}
-              <PopoverForm label="Exterior" icon={<HouseOutlined />}>
-                <Input label="Lot Size" id="lot-size" type="number" />
-                <Input label="Number of Floors" id="floors" type="number" />
+              <PopoverForm label="Exterior" icon={<HouseOutlined />} title="Outdoor Areas">
+                <FormControl>
+                  <VStack align="start">
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="pool" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="court" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="deck" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="flowerGard" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="vegGard" />
+                    </HStack>
+                    <HStack>
+                      <Input type="number" w={10} p={0} textAlign="center" />
+                      <RoomIconText type="orchard" />
+                    </HStack>
+                  </VStack>
+                </FormControl>
               </PopoverForm>
 
               {/* Features Filter */}
-              <PopoverForm label="Features" icon={<StarOutline />}>
+              <PopoverForm label="Features" icon={<StarOutline />} title="Include:">
                 <VStack align="start">
                   <CheckboxGroup>
-                    <Checkbox value="internet">Internet</Checkbox>
-                    <Checkbox value="airConditioning">Air Conditioning</Checkbox>
-                    <Checkbox value="pool">Pool</Checkbox>
-                    <Checkbox value="gym">Gym</Checkbox>
-                    <Checkbox value="garden">Garden</Checkbox>
-                    <Checkbox value="garage">Garage</Checkbox>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="internet" />
+                      <Checkbox value="internet"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="airCon" />
+                      <Checkbox value="aircon"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="heating" />
+                      <Checkbox value="heating"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="secSys" />
+                      <Checkbox value="securitysys"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="solar" />
+                      <Checkbox value="solar"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="gardServ" />
+                      <Checkbox value="gardenserv"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="irrigation" />
+                      <Checkbox value="irrigation"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="outdoorLight" />
+                      <Checkbox value="outLighting"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="boma" />
+                      <Checkbox value="boma"></Checkbox>
+                    </div>
+                    <div className="w-full flex flex-row justify-between">
+                      <FeatureIconText type="gatedCommunity" />
+                      <Checkbox value="gatedCommunity"></Checkbox>
+                    </div>
                   </CheckboxGroup>
                 </VStack>
               </PopoverForm>

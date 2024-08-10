@@ -20,6 +20,7 @@ import {
   PopoverHeader,
   PopoverBody,
   Button,
+  HStack,
 } from "@chakra-ui/react";
 import { FocusLock } from "@chakra-ui/react";
 
@@ -49,6 +50,12 @@ const PopoverForm = ({ label, icon, title, children }) => {
             <PopoverHeader>{title}</PopoverHeader>
             <PopoverBody>
               <VStack align="stretch">{children}</VStack>
+              <HStack w="full" justify="end" mt={2}>
+                <Button variant="colorOutline" onClick={onClose}>
+                  Reset
+                </Button>
+                <Button onClick={onClose}>Apply</Button>
+              </HStack>
             </PopoverBody>
           </FocusLock>
         </PopoverContent>
