@@ -5,13 +5,9 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Box,
   Button,
-  Text,
   VStack,
   HStack,
-  SimpleGrid,
-  Divider,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";

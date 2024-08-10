@@ -1,3 +1,4 @@
+import CustomerCard from "../components/admin/CustomerCard";
 import Sidebar from "../components/navigation/Sidebar";
 
 function AdminBuyDash() {
@@ -6,8 +7,11 @@ function AdminBuyDash() {
       <div className="flex">
         <Sidebar />
         <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
-          <h1>Potential Buyers</h1>
-          <div className="bg-green-300 w-full h-screen"></div>
+          <h1 className="mb-2">Potential Buyers</h1>
+          <CustomerCard type="buyer" />
+          <CustomerCard type="buyer" />
+          <CustomerCard type="buyer" />
+          <CustomerCard type="buyer" />
         </div>
       </div>
     </>
