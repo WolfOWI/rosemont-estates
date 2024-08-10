@@ -54,6 +54,7 @@ import {
 
 import RadioCard from "../components/input/RadioCard";
 import FeatureIconText from "../components/buildingblocks/FeatureIconText";
+import RoomIconText from "../components/buildingblocks/RoomIconText";
 
 function CreateListingPage() {
   const pricingOptions = ["For Sale", "To Rent"];
@@ -212,43 +213,35 @@ function CreateListingPage() {
                     <VStack align="start">
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <BedOutlined />
-                        <p>Bedrooms</p>
+                        <RoomIconText type="bed" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <ShowerOutlined />
-                        <p>Bathrooms</p>
+                        <RoomIconText type="bath" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <KitchenOutlined />
-                        <p>Kitchens</p>
+                        <RoomIconText type="kitchen" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <RestaurantOutlined />
-                        <p>Dining Rooms</p>
+                        <RoomIconText type="dining" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <FitnessCenterOutlined />
-                        <p>Gymnasiums</p>
+                        <RoomIconText type="gym" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <ImportContactsOutlined />
-                        <p>Billiard Rooms</p>
+                        <RoomIconText type="billiard" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <FoundationOutlined />
-                        <p>Basements</p>
+                        <RoomIconText type="basement" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <DirectionsCarOutlined />
-                        <p>Garages</p>
+                        <RoomIconText type="garage" />
                       </HStack>
                     </VStack>
                   </FormControl>
@@ -276,33 +269,27 @@ function CreateListingPage() {
                     <VStack align="start">
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <PoolOutlined />
-                        <p>Swimming Pools</p>
+                        <RoomIconText type="pool" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <SportsTennisOutlined />
-                        <p>Sports Courts</p>
+                        <RoomIconText type="court" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <DeckOutlined />
-                        <p>Decks</p>
+                        <RoomIconText type="deck" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <LocalFloristOutlined />
-                        <p>Flower Gardens</p>
+                        <RoomIconText type="flowerGard" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <SpaOutlined />
-                        <p>Vegetable Gardens</p>
+                        <RoomIconText type="vegGard" />
                       </HStack>
                       <HStack>
                         <Input type="number" w={10} p={0} textAlign="center" />
-                        <NatureOutlined />
-                        <p>Orchards</p>
+                        <RoomIconText type="orchard" />
                       </HStack>
                     </VStack>
                   </FormControl>

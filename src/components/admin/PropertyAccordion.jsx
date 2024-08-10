@@ -44,7 +44,7 @@ function PropertyAccordion({ property }) {
                 </VStack>
               </HStack>
               <div className="w-[25%] flex flex-col items-start relative">
-                <AccordionButton as={Button} rightIcon={<AccordionIcon />} w="full">
+                <AccordionButton as={Button} rightIcon={<AccordionIcon />} _hover="" w="full">
                   {isExpanded ? "Collapse" : "Expand"}
                 </AccordionButton>
                 <div className={`w-full absolute mt-16  ${isExpanded ? "block" : "hidden"}`}>
@@ -70,8 +70,8 @@ function PropertyAccordion({ property }) {
                 </div>
               </div>
             </div>
-            <AccordionPanel px={0}>
-              <div className="flex w-full bg-beige-0 p-6">Total Floors</div>
+            <AccordionPanel px={0} w="70%">
+              <div className="flex w-full bg-beige-M1 p-6 rounded-xl">Total Floors</div>
               <Box>
                 <SimpleGrid columns={2} spacing={10}>
                   <Box>
