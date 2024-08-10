@@ -53,6 +53,7 @@ import {
 } from "@mui/icons-material";
 
 import RadioCard from "../components/input/RadioCard";
+import FeatureIconText from "../components/buildingblocks/FeatureIconText";
 
 function CreateListingPage() {
   const pricingOptions = ["For Sale", "To Rent"];
@@ -319,38 +320,23 @@ function CreateListingPage() {
                     <VStack align="start">
                       <CheckboxGroup>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <WifiOutlined />
-                            <p>Internet Connection</p>
-                          </HStack>
+                          <FeatureIconText type="internet" />
                           <Checkbox value="internet"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <AcUnitOutlined />
-                            <p>Air Conditioning</p>
-                          </HStack>
+                          <FeatureIconText type="airCon" />
                           <Checkbox value="aircon"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <LocalFireDepartmentOutlined />
-                            <p>Central Heating</p>
-                          </HStack>
+                          <FeatureIconText type="heating" />
                           <Checkbox value="heating"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <VideocamOutlined />
-                            <p>Security System</p>
-                          </HStack>
+                          <FeatureIconText type="secSys" />
                           <Checkbox value="securitysys"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <SolarPowerOutlined />
-                            <p>Solar Panels</p>
-                          </HStack>
+                          <FeatureIconText type="solar" />
                           <Checkbox value="solar"></Checkbox>
                         </div>
                       </CheckboxGroup>
@@ -361,38 +347,23 @@ function CreateListingPage() {
                     <VStack align="start">
                       <CheckboxGroup>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <YardOutlined />
-                            <p>Garden Services</p>
-                          </HStack>
+                          <FeatureIconText type="gardServ" />
                           <Checkbox value="gardenserv"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <WaterDropOutlined />
-                            <p>Irrigation System</p>
-                          </HStack>
+                          <FeatureIconText type="irrigation" />
                           <Checkbox value="irrigation"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <WbTwilightOutlined />
-                            <p>Outdoor Lighting</p>
-                          </HStack>
+                          <FeatureIconText type="outdoorLight" />
                           <Checkbox value="outLighting"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <OutdoorGrillOutlined />
-                            <p>Outdoor Boma</p>
-                          </HStack>
+                          <FeatureIconText type="boma" />
                           <Checkbox value="boma"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <HStack>
-                            <FenceOutlined />
-                            <p>Gated Community</p>
-                          </HStack>
+                          <FeatureIconText type="gatedCommunity" />
                           <Checkbox value="gatedCommunity"></Checkbox>
                         </div>
                       </CheckboxGroup>

@@ -10,7 +10,6 @@ import {
   Text,
   VStack,
   HStack,
-  Stack,
   SimpleGrid,
   Divider,
 } from "@chakra-ui/react";
@@ -19,6 +18,7 @@ import { CheckOutlined, CloseOutlined } from "@mui/icons-material";
 
 // TODO Temporary Image Placeholder (Delete later)
 import tempImg from "../../assets/images/familyAtHome.jpg";
+import FeatureIconText from "../buildingblocks/FeatureIconText";
 
 function PropertyAccordion({ property }) {
   return (
@@ -27,7 +27,7 @@ function PropertyAccordion({ property }) {
         {({ isExpanded }) => (
           <>
             <div className={`flex justify-between ${isExpanded ? "items-start" : "items-center"}`}>
-              <HStack spacing={4} align="start" w="80%">
+              <HStack spacing={4} align="start" w="70%">
                 <img
                   src={tempImg}
                   alt="home"
@@ -43,17 +43,23 @@ function PropertyAccordion({ property }) {
                   <p className={`${isExpanded ? "block" : "hidden"}`}>{property.description}</p>
                 </VStack>
               </HStack>
-              <div className="w-[15%] flex flex-col items-start relative">
+              <div className="w-[25%] flex flex-col items-start relative">
                 <AccordionButton as={Button} rightIcon={<AccordionIcon />} w="full">
                   {isExpanded ? "Collapse" : "Expand"}
                 </AccordionButton>
-                <div
-                  className={`w-full bg-green-500  absolute mt-16  ${
-                    isExpanded ? "block" : "hidden"
-                  }`}
-                >
+                <div className={`w-full absolute mt-16  ${isExpanded ? "block" : "hidden"}`}>
                   <h3>Features</h3>
-                  <VStack>
+                  <VStack align="start">
+                    <FeatureIconText type="internet" />
+                    <FeatureIconText type="airCon" />
+                    <FeatureIconText type="heating" />
+                    <FeatureIconText type="secSys" />
+                    <FeatureIconText type="solar" />
+                    <FeatureIconText type="gardServ" />
+                    <FeatureIconText type="irrigation" />
+                    <FeatureIconText type="outdoorLight" />
+                    <FeatureIconText type="boma" />
+                    <FeatureIconText type="gatedCommunity" />
                     <Button w="full" leftIcon={<CheckOutlined />}>
                       Approve
                     </Button>
@@ -88,16 +94,7 @@ function PropertyAccordion({ property }) {
                     </SimpleGrid>
                   </Box>
                 </SimpleGrid>
-                <VStack mt={4} align="start">
-                  <Text fontWeight="bold">Features</Text>
-                  <Divider />
-                  <SimpleGrid columns={2} spacing={4} mt={2}>
-                    <Box>Internet Connection</Box>
-                    <Box>Air Conditioning</Box>
-                    <Box>Security System</Box>
-                    {/* Add more features */}
-                  </SimpleGrid>
-                </VStack>
+
                 <VStack mt={4} align="start">
                   <Text fontWeight="bold">Pricing</Text>
                   <Divider />
