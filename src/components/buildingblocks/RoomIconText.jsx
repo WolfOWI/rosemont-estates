@@ -1,4 +1,4 @@
-// Home Features: Icon & Text
+// Room (interior & exterior): Icon & Text
 
 import { HStack } from "@chakra-ui/react";
 
@@ -75,7 +75,7 @@ function RoomIconText({ type }) {
       break;
     case "vegGard":
       icon = <SpaOutlined />;
-      text = "Vegetable Gardens";
+      text = "Veg Gardens";
       break;
     case "orchard":
       icon = <NatureOutlined />;
