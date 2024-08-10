@@ -30,6 +30,8 @@ import SearchBar from "../components/input/SearchBar";
 import PopoverForm from "../components/input/PopoverForm";
 import RoomIconText from "../components/buildingblocks/RoomIconText";
 import FeatureIconText from "../components/buildingblocks/FeatureIconText";
+import RecentHouseCard from "../components/home/RecentHouseCard";
+import familyImg from "../assets/images/familyAtHome.jpg";
 
 function HomePage() {
   const [priceRange, setPriceRange] = useState([0, 150]);
@@ -46,6 +48,21 @@ function HomePage() {
   const handleMaxInputChange = (valueString) => {
     const value = parseInt(valueString, 10);
     setPriceRange([priceRange[0], value]);
+  };
+
+  const property = {
+    title: "Modern Riversands Villa",
+    style: "Italian-Style",
+    availableDate: "01/09/2024",
+    address: "22 Century Boulevard, Riversands, Johannesburg, 1684",
+    description:
+      "Modern bedroom with en-suite bathroom available in two bedroom apartment. Are you looking for a vibrant living experience in the heart of River-sands, near the University of Johannesburg? Look no further than this fantastic opportunity at Urban Quarter!",
+    bedrooms: 6,
+    bathrooms: 5,
+    kitchens: 2,
+    swimmingPools: 1,
+    sportsCourts: 1,
+    price: "R64,500,000",
   };
 
   return (
@@ -253,9 +270,36 @@ function HomePage() {
                   </CheckboxGroup>
                 </VStack>
               </PopoverForm>
-
               <div className="w-[34%]">{/* Spacer */}</div>
             </HStack>
+
+            {/* Recently Viewed */}
+            <VStack align="start" mt={16} spacing={8}>
+              <h3 className="mb-[-16px]">Recently Viewed</h3>
+              <RecentHouseCard property={property} />
+              <RecentHouseCard property={property} />
+              <RecentHouseCard property={property} />
+            </VStack>
+
+            {/* About Us */}
+            <VStack align="start" mt={16}>
+              <h3>About Us</h3>
+              <img
+                src={familyImg}
+                alt="happy family"
+                className="h-64 w-full object-cover rounded-3xl"
+              />
+              <p>
+                At Rosemont Estates, we understand that luxury is about more than just opulence—it's
+                about lifestyle, comfort, and creating a haven where memories are made. Our curated
+                collection of high-end homes includes a diverse range of architectural styles, from
+                contemporary masterpieces to timeless estates, ensuring that we have the perfect
+                property to match your unique taste and preferences.
+              </p>
+            </VStack>
+
+            {/* Spacer */}
+            <div className="w-full h-64"></div>
           </div>
         </div>
       </div>
