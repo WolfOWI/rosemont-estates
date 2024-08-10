@@ -31,13 +31,19 @@ function PropertyAccordion({ property }) {
         {({ isExpanded }) => (
           <>
             {/* Accordion Head */}
-            <div className={`flex justify-between ${isExpanded ? "items-start" : "items-center"}`}>
+            <div
+              className={`flex justify-between ${
+                isExpanded ? "items-start" : "items-center"
+              } transition-all duration-250`}
+            >
               {/* Basic Home Info */}
               <HStack spacing={4} align="start" w="70%">
                 <img
                   src={tempImg}
                   alt="home"
-                  className={`w-48 h-48 object-cover rounded-xl ${isExpanded ? "block" : "hidden"}`}
+                  className={`object-cover rounded-xl ${
+                    isExpanded ? "w-84 h-64" : "w-24 h-24"
+                  } transition-all duration-250`}
                 />
                 <VStack align="start" spacing={1}>
                   <h3>{property.title}</h3>
@@ -108,7 +114,7 @@ function PropertyAccordion({ property }) {
               </div>
             </div>
             {/* Accordion Content */}
-            <AccordionPanel p={0} w="73%">
+            <AccordionPanel p={0} w="73%" transition="all">
               {/* Size Section */}
               <HStack bg="beige.M1" px={6} py={4} rounded="2xl" spacing={16} mt={4}>
                 <HStack w="full" spacing={4}>

@@ -48,7 +48,7 @@ function Sidebar() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between bg-thorn-M1 h-screen w-64 px-4 pt-4 pb-8 sticky top-0 left-0">
+      <div className="fixed flex flex-col items-center justify-between bg-thorn-M1 w-64 px-4 pt-4 pb-8 h-full">
         <img src={rm_emblem} alt="rosemont emblem" className="w-[85%]" />
         <div className="flex flex-col items-start w-full mb-16">
           <Button

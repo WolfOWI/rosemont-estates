@@ -22,9 +22,11 @@ function AdminListingsDash() {
     <>
       <div className="flex">
         <Sidebar />
-        <div className="flex flex-col mx-8 mt-8 w-full">
+        <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
           <h1>New Homes</h1>
           <div className=" w-full h-screen">
+            <PropertyAccordion property={property} />
+            <PropertyAccordion property={property} />
             <PropertyAccordion property={property} />
           </div>
         </div>
