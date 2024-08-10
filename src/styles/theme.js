@@ -51,6 +51,16 @@ const Button = {
         color: "thorn.P2",
       },
     },
+    tertiaryBeige: {
+      bg: "transparent",
+      color: "beige.0",
+      fontWeight: "normal",
+      border: "none",
+      _hover: {
+        fontWeight: "bold",
+        color: "beige.P2",
+      },
+    },
   },
   defaultProps: {
     variant: "colorfilled",
