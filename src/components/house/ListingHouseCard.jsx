@@ -71,7 +71,7 @@ function ListingHouseCard({ house }) {
           <HStack>
             <IconTextBlock type="floorSize" value={house.floorSize} variant="beigeBadge" />
             <IconTextBlock type="rooms" value={house.numRooms} variant="beigeBadge" />
-            <IconTextBlock type="numFloors" value={house.numFloors} variant="beigeBadge" />
+            <IconTextBlock type="floors" value={house.floors} variant="beigeBadge" />
             <IconTextBlock type="bath" value={house.numBath} variant="beigeBadge" />
             <IconTextBlock type="garage" value={house.numGarage} variant="beigeBadge" />
           </HStack>

@@ -48,7 +48,7 @@ function ListingsPage() {
       "Modern bedroom with en-suite bathroom available in two bedroom apartment. Are you looking for a vibrant living experience in the heart of River-sands, near the University of Johannesburg? Look no further than this fantastic opportunity at Urban Quarter!",
     catchphrase: "6 Bedroom Italian-Style Mansion in Riversands",
     floorSize: 1200,
-    numFloors: 5,
+    floors: 5,
     numRooms: 53,
     numBath: 5,
     numGarage: 2,

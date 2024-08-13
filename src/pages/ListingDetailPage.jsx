@@ -64,7 +64,7 @@ function ListingDetailPage() {
             </VStack>
             <HStack w="fit-content">
               <IconTextBlock type="floorSize" textHidden="true" value="1205" variant="beigeBadge" />
-              <IconTextBlock type="numFloors" textHidden="true" value="5" variant="beigeBadge" />
+              <IconTextBlock type="floors" textHidden="true" value="5" variant="beigeBadge" />
               <IconTextBlock type="rooms" textHidden="true" value="53" variant="beigeBadge" />
               <IconTextBlock type="lotSize" textHidden="true" value="3200" variant="beigeBadge" />
             </HStack>
