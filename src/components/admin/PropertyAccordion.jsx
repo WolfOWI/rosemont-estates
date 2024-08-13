@@ -16,9 +16,7 @@ import { CheckOutlined, CloseOutlined } from "@mui/icons-material";
 
 // TODO Temporary Image Placeholder (Delete later)
 import tempImg from "../../assets/images/familyAtHome.jpg";
-import FeatureIconText from "../buildingblocks/FeatureIconText";
 import IconTextBlock from "../buildingblocks/IconTextBlock";
-import HomeInfoIconText from "../buildingblocks/HomeInfoIconText";
 
 function PropertyAccordion({ property }) {
   return (
@@ -72,16 +70,16 @@ function PropertyAccordion({ property }) {
                     <div>
                       <h3 className="mb-2">Features</h3>
                       <VStack align="start">
-                        <FeatureIconText type="internet" />
-                        <FeatureIconText type="airCon" />
-                        <FeatureIconText type="heating" />
-                        <FeatureIconText type="secSys" />
-                        <FeatureIconText type="solar" />
-                        <FeatureIconText type="gardServ" />
-                        <FeatureIconText type="irrigation" />
-                        <FeatureIconText type="outdoorLight" />
-                        <FeatureIconText type="boma" />
-                        <FeatureIconText type="gatedCommunity" />
+                        <IconTextBlock type="internet" />
+                        <IconTextBlock type="airCon" />
+                        <IconTextBlock type="heating" />
+                        <IconTextBlock type="secSys" />
+                        <IconTextBlock type="solar" />
+                        <IconTextBlock type="gardServ" />
+                        <IconTextBlock type="irrigation" />
+                        <IconTextBlock type="outdoorLight" />
+                        <IconTextBlock type="boma" />
+                        <IconTextBlock type="gatedCommunity" />
                       </VStack>
                     </div>
                     {/* Pricing */}
@@ -89,7 +87,7 @@ function PropertyAccordion({ property }) {
                       <h3 className="mt-5 mb-2">Pricing</h3>
                       <VStack>
                         <div className="flex justify-center w-full bg-beige-M1 rounded-2xl py-2">
-                          <HomeInfoIconText type="toRent" />
+                          <IconTextBlock type="toRent" />
                         </div>
                         <div className="flex justify-between items-center w-full bg-beige-M1 rounded-2xl p-4">
                           <p className="text-2xl">R64,500</p>

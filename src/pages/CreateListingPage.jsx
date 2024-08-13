@@ -29,7 +29,6 @@ import {
 } from "@mui/icons-material";
 
 import RadioCard from "../components/input/RadioCard";
-import FeatureIconText from "../components/buildingblocks/FeatureIconText";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 
 function CreateListingPage() {
@@ -283,23 +282,23 @@ function CreateListingPage() {
                     <VStack align="start">
                       <CheckboxGroup>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="internet" />
+                          <IconTextBlock type="internet" />
                           <Checkbox value="internet"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="airCon" />
+                          <IconTextBlock type="airCon" />
                           <Checkbox value="aircon"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="heating" />
+                          <IconTextBlock type="heating" />
                           <Checkbox value="heating"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="secSys" />
+                          <IconTextBlock type="secSys" />
                           <Checkbox value="securitysys"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="solar" />
+                          <IconTextBlock type="solar" />
                           <Checkbox value="solar"></Checkbox>
                         </div>
                       </CheckboxGroup>
@@ -310,23 +309,23 @@ function CreateListingPage() {
                     <VStack align="start">
                       <CheckboxGroup>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="gardServ" />
+                          <IconTextBlock type="gardServ" />
                           <Checkbox value="gardenserv"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="irrigation" />
+                          <IconTextBlock type="irrigation" />
                           <Checkbox value="irrigation"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="outdoorLight" />
+                          <IconTextBlock type="outdoorLight" />
                           <Checkbox value="outLighting"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="boma" />
+                          <IconTextBlock type="boma" />
                           <Checkbox value="boma"></Checkbox>
                         </div>
                         <div className="w-full flex flex-row justify-between">
-                          <FeatureIconText type="gatedCommunity" />
+                          <IconTextBlock type="gatedCommunity" />
                           <Checkbox value="gatedCommunity"></Checkbox>
                         </div>
                       </CheckboxGroup>
