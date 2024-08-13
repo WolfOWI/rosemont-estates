@@ -32,8 +32,8 @@ function ListingDetailPage() {
     <>
       <Navbar />
       {/* Page Content */}
-      <div className="mt-4 mb-24 mx-4 md:mx-8">
-        <IconButton as={Link} to="/listings" icon={<ArrowBack />} />
+      <div className="mt-4 mb-24 mx-2 md:mx-8 lg:mx-16 xl:mx-32 2xl:mx-64">
+        <IconButton as={Link} to="/listings" icon={<ArrowBack />} minW={12} />
         {/* House Imagery */}
         <div className="mt-4">
           <ImageCollection images={[tempImgB, tempImgA, tempImgC, tempImgC, tempImgA]} />

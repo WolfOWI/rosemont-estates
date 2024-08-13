@@ -30,7 +30,7 @@ import adminLogoColour from "../../assets/logos/agencyLogos/adminLogoColour.png"
 function ListingHouseCard({ house }) {
   return (
     <>
-      <div className="flex h-56 p-4 rounded-3xl hover:bg-beige-P1 hover:cursor-pointer transition-all duration-300">
+      <div className="flex h-56 min-w-full p-4 rounded-3xl hover:bg-beige-P1 hover:cursor-pointer transition-all duration-300">
         {/* Image (left) */}
         <div className="relative mr-4 group">
           <img
@@ -69,11 +69,36 @@ function ListingHouseCard({ house }) {
           <h3 className="text-thorn-0 font-bold font-alt">{house.price}</h3>
           {/* Badges */}
           <HStack>
-            <IconTextBlock type="floorSize" value={house.floorSize} variant="beigeBadge" />
-            <IconTextBlock type="rooms" value={house.numRooms} variant="beigeBadge" />
-            <IconTextBlock type="floors" value={house.floors} variant="beigeBadge" />
-            <IconTextBlock type="bath" value={house.numBath} variant="beigeBadge" />
-            <IconTextBlock type="garage" value={house.numGarage} variant="beigeBadge" />
+            <IconTextBlock
+              type="floorSize"
+              value={house.floorSize}
+              variant="beigeBadge"
+              textHidden={true}
+            />
+            <IconTextBlock
+              type="rooms"
+              value={house.numRooms}
+              variant="beigeBadge"
+              textHidden={true}
+            />
+            <IconTextBlock
+              type="floors"
+              value={house.floors}
+              variant="beigeBadge"
+              textHidden={true}
+            />
+            <IconTextBlock
+              type="bath"
+              value={house.numBath}
+              variant="beigeBadge"
+              textHidden={true}
+            />
+            <IconTextBlock
+              type="garage"
+              value={house.numGarage}
+              variant="beigeBadge"
+              textHidden={true}
+            />
           </HStack>
         </div>
       </div>

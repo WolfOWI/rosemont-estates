@@ -199,7 +199,7 @@ function ListingsPage() {
 
             {/* Features Filter */}
             <PopoverForm label="Features" icon={<StarOutline />} title="Include:">
-              <VStack align="start">
+              <VStack align="start" mb={4}>
                 <CheckboxGroup>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="internet" />

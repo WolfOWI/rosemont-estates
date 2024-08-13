@@ -51,7 +51,13 @@ function Navbar({ transparent }) {
         </Flex>
 
         <HStack spacing={2}>
-          <IconButton as={Link} to="/add" variant="lightFilled" icon={<AddHomeOutlined />} />
+          <IconButton
+            as={Link}
+            to="/add"
+            variant="lightFilled"
+            icon={<AddHomeOutlined />}
+            minW={12}
+          />
           <Menu>
             <MenuButton as={Button} variant="lightOutline" rightIcon={<ArrowDropDown />}>
               Jane Doe
