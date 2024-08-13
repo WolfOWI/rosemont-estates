@@ -112,7 +112,7 @@ function PropertyAccordion({ property }) {
             {/* Accordion Content */}
             <AccordionPanel p={0} w="73%" transition="all">
               {/* Size Section */}
-              <HStack bg="beige.M1" px={6} py={4} rounded="2xl" spacing={16} mt={4}>
+              <HStack bg="beige.M1" px={6} py={4} rounded="2xl" spacing={4} mt={4}>
                 <HStack w="full" spacing={4}>
                   <p className="font-bold min-w-fit">Total Floors</p>
                   <div className="bg-beige-0 rounded-2xl p-2 w-full text-center">X</div>

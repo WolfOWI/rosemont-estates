@@ -21,7 +21,7 @@ import SearchBar from "../components/input/SearchBar";
 import PopoverForm from "../components/input/PopoverForm";
 import RoomIconText from "../components/buildingblocks/RoomIconText";
 import FeatureIconText from "../components/buildingblocks/FeatureIconText";
-import RecentHouseCard from "../components/home/RecentHouseCard";
+import RecentHouseCard from "../components/house/RecentHouseCard";
 import familyImg from "../assets/images/familyAtHome.jpg";
 
 function HomePage() {
