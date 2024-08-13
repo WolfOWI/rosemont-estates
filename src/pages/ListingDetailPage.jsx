@@ -25,7 +25,6 @@ import remaxLogoColour from "../assets/logos/agencyLogos/remaxLogoColour.png";
 import seeffLogoColour from "../assets/logos/agencyLogos/seeffLogoColour.png";
 import tsungaiLogoColour from "../assets/logos/agencyLogos/tsungaiLogoColour.png";
 import adminLogoColour from "../assets/logos/agencyLogos/adminLogoColour.png";
-import ListingBadge from "../components/buildingblocks/ListingBadge.jsx";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock.jsx";
 
 function ListingDetailPage() {
@@ -64,10 +63,10 @@ function ListingDetailPage() {
               </HStack>
             </VStack>
             <HStack w="fit-content">
-              <ListingBadge type="floorSize" size="full" value="1205" />
-              <ListingBadge type="numFloors" size="full" value="5" />
-              <ListingBadge type="rooms" size="full" value="53" />
-              <ListingBadge type="lotSize" size="full" value="3200" />
+              <IconTextBlock type="floorSize" textHidden="true" value="1205" variant="beigeBadge" />
+              <IconTextBlock type="numFloors" textHidden="true" value="5" variant="beigeBadge" />
+              <IconTextBlock type="rooms" textHidden="true" value="53" variant="beigeBadge" />
+              <IconTextBlock type="lotSize" textHidden="true" value="3200" variant="beigeBadge" />
             </HStack>
           </div>
           {/* Price & Buttons (Left) */}

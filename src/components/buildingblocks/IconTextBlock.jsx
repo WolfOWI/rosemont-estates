@@ -32,9 +32,10 @@ import {
   ErrorOutline,
 } from "@mui/icons-material";
 
-function IconTextBlock({ type, value, variant }) {
+function IconTextBlock({ type, value, variant, textHidden }) {
   let icon = null;
   let text = "";
+  let m2Unit = false; // Show m² unit.
 
   // Icon Property Function (for different variants)
   const getIconProps = () => {
@@ -107,6 +108,7 @@ function IconTextBlock({ type, value, variant }) {
     case "floorSize":
       icon = <CropFreeOutlined {...getIconProps()} />;
       text = "Floor Size";
+      m2Unit = true;
       break;
     case "floors":
       icon = <StairsOutlined {...getIconProps()} />;
@@ -119,6 +121,7 @@ function IconTextBlock({ type, value, variant }) {
     case "lotSize":
       icon = <YardOutlined {...getIconProps()} />;
       text = "Lot Size";
+      m2Unit = true;
       break;
     case "toRent":
       icon = <CurrencyExchangeOutlined {...getIconProps()} />;
@@ -179,11 +182,20 @@ function IconTextBlock({ type, value, variant }) {
 
   return (
     <>
-      <HStack>
+      <HStack
+        bg={variant === "beigeBadge" ? "beige.M1" : "transparent"}
+        py={variant === "beigeBadge" ? 2 : 0}
+        px={variant === "beigeBadge" ? 4 : 0}
+        rounded={variant === "beigeBadge" ? "xl" : "none"}
+        w={variant === "beigeBadge" ? "full" : "auto"}
+        minW={variant === "beigeBadge" ? "fit-content" : "auto"}
+        justify={variant === "beigeBadge" ? "center" : "start"}
+      >
         {icon}
         <p>
           {value}
-          {value ? ` ${text}` : text}
+          {m2Unit && ` m²`}
+          {textHidden ? "" : ` ${text}`}
         </p>
       </HStack>
     </>

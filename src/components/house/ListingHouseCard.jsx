@@ -1,5 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import tempImg from "../../assets/images/familyAtHome.jpg";
+import IconTextBlock from "../buildingblocks/IconTextBlock";
 import {
   WifiOutlined,
   AcUnitOutlined,
@@ -25,7 +26,6 @@ import remaxLogoColour from "../../assets/logos/agencyLogos/remaxLogoColour.png"
 import seeffLogoColour from "../../assets/logos/agencyLogos/seeffLogoColour.png";
 import tsungaiLogoColour from "../../assets/logos/agencyLogos/tsungaiLogoColour.png";
 import adminLogoColour from "../../assets/logos/agencyLogos/adminLogoColour.png";
-import ListingBadge from "../buildingblocks/ListingBadge";
 
 function ListingHouseCard({ house }) {
   return (
@@ -69,11 +69,11 @@ function ListingHouseCard({ house }) {
           <h3 className="text-thorn-0 font-bold font-alt">{house.price}</h3>
           {/* Badges */}
           <HStack>
-            <ListingBadge type="floorSize" value={house.floorSize} />
-            <ListingBadge type="rooms" value={house.numRooms} />
-            <ListingBadge type="numFloors" value={house.numFloors} />
-            <ListingBadge type="bath" value={house.numBath} />
-            <ListingBadge type="garage" value={house.numGarage} />
+            <IconTextBlock type="floorSize" value={house.floorSize} variant="beigeBadge" />
+            <IconTextBlock type="rooms" value={house.numRooms} variant="beigeBadge" />
+            <IconTextBlock type="numFloors" value={house.numFloors} variant="beigeBadge" />
+            <IconTextBlock type="bath" value={house.numBath} variant="beigeBadge" />
+            <IconTextBlock type="garage" value={house.numGarage} variant="beigeBadge" />
           </HStack>
         </div>
       </div>
