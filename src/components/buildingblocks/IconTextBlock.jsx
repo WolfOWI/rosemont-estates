@@ -30,9 +30,12 @@ import {
   OutdoorGrillOutlined,
   FenceOutlined,
   ErrorOutline,
+  Person2Outlined,
+  PhoneOutlined,
+  EmailOutlined,
 } from "@mui/icons-material";
 
-function IconTextBlock({ type, value, variant, textHidden }) {
+function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
   let icon = null;
   let text = "";
   let m2Unit = false; // Show m² unit.
@@ -174,6 +177,20 @@ function IconTextBlock({ type, value, variant, textHidden }) {
       text = "Gated Community";
       break;
 
+    // User-related
+    case "name":
+      icon = <Person2Outlined {...getIconProps()} />;
+      text = "Name";
+      break;
+    case "phone":
+      icon = <PhoneOutlined {...getIconProps()} />;
+      text = "Phone Number";
+      break;
+    case "email":
+      icon = <EmailOutlined {...getIconProps()} />;
+      text = "Email Address";
+      break;
+
     default:
       icon = <ErrorOutline {...getIconProps()} />;
       text = "Icon & Text Not Found";
@@ -192,7 +209,7 @@ function IconTextBlock({ type, value, variant, textHidden }) {
         justify={variant === "beigeBadge" ? "center" : "start"}
       >
         {icon}
-        <p>
+        <p className={fontWeight ? "font-bold" : ""}>
           {value}
           {m2Unit && ` m²`}
           {textHidden ? "" : ` ${text}`}
