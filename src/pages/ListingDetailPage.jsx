@@ -32,7 +32,7 @@ function ListingDetailPage() {
     <>
       <Navbar />
       {/* Page Content */}
-      <div className="mt-4 mx-4 md:mx-8">
+      <div className="mt-4 mb-24 mx-4 md:mx-8">
         <IconButton as={Link} to="/listings" icon={<ArrowBack />} />
         {/* House Imagery */}
         <div className="mt-4">
@@ -86,12 +86,48 @@ function ListingDetailPage() {
           </div>
         </div>
         {/* Interior, Exterior & Features */}
-        <HStack mt={4}>
-          <div className="bg-beige-0 p-8 rounded-2xl flex flex-col">
+        <HStack mt={4} spacing={4} align="stretch">
+          <div className="bg-beige-0 p-8 rounded-2xl flex flex-col w-full h-full">
             <VStack align="start" spacing={4}>
               <h3>Interior</h3>
-              <IconTextBlock value="2" type="bed" variant="thornLrg" />
-              <IconTextBlock value="2" type="bed" variant="thornLrg" />
+              <VStack align="start" spacing={6}>
+                <IconTextBlock value="2" type="bed" variant="thornLrg" />
+                <IconTextBlock value="2" type="bath" variant="thornLrg" />
+                <IconTextBlock value="2" type="kitchen" variant="thornLrg" />
+                <IconTextBlock value="2" type="dining" variant="thornLrg" />
+                <IconTextBlock value="2" type="gym" variant="thornLrg" />
+                <IconTextBlock value="2" type="billiard" variant="thornLrg" />
+                <IconTextBlock value="2" type="basement" variant="thornLrg" />
+                <IconTextBlock value="2" type="garage" variant="thornLrg" />
+              </VStack>
+            </VStack>
+          </div>
+          <div className="bg-beige-0 p-8 rounded-2xl flex flex-col w-full">
+            <VStack align="start" spacing={4}>
+              <h3>Exterior</h3>
+              <VStack align="start" spacing={6}>
+                <IconTextBlock value="2" type="pool" variant="thornLrg" />
+                <IconTextBlock value="2" type="court" variant="thornLrg" />
+                <IconTextBlock value="2" type="deck" variant="thornLrg" />
+                <IconTextBlock value="2" type="flowerGard" variant="thornLrg" />
+                <IconTextBlock value="2" type="vegGard" variant="thornLrg" />
+                <IconTextBlock value="2" type="orchard" variant="thornLrg" />
+              </VStack>
+            </VStack>
+          </div>
+          <div className="bg-beige-0 p-8 rounded-2xl flex flex-col w-full ">
+            <VStack align="start" spacing={4}>
+              <h3>Features</h3>
+              <VStack align="start" spacing={6}>
+                <IconTextBlock type="internet" variant="thornLrg" />
+                <IconTextBlock type="airCon" variant="thornLrg" />
+                <IconTextBlock type="heating" variant="thornLrg" />
+                <IconTextBlock type="secSys" variant="thornLrg" />
+                <IconTextBlock type="solar" variant="thornLrg" />
+                <IconTextBlock type="gardServ" variant="thornLrg" />
+                <IconTextBlock type="outdoorLight" variant="thornLrg" />
+                <IconTextBlock type="gatedCommunity" variant="thornLrg" />
+              </VStack>
             </VStack>
           </div>
         </HStack>
