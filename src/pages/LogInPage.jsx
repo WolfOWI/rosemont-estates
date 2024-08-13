@@ -15,7 +15,6 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -32,35 +31,47 @@ function LogInPage() {
   // Alert Dialog
   const [alertIsOpen, setAlertIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [redirectUrl, setRedirectUrl] = useState(null); // Store the redirect URL
   const cancelRef = React.useRef();
-
-  const onClose = () => setAlertIsOpen(false);
 
   // Handle Log in (submit) button
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost/rosemont/backend/api/login.php", {
+    fetch("http://localhost/rosemont/backend/api/login.php", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         email: email,
         password: password,
         userType: userType,
-      })
-      .then((response) => {
-        // alert(response.data.message);
-        setAlertMessage(response.data.message);
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAlertMessage(data.message);
         setAlertIsOpen(true);
+        if (data.redirect) {
+          setRedirectUrl(data.redirect); // Store the redirect URL
+        }
       })
       .catch((error) => {
         setAlertMessage("An error occurred during login. Please try again. Error: " + error);
         setAlertIsOpen(true);
       });
   };
+  const onClose = () => {
+    setAlertIsOpen(false);
+    if (redirectUrl) {
+      window.location.href = redirectUrl; // Redirect after closing the alert
+    }
+  };
 
   return (
     <>
-      {/* TODO Delete Navbar Later */}
-      <Navbar />
       <div className="flex flex-col lg:flex-row-reverse justify-start w-full h-full bg-beige-0">
         {/* Rosemont Emblem Picture */}
         <div className="hidden sm:flex justify-center items-center h-52 lg:h-screen w-full lg:w-[45%] relative bg-thorn-M1 overflow-hidden">
@@ -125,6 +136,8 @@ function LogInPage() {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
+      {/* TODO Delete Navbar Later */}
+      <Navbar />
     </>
   );
 }

@@ -55,8 +55,6 @@ function SignUpPage() {
 
   return (
     <>
-      {/* TODO Delete Navbar Later */}
-      <Navbar />
       <div className="flex flex-col lg:flex-row justify-start w-full h-full bg-beige-0">
         {/* Rosemont Emblem Picture */}
         <div className="hidden sm:flex justify-center items-center h-52 lg:h-screen w-full lg:w-[45%] relative bg-thorn-M1 overflow-hidden">
@@ -148,6 +146,8 @@ function SignUpPage() {
           </Box>
         </div>
       </div>
+      {/* TODO Delete Navbar Later */}
+      <Navbar />
     </>
   );
 }

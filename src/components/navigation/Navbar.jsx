@@ -1,6 +1,4 @@
-// IMPORT
-// ---------------------------
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -20,9 +18,35 @@ import {
   LogoutOutlined,
 } from "@mui/icons-material";
 import NavLogo from "./NavLogo";
-// ---------------------------
 
 function Navbar({ transparent }) {
+  // Logged in user
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch session info from the server
+    fetch("http://localhost/rosemont/backend/api/getSession.php", {
+      method: "GET",
+      credentials: "include", // Include cookies in the request
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.sessionExists) {
+          setUser(data.sessionData);
+        }
+      });
+  }, []);
+
+  const handleLogout = () => {
+    fetch("http://localhost/rosemont/backend/api/logout.php", {
+      method: "POST",
+      credentials: "include", // Include cookies in the request
+    }).then(() => {
+      setUser(null); // Clear the user state
+      window.location.href = "/"; // Redirect to login page
+    });
+  };
+
   return (
     <Box px={4} bg={transparent ? "transparent" : "thorn.M2"} h={16}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
@@ -50,26 +74,39 @@ function Navbar({ transparent }) {
           </Button>
         </Flex>
 
-        <HStack spacing={2}>
-          <IconButton
-            as={Link}
-            to="/add"
-            variant="lightFilled"
-            icon={<AddHomeOutlined />}
-            minW={12}
-          />
-          <Menu>
-            <MenuButton as={Button} variant="lightOutline" rightIcon={<ArrowDropDown />}>
-              Jane Doe
-            </MenuButton>
-            <MenuList>
-              <MenuItem as={Link} to="/profile" icon={<AccountCircleOutlined />}>
-                Profile
-              </MenuItem>
-              <MenuItem icon={<LogoutOutlined />}>Log Out</MenuItem>
-            </MenuList>
-          </Menu>
-        </HStack>
+        {user ? (
+          <HStack spacing={2}>
+            <IconButton
+              as={Link}
+              to="/add"
+              variant="lightFilled"
+              icon={<AddHomeOutlined />}
+              minW={12}
+            />
+            <Menu>
+              <MenuButton as={Button} variant="lightOutline" rightIcon={<ArrowDropDown />}>
+                {user.firstName} {user.lastName}
+              </MenuButton>
+              <MenuList>
+                <MenuItem as={Link} to="/profile" icon={<AccountCircleOutlined />}>
+                  Profile
+                </MenuItem>
+                <MenuItem icon={<LogoutOutlined />} onClick={handleLogout}>
+                  Log Out
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
+        ) : (
+          <Flex>
+            <Button as={Link} to="/">
+              Log In
+            </Button>
+            <Button as={Link} to="/signup">
+              Sign Up
+            </Button>
+          </Flex>
+        )}
       </Flex>
     </Box>
   );

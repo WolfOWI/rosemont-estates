@@ -1,95 +1,78 @@
 <?php
-// Login Functionality
-
-// SETUP
-// -----------------------------------------
-// Enable error reporting
+// Setup error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-session_start(); // Start Session
-require '../config/config.php'; // Include the config file
+// Start the session
+session_start();
 
-// Allow CORS
-header("Access-Control-Allow-Origin: *"); 
+// Add CORS headers
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Content-Type: application/json; charset=UTF-8");
 
-// Handle preflight requests (CORS)
+// Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    // Allow preflight request
     http_response_code(204);
     exit;
 }
-// -----------------------------------------
 
+require "../config/config.php";
 
-// Decode JSON input
+// Decode the JSON input from the request
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Get values from the form
+// Get email, password, and userType from the request
 $email = $data['email'];
 $password = $data['password'];
 $userType = $data['userType'];
 
-// TODO Determine what kind of user wants to log in?
-
-// If form has been submitted (log in button press)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Standard user or agent entity?
     if ($userType === "user") {
-        // SQL: Find user by email
-        $sql = "SELECT * from user WHERE email = ?";
-        $userTypePlaceholder = "customer";
-    }
-    else if ($userType === "agent") {
-        // SQL: Find agent by email
-        $sql = "SELECT * from agent WHERE email = ?";
-        $userTypePlaceholder = "agency";
+        $sql = "SELECT * FROM user WHERE email = ?";
+    } else if ($userType === "agent") {
+        $sql = "SELECT * FROM agent WHERE email = ?";
     }
 
-    // Prepare SQL statement
     $stmt = $conn->prepare($sql);
-
-    // Add the values to the SQL statement
     $stmt->bind_param("s", $email);
-
-    // Execute SQL
     $stmt->execute();
-
-    // Store result 
     $result = $stmt->get_result();
 
-    // If user exists
-    if($result->num_rows > 0){
-
-        // Fetch person (user/agent) data
+    if ($result->num_rows > 0) {
         $person = $result->fetch_assoc();
+        if ($password == $person['password']) {
+            $_SESSION['user'] = [
+                'firstName' => $person['firstName'],
+                'lastName' => $person['lastName'],
+                'email' => $person['email'],
+                'userType' => $userType
+            ];
 
-        // If password matches
-        if($password === $person['password']){
+            $session_id = session_id();
 
-            // Store person information in session
-            $_SESSION['firstName'] = $person["firstName"];
+            echo json_encode([
+                "message" => "Welcome " . $person["firstName"] . " " . $person["lastName"],
+                "sessionSet" => isset($_SESSION['user']),
+                "sessionData" => $_SESSION['user'],
+                "sessionID" => $session_id,
+                "redirect" => "/home"
+            ]);
 
-            echo json_encode(["message" => "Welcome " . $person["firstName"] . " " . $person["lastName"]]);
+            error_log("Login.php - Session ID: " . $session_id);
+            error_log("Login.php - Session Data: " . print_r($_SESSION, true));
 
-            // TODO Redirect to home page
-            // header("Location: ../../src/pages/HomePage.jsx");
-
-            exit(); // Terminate the script to ensure redirection
         } else {
-            echo json_encode(["message" => "The username or password you have entered does not match our $userTypePlaceholder records. Please check your details and that you've selected the correct account type."]);
+            echo json_encode(["message" => "The username or password you have entered is incorrect."]);
         }
     } else {
-        echo json_encode(["message" => "The username or password you have entered does not match our $userTypePlaceholder records. Please check your details and that you've selected the correct account type."]);
+        echo json_encode(["message" => "No account found with the provided email."]);
     }
 
     $stmt->close();
     $conn->close();
 }
-
 ?>
