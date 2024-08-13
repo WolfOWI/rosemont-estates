@@ -102,7 +102,7 @@ function PropertyAccordion({ property }) {
                     <Button w="full" leftIcon={<CheckOutlined />}>
                       Approve
                     </Button>
-                    <Button w="full" leftIcon={<CloseOutlined />} variant="colorOutline">
+                    <Button w="full" leftIcon={<CloseOutlined />} variant="thornOutline">
                       Decline
                     </Button>
                   </VStack>

@@ -5,7 +5,6 @@ import RoomIconText from "../components/buildingblocks/RoomIconText";
 import FeatureIconText from "../components/buildingblocks/FeatureIconText";
 import React, { useState } from "react";
 import {
-  Container,
   VStack,
   HStack,
   FormControl,

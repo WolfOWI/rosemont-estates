@@ -39,7 +39,7 @@ const PopoverForm = ({ label, icon, title, children }) => {
         closeOnBlur={false}
       >
         <PopoverTrigger>
-          <Button leftIcon={icon} w="full" h={12} variant="colorOutline">
+          <Button leftIcon={icon} w="full" h={12} variant="thornOutline">
             {label}
           </Button>
         </PopoverTrigger>
@@ -51,7 +51,7 @@ const PopoverForm = ({ label, icon, title, children }) => {
             <PopoverBody>
               <VStack align="stretch">{children}</VStack>
               <HStack w="full" justify="end" mt={2}>
-                <Button variant="colorOutline" onClick={onClose}>
+                <Button variant="thornOutline" onClick={onClose}>
                   Reset
                 </Button>
                 <Button onClick={onClose}>Apply</Button>

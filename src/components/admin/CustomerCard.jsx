@@ -58,13 +58,13 @@ function CustomerCard({ type }) {
         </div>
         {/* Right Side (Buttons) */}
         <VStack minWidth="20%" justify="space-between">
-          <Button w="full" h={20} leftIcon={<EmailOutlined />} variant="colorfilled">
+          <Button w="full" h={20} leftIcon={<EmailOutlined />}>
             Email Customer
           </Button>
-          <Button w="full" h={14} leftIcon={markAsIcon} variant="colorOutline">
+          <Button w="full" h={14} leftIcon={markAsIcon} variant="thornOutline">
             {markAsText}
           </Button>
-          <Button w="full" h={14} leftIcon={<CloseOutlined />} variant="colorOutline">
+          <Button w="full" h={14} leftIcon={<CloseOutlined />} variant="thornOutline">
             Dismiss
           </Button>
         </VStack>

@@ -56,7 +56,7 @@ function CreateListingPage() {
               <h2 className="mt-2 ml-4">New Property</h2>
             </div>
             <HStack>
-              <Button variant="colorOutline" size="lg" mt={4} leftIcon={<DeleteForeverOutlined />}>
+              <Button variant="thornOutline" size="lg" mt={4} leftIcon={<DeleteForeverOutlined />}>
                 Clear
               </Button>
               <Button size="lg" mt={4} rightIcon={<CheckCircleOutlineOutlined />}>
