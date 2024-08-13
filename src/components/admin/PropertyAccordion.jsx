@@ -17,7 +17,7 @@ import { CheckOutlined, CloseOutlined } from "@mui/icons-material";
 // TODO Temporary Image Placeholder (Delete later)
 import tempImg from "../../assets/images/familyAtHome.jpg";
 import FeatureIconText from "../buildingblocks/FeatureIconText";
-import RoomIconText from "../buildingblocks/RoomIconText";
+import IconTextBlock from "../buildingblocks/IconTextBlock";
 import HomeInfoIconText from "../buildingblocks/HomeInfoIconText";
 
 function PropertyAccordion({ property }) {
@@ -140,7 +140,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="bed" />
+                      <IconTextBlock type="bed" />
                     </HStack>
                   </WrapItem>
                   {/* Bathrooms */}
@@ -149,7 +149,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="bath" />
+                      <IconTextBlock type="bath" />
                     </HStack>
                   </WrapItem>
                   {/* Kitchens */}
@@ -158,7 +158,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="kitchen" />
+                      <IconTextBlock type="kitchen" />
                     </HStack>
                   </WrapItem>
                   {/* Dining Rooms */}
@@ -167,7 +167,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="dining" />
+                      <IconTextBlock type="dining" />
                     </HStack>
                   </WrapItem>
                   {/* Gymnasiums */}
@@ -176,7 +176,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="gym" />
+                      <IconTextBlock type="gym" />
                     </HStack>
                   </WrapItem>
                   {/* Billiard Rooms */}
@@ -185,7 +185,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="billiard" />
+                      <IconTextBlock type="billiard" />
                     </HStack>
                   </WrapItem>
                   {/* Basements */}
@@ -194,7 +194,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="basement" />
+                      <IconTextBlock type="basement" />
                     </HStack>
                   </WrapItem>
                   {/* Garages */}
@@ -203,7 +203,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="garage" />
+                      <IconTextBlock type="garage" />
                     </HStack>
                   </WrapItem>
                 </Wrap>
@@ -218,7 +218,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="pool" />
+                      <IconTextBlock type="pool" />
                     </HStack>
                   </WrapItem>
                   {/* Sports Courts */}
@@ -227,7 +227,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="court" />
+                      <IconTextBlock type="court" />
                     </HStack>
                   </WrapItem>
                   {/* Decks */}
@@ -236,7 +236,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="deck" />
+                      <IconTextBlock type="deck" />
                     </HStack>
                   </WrapItem>
                   {/* Flower Gardens */}
@@ -245,7 +245,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="flowerGard" />
+                      <IconTextBlock type="flowerGard" />
                     </HStack>
                   </WrapItem>
                   {/* Veg Gardens */}
@@ -254,7 +254,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="vegGard" />
+                      <IconTextBlock type="vegGard" />
                     </HStack>
                   </WrapItem>
                   {/* Orchards */}
@@ -263,7 +263,7 @@ function PropertyAccordion({ property }) {
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
                         X
                       </div>
-                      <RoomIconText type="orchard" />
+                      <IconTextBlock type="orchard" />
                     </HStack>
                   </WrapItem>
                 </Wrap>

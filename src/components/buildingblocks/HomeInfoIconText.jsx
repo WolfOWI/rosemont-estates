@@ -53,8 +53,8 @@ function HomeInfoIconText({ type, value }) {
       <HStack>
         {icon}
         <p>
-          {value ? `${value} ` : ""}
-          {text}
+          {value}
+          {value ? ` ${text}` : text}
         </p>
       </HStack>
     </>

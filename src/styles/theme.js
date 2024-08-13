@@ -32,11 +32,11 @@ const Button = {
       bg: "transparent",
       color: "rosered.0",
       border: "2px solid",
-      borderColor: "thorn.0",
+      borderColor: "rosered.0",
       _hover: {
         color: "beige.0",
-        bg: "thorn.P2",
-        borderColor: "thorn.P2",
+        bg: "rosered.0",
+        borderColor: "rosered.P2",
       },
     },
     lightFilled: {

@@ -33,20 +33,20 @@ function ListingBadge({ type, value, size }) {
   switch (type) {
     case "floorSize":
       icon = <CropFreeOutlined />;
-      text = "Floor Size";
+      text = "floor size";
       m2Unit = true;
       break;
     case "numFloors":
       icon = <StairsOutlined />;
-      text = "Floors";
+      text = "floors";
       break;
     case "rooms":
       icon = <CabinOutlined />;
-      text = "Rooms";
+      text = "rooms";
       break;
     case "lotSize":
       icon = <YardOutlined />;
-      text = "Lot Size";
+      text = "lot size";
       m2Unit = true;
       break;
     case "toRent":

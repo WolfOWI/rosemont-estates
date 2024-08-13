@@ -1,7 +1,7 @@
 import Navbar from "../components/navigation/Navbar";
 import SearchBar from "../components/input/SearchBar";
 import PopoverForm from "../components/input/PopoverForm";
-import RoomIconText from "../components/buildingblocks/RoomIconText";
+import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 import FeatureIconText from "../components/buildingblocks/FeatureIconText";
 import React, { useState } from "react";
 import {
@@ -132,35 +132,35 @@ function ListingsPage() {
                 <VStack align="start">
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="bed" />
+                    <IconTextBlock type="bed" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="bath" />
+                    <IconTextBlock type="bath" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="kitchen" />
+                    <IconTextBlock type="kitchen" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="dining" />
+                    <IconTextBlock type="dining" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="gym" />
+                    <IconTextBlock type="gym" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="billiard" />
+                    <IconTextBlock type="billiard" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="basement" />
+                    <IconTextBlock type="basement" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="garage" />
+                    <IconTextBlock type="garage" />
                   </HStack>
                 </VStack>
               </FormControl>
@@ -172,27 +172,27 @@ function ListingsPage() {
                 <VStack align="start">
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="pool" />
+                    <IconTextBlock type="pool" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="court" />
+                    <IconTextBlock type="court" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="deck" />
+                    <IconTextBlock type="deck" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="flowerGard" />
+                    <IconTextBlock type="flowerGard" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="vegGard" />
+                    <IconTextBlock type="vegGard" />
                   </HStack>
                   <HStack>
                     <Input type="number" w={10} p={0} textAlign="center" />
-                    <RoomIconText type="orchard" />
+                    <IconTextBlock type="orchard" />
                   </HStack>
                 </VStack>
               </FormControl>
