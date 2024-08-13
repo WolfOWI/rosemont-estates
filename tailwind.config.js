@@ -17,7 +17,11 @@ module.exports = {
           M3: "#aaa79e",
         },
         rosered: {
+          P2: "#e4afaf",
+          P1: "#db9595",
           0: "#D27A7A",
+          M1: "#a86262",
+          M2: "#7e4949",
         },
         thorn: {
           P3: "#88a9a3",

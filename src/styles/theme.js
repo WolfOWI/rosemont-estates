@@ -6,7 +6,8 @@ const Button = {
     borderRadius: "xl",
   },
   variants: {
-    colorfilled: {
+    thornFilled: {
+      height: 12,
       bg: "thorn.0",
       color: "beige.0",
       _hover: {
@@ -14,7 +15,8 @@ const Button = {
         color: "beige.0",
       },
     },
-    colorOutline: {
+    thornOutline: {
+      height: 12,
       bg: "transparent",
       color: "thorn.0",
       border: "2px solid",
@@ -25,7 +27,20 @@ const Button = {
         borderColor: "thorn.P2",
       },
     },
+    roseOutline: {
+      height: 12,
+      bg: "transparent",
+      color: "rosered.0",
+      border: "2px solid",
+      borderColor: "thorn.0",
+      _hover: {
+        color: "beige.0",
+        bg: "thorn.P2",
+        borderColor: "thorn.P2",
+      },
+    },
     lightFilled: {
+      height: 12,
       bg: "beige.0",
       color: "thorn.0",
       _hover: {
@@ -34,6 +49,7 @@ const Button = {
       },
     },
     lightOutline: {
+      height: 12,
       bg: "transparent",
       color: "beige.0",
       border: "2px solid",
@@ -44,6 +60,7 @@ const Button = {
       },
     },
     tertiary: {
+      height: 12,
       bg: "transparent",
       color: "thorn.0",
       border: "none",
@@ -52,6 +69,7 @@ const Button = {
       },
     },
     tertiaryBeige: {
+      height: 12,
       bg: "transparent",
       color: "beige.0",
       fontWeight: "normal",
@@ -63,7 +81,7 @@ const Button = {
     },
   },
   defaultProps: {
-    variant: "colorfilled",
+    variant: "thornFilled",
   },
 };
 
@@ -322,7 +340,11 @@ const theme = extendTheme({
       M3: "#aaa79e",
     },
     rosered: {
+      P2: "#e4afaf",
+      P1: "#db9595",
       0: "#D27A7A",
+      M1: "#a86262",
+      M2: "#7e4949",
     },
     thorn: {
       P3: "#88a9a3",
