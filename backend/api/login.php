@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $person = $result->fetch_assoc();
         if ($password == $person['password']) {
+            // Store common session data
             $_SESSION['user'] = [
                 'firstName' => $person['firstName'],
                 'lastName' => $person['lastName'],
@@ -56,17 +57,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'userType' => $userType
             ];
 
-            $session_id = session_id();
+            if ($userType === "user") {
+                echo json_encode([
+                    "message" => "Welcome " . $person["firstName"] . " " . $person["lastName"],
+                    "sessionSet" => isset($_SESSION['user']),
+                    "sessionData" => $_SESSION['user'],
+                    "redirect" => "/home" // Redirect for normal users
+                ]);
+            } else if ($userType === "agent") {
+                $_SESSION['user']['realEstateId'] = $person['realEstateId'];
+                echo json_encode([
+                    "message" => "Welcome " . $person["firstName"] . " " . $person["lastName"],
+                    "sessionSet" => isset($_SESSION['user']),
+                    "sessionData" => $_SESSION['user'],
+                    "redirect" => "/admin-listings" // Redirect for agents
+                ]);
+            }
 
-            echo json_encode([
-                "message" => "Welcome " . $person["firstName"] . " " . $person["lastName"],
-                "sessionSet" => isset($_SESSION['user']),
-                "sessionData" => $_SESSION['user'],
-                "sessionID" => $session_id,
-                "redirect" => "/home"
-            ]);
-
-            error_log("Login.php - Session ID: " . $session_id);
+            error_log("Login.php - Session ID: " . session_id());
             error_log("Login.php - Session Data: " . print_r($_SESSION, true));
 
         } else {
