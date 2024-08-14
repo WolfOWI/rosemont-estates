@@ -1,4 +1,6 @@
 <?php
+// SETUP
+// -------------------------------------------------
 // Setup error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -19,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(204);
     exit;
 }
+// -------------------------------------------------
 
 require "../config/config.php";
 
@@ -48,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user'] = [
                 'firstName' => $person['firstName'],
                 'lastName' => $person['lastName'],
+                'phone' => $person['phone'],
                 'email' => $person['email'],
                 'userType' => $userType
             ];

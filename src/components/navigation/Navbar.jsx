@@ -98,14 +98,14 @@ function Navbar({ transparent }) {
             </Menu>
           </HStack>
         ) : (
-          <Flex>
-            <Button as={Link} to="/">
+          <HStack>
+            <Button as={Link} to="/" variant="lightFilled">
               Log In
             </Button>
-            <Button as={Link} to="/signup">
+            <Button as={Link} to="/signup" variant="lightOutline">
               Sign Up
             </Button>
-          </Flex>
+          </HStack>
         )}
       </Flex>
     </Box>

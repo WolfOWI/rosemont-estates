@@ -21,8 +21,36 @@ import {
 } from "@mui/icons-material";
 
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
+import { useState, useEffect } from "react";
 
 function ProfilePage() {
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    // Fetch session info from the server
+    fetch("http://localhost/rosemont/backend/api/getSession.php", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.sessionExists) {
+          setUser(data.sessionData);
+        }
+      });
+  }, []);
+
+  // Log out function
+  const handleLogout = () => {
+    fetch("http://localhost/rosemont/backend/api/logout.php", {
+      method: "POST",
+      credentials: "include", // Include cookies in the request
+    }).then(() => {
+      setUser(null); // Clear the user state
+      window.location.href = "/"; // Redirect to login page
+    });
+  };
+
   return (
     <>
       <Navbar />
@@ -51,21 +79,23 @@ function ProfilePage() {
                   <div className="w-[50%]">
                     <IconTextBlock type="name" fontWeight={"bold"} />
                   </div>
-                  <p>Jane Doe</p>
+                  <p>{`${user.firstName} ${user.lastName}`}</p>
                 </HStack>
                 <HStack w="full">
                   <div className="w-[50%]">
                     <IconTextBlock type="phone" fontWeight={"bold"} />
                   </div>
-                  <p>0924341202</p>
+                  <p>{user.phone}</p>
                 </HStack>
                 <HStack w="full">
                   <div className="w-[50%]">
                     <IconTextBlock type="email" fontWeight={"bold"} />
                   </div>
-                  <p>jane@gmail.com</p>
+                  <p>{user.email}</p>
                 </HStack>
-                <Button leftIcon={<LogoutOutlined />}>Log Out</Button>
+                <Button leftIcon={<LogoutOutlined />} onClick={handleLogout}>
+                  Log Out
+                </Button>
               </VStack>
             </div>
             {/* Submitted Properties  */}
