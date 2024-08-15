@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
   Box,
   Flex,
@@ -33,24 +32,36 @@ function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const handlePasswordVisibility = () => setShowPassword(!showPassword);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost/rosemont/backend/api/signup.php", {
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        email: email,
-        password: password,
-        userType: userType,
-      })
-      .then((response) => {
-        alert(response.data.message);
-      })
-      .catch((error) => {
-        console.log("Sign Up Error: ", error);
+    try {
+      const response = await fetch("http://localhost/rosemont/backend/api/auth/signup.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          email: email,
+          password: password,
+          userType: userType,
+        }),
+        credentials: "include", // Ensures cookies are included in the request
       });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+      } else {
+        alert(`Sign Up Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.log("Sign Up Error: ", error);
+    }
   };
 
   return (
