@@ -2,7 +2,8 @@ import Navbar from "../components/navigation/Navbar";
 import SearchBar from "../components/input/SearchBar";
 import PopoverForm from "../components/input/PopoverForm";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchAllHouses } from "../services/houseService";
 import {
   VStack,
   HStack,
@@ -22,6 +23,24 @@ import { PriceCheckOutlined, BedOutlined, HouseOutlined, StarOutline } from "@mu
 import ListingHouseCard from "../components/house/ListingHouseCard";
 
 function ListingsPage() {
+  // Houses in database
+  const [houses, setHouses] = useState([]);
+
+  useEffect(() => {
+    async function loadHouses() {
+      try {
+        const response = await fetchAllHouses();
+        setHouses(response);
+      } catch (error) {
+        console.log("Error fetching houses: ", error);
+      }
+    }
+
+    loadHouses();
+  }, []);
+
+  // Price Filter
+  // ----------------------------------------------------
   const [priceRange, setPriceRange] = useState([0, 150]);
 
   const handleSliderChange = (value) => {
@@ -37,6 +56,7 @@ function ListingsPage() {
     const value = parseInt(valueString, 10);
     setPriceRange([priceRange[0], value]);
   };
+  // ----------------------------------------------------
 
   // TODO Temporary Home
   const propertyA = {
