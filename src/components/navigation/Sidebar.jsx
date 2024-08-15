@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { fetchAllAgencies } from "../../services/agencyService";
+import { getSession } from "../../services/authService";
 import {
   Button,
   Modal,
@@ -22,16 +24,7 @@ import {
   WarningRounded,
 } from "@mui/icons-material";
 import rm_emblem from "../../assets/logos/rosemont_emblem.svg";
-
-// Real Estate Beige Logos
-import aidaLogoBeige from "../../assets/logos/agencyLogos/aidaLogoBeige.png";
-import engelLogoBeige from "../../assets/logos/agencyLogos/engelLogoBeige.png";
-import pamLogoBeige from "../../assets/logos/agencyLogos/pamLogoBeige.png";
-import rawsonLogoBeige from "../../assets/logos/agencyLogos/rawsonLogoBeige.png";
-import realnetLogoBeige from "../../assets/logos/agencyLogos/realnetLogoBeige.png";
-import remaxLogoBeige from "../../assets/logos/agencyLogos/remaxLogoBeige.png";
-import seeffLogoBeige from "../../assets/logos/agencyLogos/seeffLogoBeige.png";
-import tsungaiLogoBeige from "../../assets/logos/agencyLogos/tsungaiLogoBeige.png";
+import logoMap from "../../utils/logoMap";
 
 // Real Estate Colour Logos
 import aidaLogoColour from "../../assets/logos/agencyLogos/aidaLogoColour.png";
@@ -50,33 +43,62 @@ function Sidebar() {
   // Logged in user
   const [user, setUser] = useState(null);
 
+  // Agencies
+  const [agency, setAgency] = useState("");
+  const [agencies, setAgencies] = useState([]);
+
+  // Fetch logged in user
   useEffect(() => {
-    // Fetch session info from the server
-    fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
-      method: "GET",
-      credentials: "include", // Include cookies in the request
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    async function fetchSessionData() {
+      try {
+        const data = await getSession();
         if (data.sessionExists) {
           setUser(data.sessionData);
         }
-      });
+      } catch (error) {
+        console.error("Failed to fetch session data:", error);
+      }
+    }
+
+    fetchSessionData();
   }, []);
+
+  // Fetch agencies & logged in user's agency
+  useEffect(() => {
+    // If user agency is not null
+    if (user && user.realEstateId) {
+      async function loadAgencies() {
+        try {
+          const agencies = await fetchAllAgencies();
+          setAgencies(agencies);
+          // console.log(user.realEstateId);
+          // console.log(agencies);
+          const foundAgency = agencies.find(
+            (a) => parseInt(a.realEstateId) === parseInt(user.realEstateId)
+          );
+          setAgency(foundAgency);
+          // console.log(foundAgency);
+        } catch (error) {
+          console.log("Error fetching agencies: ", error);
+        }
+      }
+      loadAgencies();
+    }
+  }, [user]);
 
   const handleLogout = () => {
     fetch("http://localhost/rosemont/backend/api/auth/logout.php", {
       method: "POST",
-      credentials: "include", // Include cookies in the request
+      credentials: "include",
     }).then(() => {
-      setUser(null); // Clear the user state
-      window.location.href = "/"; // Redirect to login page
+      setUser(null);
+      window.location.href = "/";
     });
   };
 
   return (
     <>
-      {user ? (
+      {user && agency ? (
         <div className="fixed flex flex-col items-center justify-between bg-thorn-M1 w-64 px-4 pt-4 pb-8 h-full">
           <img src={rm_emblem} alt="rosemont emblem" className="w-[85%]" />
           <div className="flex flex-col items-start w-full mb-16">
@@ -106,8 +128,7 @@ function Sidebar() {
             </Button>
           </div>
           <div className="flex flex-col items-center w-full">
-            <p className="text-beige-0 mb-2">{`${user.firstName} ${user.lastName} ${user.realEstateId}`}</p>
-            {/* TODO Change agency based on logged in agent */}
+            <p className="text-beige-0 mb-2">{`${user.firstName} ${user.lastName}`}</p>
 
             {user.realEstateId === null ? (
               <Button w="full" py={8} leftIcon={<WarningRounded />} onClick={onOpen}>
@@ -115,12 +136,9 @@ function Sidebar() {
               </Button>
             ) : (
               <Button w="full" h="fit-content" py={4} onClick={onOpen}>
-                <img src={rawsonLogoBeige} alt="estate agency logo" className="w-[80%]" />
+                <img src={logoMap[agency.logoBeige]} alt={agency.logoBeige} className="w-[80%]" />
               </Button>
             )}
-            {/* <Button w="full" py={8} leftIcon={<ShieldOutlined />}>
-            Admin
-          </Button> */}
 
             <Button
               w="full"
@@ -136,7 +154,6 @@ function Sidebar() {
       ) : (
         <div>Loading</div>
       )}
-      {/* Real Estate Agency Picker Modal */}
       <Modal isOpen={isOpen} onClose={onClose} size="2xl">
         <ModalOverlay />
         <ModalContent>
