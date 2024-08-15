@@ -35,9 +35,9 @@ $userType = $data['userType'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($userType === "user") {
-        $sql = "SELECT * FROM user WHERE email = ?";
+        $sql = "SELECT userId, firstName, lastName, phone, email, password FROM user WHERE email = ?";
     } else if ($userType === "agent") {
-        $sql = "SELECT * FROM agent WHERE email = ?";
+        $sql = "SELECT agentId, realEstateId, firstName, lastName, phone, email, password FROM agent WHERE email = ?";
     }
 
     $stmt = $conn->prepare($sql);
@@ -58,6 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ];
 
             if ($userType === "user") {
+                // Additional fields for normal users
+                $_SESSION['user']['userId'] = $person['userId'];
                 echo json_encode([
                     "message" => "Welcome " . $person["firstName"] . " " . $person["lastName"],
                     "sessionSet" => isset($_SESSION['user']),
@@ -65,6 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     "redirect" => "/home" // Redirect for normal users
                 ]);
             } else if ($userType === "agent") {
+                // Additional fields for agents
+                $_SESSION['user']['agentId'] = $person['agentId'];
                 $_SESSION['user']['realEstateId'] = $person['realEstateId'];
                 echo json_encode([
                     "message" => "Welcome " . $person["firstName"] . " " . $person["lastName"],

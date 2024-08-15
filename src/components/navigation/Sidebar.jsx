@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchAllAgencies } from "../../services/agencyService";
 import { getSession } from "../../services/authService";
+import { updateAgent } from "../../services/agentService";
 import {
   Button,
   Modal,
@@ -42,12 +43,12 @@ function Sidebar() {
 
   // Logged in user
   const [user, setUser] = useState(null);
-
-  // Agencies
+  // User's Agency
   const [agency, setAgency] = useState("");
-  const [agencies, setAgencies] = useState([]);
 
-  // Fetch logged in user
+  // ON PAGE LOAD
+  // -------------------------------------------
+  // Fetch logged in user (on page load)
   useEffect(() => {
     async function fetchSessionData() {
       try {
@@ -59,18 +60,16 @@ function Sidebar() {
         console.error("Failed to fetch session data:", error);
       }
     }
-
     fetchSessionData();
   }, []);
 
-  // Fetch agencies & logged in user's agency
+  // Fetch agencies (after user details)
   useEffect(() => {
     // If user agency is not null
     if (user && user.realEstateId) {
       async function loadAgencies() {
         try {
           const agencies = await fetchAllAgencies();
-          setAgencies(agencies);
           // console.log(user.realEstateId);
           // console.log(agencies);
           const foundAgency = agencies.find(
@@ -85,7 +84,10 @@ function Sidebar() {
       loadAgencies();
     }
   }, [user]);
+  // -------------------------------------------
 
+  // HANDLERS
+  // -------------------------------------------
   const handleLogout = () => {
     fetch("http://localhost/rosemont/backend/api/auth/logout.php", {
       method: "POST",
@@ -96,9 +98,21 @@ function Sidebar() {
     });
   };
 
+  // Changing Real Estate Agency of Agent
+  const handleUpdateRealEstate = async (updatedDetails) => {
+    try {
+      const response = await updateAgent(updatedDetails);
+      setUser(response.sessionData);
+    } catch (error) {
+      console.log("Failed to update real estate agency: ", error);
+    }
+    onClose(); // Close Modal
+  };
+  // -------------------------------------------
+
   return (
     <>
-      {user && agency ? (
+      {user ? (
         <div className="fixed flex flex-col items-center justify-between bg-thorn-M1 w-64 px-4 pt-4 pb-8 h-full">
           <img src={rm_emblem} alt="rosemont emblem" className="w-[85%]" />
           <div className="flex flex-col items-start w-full mb-16">
@@ -154,6 +168,7 @@ function Sidebar() {
       ) : (
         <div>Loading</div>
       )}
+      {/* Real Estate Selection Modal */}
       <Modal isOpen={isOpen} onClose={onClose} size="2xl">
         <ModalOverlay />
         <ModalContent>
@@ -162,35 +177,98 @@ function Sidebar() {
           <ModalBody>
             <VStack>
               <HStack>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 2 });
+                  }}
+                >
                   <img src={aidaLogoColour} alt="aida" className="w-[80%]" />
                 </Button>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 3 });
+                  }}
+                >
                   <img src={engelLogoColour} alt="engel & volkers" className="w-[80%]" />
                 </Button>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 4 });
+                  }}
+                >
                   <img src={pamLogoColour} alt="pam golding" className="w-[80%]" />
                 </Button>
               </HStack>
               <HStack>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 5 });
+                  }}
+                >
                   <img src={rawsonLogoColour} alt="rawson" className="w-[80%]" />
                 </Button>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 6 });
+                  }}
+                >
                   <img src={realnetLogoColour} alt="realnet" className="w-[80%]" />
                 </Button>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 7 });
+                  }}
+                >
                   <img src={remaxLogoColour} alt="remax" className="w-[80%]" />
                 </Button>
               </HStack>
               <HStack>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 8 });
+                  }}
+                >
                   <img src={seeffLogoColour} alt="seeff" className="w-[80%]" />
                 </Button>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 9 });
+                  }}
+                >
                   <img src={tsungaiLogoColour} alt="tsungai united" className="w-[80%]" />
                 </Button>
-                <Button h="fit-content" py={4} variant="lightFilled">
+                <Button
+                  h="fit-content"
+                  py={4}
+                  variant="lightFilled"
+                  onClick={() => {
+                    handleUpdateRealEstate({ realEstateId: 1 });
+                  }}
+                >
                   <img src={adminLogoColour} alt="admin" className="w-[80%]" />
                 </Button>
               </HStack>
