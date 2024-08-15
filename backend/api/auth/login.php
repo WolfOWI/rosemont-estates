@@ -9,6 +9,8 @@ error_reporting(E_ALL);
 // Start the session
 session_start();
 
+require "../../config/config.php";
+
 // Add CORS headers
 header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Credentials: true");
@@ -22,8 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 // -------------------------------------------------
-
-require "../../config/config.php";
 
 // Decode the JSON input from the request
 $data = json_decode(file_get_contents("php://input"), true);

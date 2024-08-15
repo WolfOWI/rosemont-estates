@@ -13,6 +13,12 @@ import {
   VStack,
   Button,
   IconButton,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { VisibilityOutlined, VisibilityOffOutlined } from "@mui/icons-material";
 import Navbar from "../components/navigation/Navbar";
@@ -27,6 +33,12 @@ function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
+
+  // Alert Dialog
+  const [alertIsOpen, setAlertIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [redirectUrl, setRedirectUrl] = useState(null); // Store the redirect URL
+  const cancelRef = React.useRef();
 
   // Password Visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -49,18 +61,31 @@ function SignUpPage() {
           password: password,
           userType: userType,
         }),
-        credentials: "include", // Ensures cookies are included in the request
+        credentials: "include",
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        alert(data.message);
+        setAlertMessage(data.message);
+        setAlertIsOpen(true);
+        if (data.redirect) {
+          setRedirectUrl(data.redirect); // Store the redirect URL
+        }
       } else {
-        alert(`Sign Up Error: ${data.message}`);
+        setAlertMessage(`Sign Up Error: ${data.message}`);
+        setAlertIsOpen(true);
       }
     } catch (error) {
-      console.log("Sign Up Error: ", error);
+      setAlertMessage("An error occurred during login. Please try again. Error: " + error);
+      setAlertIsOpen(true);
+    }
+  };
+
+  const onClose = () => {
+    setAlertIsOpen(false);
+    if (redirectUrl) {
+      window.location.href = redirectUrl; // Redirect after closing the alert
     }
   };
 
@@ -157,6 +182,23 @@ function SignUpPage() {
           </Box>
         </div>
       </div>
+      <AlertDialog isOpen={alertIsOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Sign Up Message
+            </AlertDialogHeader>
+
+            <AlertDialogBody>{alertMessage}</AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Ok
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       {/* TODO Delete Navbar Later */}
       <Navbar />
     </>

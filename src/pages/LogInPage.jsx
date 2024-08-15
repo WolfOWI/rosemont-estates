@@ -62,6 +62,7 @@ function LogInPage() {
         setAlertIsOpen(true);
       });
   };
+
   const onClose = () => {
     setAlertIsOpen(false);
     if (redirectUrl) {
@@ -118,6 +119,7 @@ function LogInPage() {
           </Box>
         </div>
       </div>
+      {/* Log in Alert Box */}
       <AlertDialog isOpen={alertIsOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>
           <AlertDialogContent>
