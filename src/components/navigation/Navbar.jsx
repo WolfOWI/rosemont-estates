@@ -25,7 +25,7 @@ function Navbar({ transparent }) {
 
   useEffect(() => {
     // Fetch session info from the server
-    fetch("http://localhost/rosemont/backend/api/getSession.php", {
+    fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
       method: "GET",
       credentials: "include", // Include cookies in the request
     })
@@ -38,7 +38,7 @@ function Navbar({ transparent }) {
   }, []);
 
   const handleLogout = () => {
-    fetch("http://localhost/rosemont/backend/api/logout.php", {
+    fetch("http://localhost/rosemont/backend/api/auth/logout.php", {
       method: "POST",
       credentials: "include", // Include cookies in the request
     }).then(() => {

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 // -------------------------------------------------
 
-require "../config/config.php";
+require "../../config/config.php";
 
 // Decode the JSON input from the request
 $data = json_decode(file_get_contents("php://input"), true);

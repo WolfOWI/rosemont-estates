@@ -16,7 +16,6 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
-import axios from "axios";
 
 // TODO Delete Later (Temporary)
 import Navbar from "../components/navigation/Navbar";
@@ -38,7 +37,7 @@ function LogInPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost/rosemont/backend/api/login.php", {
+    fetch("http://localhost/rosemont/backend/api/auth/login.php", {
       method: "POST",
       credentials: "include",
       headers: {

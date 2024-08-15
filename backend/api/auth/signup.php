@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 session_start(); // Start the session
 
-require '../config/config.php'; // Include the config file
+require '../../config/config.php'; // Include the config file
 
 // Add CORS headers
 header("Access-Control-Allow-Origin: http://localhost:3000");

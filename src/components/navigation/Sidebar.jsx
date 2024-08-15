@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -46,49 +47,95 @@ import adminLogoColour from "../../assets/logos/agencyLogos/adminLogoColour.png"
 function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // Logged in user
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch session info from the server
+    fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
+      method: "GET",
+      credentials: "include", // Include cookies in the request
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.sessionExists) {
+          setUser(data.sessionData);
+        }
+      });
+  }, []);
+
+  const handleLogout = () => {
+    fetch("http://localhost/rosemont/backend/api/auth/logout.php", {
+      method: "POST",
+      credentials: "include", // Include cookies in the request
+    }).then(() => {
+      setUser(null); // Clear the user state
+      window.location.href = "/"; // Redirect to login page
+    });
+  };
+
   return (
     <>
-      <div className="fixed flex flex-col items-center justify-between bg-thorn-M1 w-64 px-4 pt-4 pb-8 h-full">
-        <img src={rm_emblem} alt="rosemont emblem" className="w-[85%]" />
-        <div className="flex flex-col items-start w-full mb-16">
-          <Button
-            as={Link}
-            to="/admin-listings"
-            variant="tertiaryBeige"
-            leftIcon={<GiteOutlined />}
-          >
-            New Homes
-          </Button>
-          <Button as={Link} to="/admin-buyers" variant="tertiaryBeige" leftIcon={<SellOutlined />}>
-            Buyers
-          </Button>
-          <Button
-            as={Link}
-            to="/admin-tenants"
-            variant="tertiaryBeige"
-            leftIcon={<CurrencyExchangeOutlined />}
-          >
-            Tenants
-          </Button>
-        </div>
-        <div className="flex flex-col items-center w-full">
-          {/* TODO Populate name based on logged in session */}
-          <p className="text-beige-0 mb-2">Alex Anderson</p>
-          {/* TODO Change agency based on logged in agent */}
-          {/* <Button w="full" py={8} leftIcon={<ShieldOutlined />}>
+      {user ? (
+        <div className="fixed flex flex-col items-center justify-between bg-thorn-M1 w-64 px-4 pt-4 pb-8 h-full">
+          <img src={rm_emblem} alt="rosemont emblem" className="w-[85%]" />
+          <div className="flex flex-col items-start w-full mb-16">
+            <Button
+              as={Link}
+              to="/admin-listings"
+              variant="tertiaryBeige"
+              leftIcon={<GiteOutlined />}
+            >
+              New Homes
+            </Button>
+            <Button
+              as={Link}
+              to="/admin-buyers"
+              variant="tertiaryBeige"
+              leftIcon={<SellOutlined />}
+            >
+              Buyers
+            </Button>
+            <Button
+              as={Link}
+              to="/admin-tenants"
+              variant="tertiaryBeige"
+              leftIcon={<CurrencyExchangeOutlined />}
+            >
+              Tenants
+            </Button>
+          </div>
+          <div className="flex flex-col items-center w-full">
+            <p className="text-beige-0 mb-2">{`${user.firstName} ${user.lastName} ${user.realEstateId}`}</p>
+            {/* TODO Change agency based on logged in agent */}
+
+            {user.realEstateId === null ? (
+              <Button w="full" py={8} leftIcon={<WarningRounded />} onClick={onOpen}>
+                No Agency
+              </Button>
+            ) : (
+              <Button w="full" h="fit-content" py={4} onClick={onOpen}>
+                <img src={rawsonLogoBeige} alt="estate agency logo" className="w-[80%]" />
+              </Button>
+            )}
+            {/* <Button w="full" py={8} leftIcon={<ShieldOutlined />}>
             Admin
           </Button> */}
-          {/* <Button w="full" py={8} leftIcon={<WarningRounded />}>
-            No Agency
-          </Button> */}
-          <Button w="full" h="fit-content" py={4} onClick={onOpen}>
-            <img src={rawsonLogoBeige} alt="estate agency logo" className="w-[80%]" />
-          </Button>
-          <Button w="full" variant="lightOutline" leftIcon={<LogoutOutlined />} mt={4}>
-            Log Out
-          </Button>
+
+            <Button
+              w="full"
+              variant="lightOutline"
+              leftIcon={<LogoutOutlined />}
+              mt={4}
+              onClick={handleLogout}
+            >
+              Log Out
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>Loading</div>
+      )}
       {/* Real Estate Agency Picker Modal */}
       <Modal isOpen={isOpen} onClose={onClose} size="2xl">
         <ModalOverlay />
