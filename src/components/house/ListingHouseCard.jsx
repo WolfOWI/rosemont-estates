@@ -1,6 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import tempImg from "../../assets/images/familyAtHome.jpg";
 import IconTextBlock from "../buildingblocks/IconTextBlock";
+import { houseCatchphrase } from "../../utils/houseCatchphrase";
 import {
   WifiOutlined,
   AcUnitOutlined,
@@ -49,7 +50,7 @@ function ListingHouseCard({ house }) {
           <div className="flex items-start justify-between">
             <div>
               <h3>{house.title}</h3>
-              <p className="mb-2">{house.catchphrase}</p>
+              <p className="mb-2">{houseCatchphrase(house)}</p>
               <HStack>
                 <WifiOutlined />
                 <AcUnitOutlined />

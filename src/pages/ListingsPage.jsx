@@ -267,13 +267,9 @@ function ListingsPage() {
           </HStack>
           {/* Homes List */}
           <VStack w="full" mt={8} spacing={4}>
-            <ListingHouseCard house={propertyA} />
-            <ListingHouseCard house={propertyA} />
-            <ListingHouseCard house={propertyA} />
-            <ListingHouseCard house={propertyA} />
-            <ListingHouseCard house={propertyA} />
-            <ListingHouseCard house={propertyA} />
-            <ListingHouseCard house={propertyA} />
+            {houses.map((house) => (
+              <ListingHouseCard key={house.houseId} house={house} />
+            ))}
             <ListingHouseCard house={propertyA} />
           </VStack>
         </div>
