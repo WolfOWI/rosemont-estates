@@ -21,21 +21,12 @@ import {
   FavoriteOutlined,
 } from "@mui/icons-material";
 
-// Real Estate Colour Logos
-import aidaLogoColour from "../../assets/logos/agencyLogos/aidaLogoColour.png";
-import engelLogoColour from "../../assets/logos/agencyLogos/engelLogoColour.png";
-import pamLogoColour from "../../assets/logos/agencyLogos/pamLogoColour.png";
-import rawsonLogoColour from "../../assets/logos/agencyLogos/rawsonLogoColour.png";
-import realnetLogoColour from "../../assets/logos/agencyLogos/realnetLogoColour.png";
-import remaxLogoColour from "../../assets/logos/agencyLogos/remaxLogoColour.png";
-import seeffLogoColour from "../../assets/logos/agencyLogos/seeffLogoColour.png";
-import tsungaiLogoColour from "../../assets/logos/agencyLogos/tsungaiLogoColour.png";
-import adminLogoColour from "../../assets/logos/agencyLogos/adminLogoColour.png";
 import { useState, useEffect } from "react";
 
 function ListingHouseCard({ house }) {
   const [agency, setAgency] = useState(null);
 
+  // When listing card mounts, fetch respective agency
   useEffect(() => {
     async function fetchAgency() {
       try {
