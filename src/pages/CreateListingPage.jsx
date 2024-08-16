@@ -69,6 +69,7 @@ function CreateListingPage() {
     province: "",
     zip: "",
     style: "",
+    availabilityStatus: "available",
     availableDate: "",
     realEstateId: "",
     sellType: "For Sale",
@@ -133,12 +134,16 @@ function CreateListingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await createHouse(formData);
+      const response = await createHouse({
+        ...formData,
+        availableDate: formData.availableDate,
+      });
       alert(response.message);
     } catch (error) {
       console.error("Failed to create house listing", error);
     }
   };
+
   // ------------------------------------------------
 
   return (
@@ -297,7 +302,14 @@ function CreateListingPage() {
                     </HStack>
                     <FormControl isRequired>
                       <HStack spacing={4}>
-                        <Input type="number" flex="1" placeholder="ZAR" />
+                        <Input
+                          type="number"
+                          flex="1"
+                          placeholder="ZAR"
+                          name={"price"}
+                          value={formData.price}
+                          onChange={handleNumberChange}
+                        />
                         {selectedOption === "rent" && <p className="text-sm">per month</p>}
                       </HStack>
                     </FormControl>
@@ -548,7 +560,7 @@ function CreateListingPage() {
                     <h3>Features</h3>
                   </HStack>
                   <VStack spacing={4} align="stretch">
-                    <FormControl isRequired>
+                    <FormControl>
                       <FormLabel>Interior</FormLabel>
                       <VStack align="start">
                         <CheckboxGroup>
@@ -596,7 +608,7 @@ function CreateListingPage() {
                       </VStack>
                     </FormControl>
 
-                    <FormControl isRequired>
+                    <FormControl>
                       <FormLabel>Exterior</FormLabel>
                       <VStack align="start">
                         <CheckboxGroup>

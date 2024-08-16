@@ -69,12 +69,17 @@ $boma = isset($data['boma']) ? 1 : 0;
 $gatedCommunity = isset($data['gatedCommunity']) ? 1 : 0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $sql = "INSERT INTO house (userId, realEstateId, title, description, street, suburb, city, province, zip, style, availabilityStatus, availableDate, sellType, price, numFloors, floorSize, numBed, numBath, numKitchen, numDining, numGym, numBilliard, numBasement, numGarage, lotSize, numPool, numCourt, numDeck, numFlowerGard, numVegGard, numOrchard, internet, airCon, heating, secSys, solar, gardServ, irrigation, outdoorLight, boma, gatedCommunity)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO `house`(`userId`, `realEstateId`, `title`, `description`, `street`, `suburb`, `city`, `province`, `zip`, `style`, `availabilityStatus`, `availableDate`, `sellType`, `price`, `numFloors`, `floorSize`, `numBed`, `numBath`, `numKitchen`, `numDining`, `numGym`, `numBilliard`, `numBasement`, `numGarage`, `lotSize`, `numPool`, `numCourt`, `numDeck`, `numFlowerGard`, `numVegGard`, `numOrchard`, `internet`, `airCon`, `heating`, `secSys`, `solar`, `gardServ`, `irrigation`, `outdoorLight`, `boma`, `gatedCommunity`)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     $stmt = $conn->prepare($sql);
+
+    if ($stmt === false) {
+        die("Prepare failed: " . $conn->error);
+    }
+
     $stmt->bind_param(
-        "iisssssssssssdiiiiiiiiiiiiiiiiiiiiii",
+        "iisssssssssssiiiiiiiiiiiiiiiiiiiiiiiiiiii",
         $userId,
         $realEstateId,
         $title,
@@ -118,10 +123,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gatedCommunity
     );
 
+
     if ($stmt->execute()) {
         echo json_encode(["message" => "House listing created successfully"]);
     } else {
-        echo json_encode(["message" => "Failed to create house listing"]);
+        echo json_encode(["message" => "Failed to create house listing", "error" => $stmt->error]);
     }
 
     $stmt->close();
