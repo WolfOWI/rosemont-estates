@@ -1,4 +1,4 @@
-import { Box, useRadio, Container, Flex } from "@chakra-ui/react";
+import { Box, useRadio, Flex } from "@chakra-ui/react";
 import { SellOutlined, CurrencyExchangeOutlined } from "@mui/icons-material";
 
 function RadioCard(props) {
@@ -34,6 +34,7 @@ function RadioCard(props) {
         px={6}
         display="flex"
         alignItems="center"
+        onClick={() => props.onChange(props.value)}
       >
         {icons[props.children]}
         <Box ml={2}>{props.children}</Box>

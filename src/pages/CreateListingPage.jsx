@@ -36,18 +36,9 @@ import RadioCard from "../components/input/RadioCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 
 function CreateListingPage() {
-  // Price Filtering
+  // SellType
   // ------------------------------------------------
-  const pricingOptions = ["For Sale", "To Rent"];
   const [selectedOption, setSelectedOption] = useState("For Sale");
-
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "sellType",
-    defaultValue: "For Sale",
-    onChange: setSelectedOption,
-  });
-
-  const group = getRootProps();
   // ------------------------------------------------
 
   // Address Modal
@@ -67,6 +58,8 @@ function CreateListingPage() {
   };
   // ------------------------------------------------
 
+  // New House Data
+  // ------------------------------------------------
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -108,18 +101,33 @@ function CreateListingPage() {
     boma: false,
     gatedCommunity: false,
   });
+  // ------------------------------------------------
+
+  // TODO Temporary: Delete Later
   useEffect(() => {
     console.log(formData);
   }, [formData]);
 
+  // Input Handlers
+  // ------------------------------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleNumberChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: parseInt(value) });
+  };
+
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
     setFormData({ ...formData, [name]: checked });
+  };
+
+  const handleRadioChange = (value) => {
+    setFormData({ ...formData, sellType: value });
+    setSelectedOption(value);
   };
 
   const handleSubmit = async (e) => {
@@ -131,6 +139,7 @@ function CreateListingPage() {
       console.error("Failed to create house listing", error);
     }
   };
+  // ------------------------------------------------
 
   return (
     <>
@@ -202,14 +211,14 @@ function CreateListingPage() {
                         value={formData.style}
                         onChange={handleChange}
                       >
-                        <option value="colonial">American Colonial</option>
-                        <option value="chateau">French Château</option>
-                        <option value="gothic">Gothic</option>
-                        <option value="villa">Italian Villa</option>
-                        <option value="modern">Modern</option>
-                        <option value="neoclassical">Neoclassical</option>
-                        <option value="framed">Timber-Framed</option>
-                        <option value="victorian">Victorian</option>
+                        <option value="American Colonial">American Colonial</option>
+                        <option value="French Chateau">French Château</option>
+                        <option value="Gothic">Gothic</option>
+                        <option value="Italian Villa">Italian Villa</option>
+                        <option value="Modern">Modern</option>
+                        <option value="Neoclassical">Neoclassical</option>
+                        <option value="Timber-Framed">Timber-Framed</option>
+                        <option value="Victorian">Victorian</option>
                       </Select>
                     </FormControl>
                     <FormControl isRequired>
@@ -223,7 +232,12 @@ function CreateListingPage() {
                     </FormControl>
                     <FormControl isRequired>
                       <FormLabel>Real Estate Agent</FormLabel>
-                      <Select placeholder="Select Agency">
+                      <Select
+                        placeholder="Select Agency"
+                        name="realEstateId"
+                        value={formData.realEstateId}
+                        onChange={handleChange}
+                      >
                         <option value="2">AIDA</option>
                         <option value="3">Engel and Völkers</option>
                         <option value="4">Pam Golding Properties</option>
@@ -236,6 +250,7 @@ function CreateListingPage() {
                     </FormControl>
                   </VStack>
                 </div>
+                {/* TODO Setup image upload */}
                 {/* Imagery */}
                 <div className="flex flex-col bg-beige-0 px-8 pb-8 pt-7 rounded-3xl">
                   <HStack spacing={2} align="center" mb={2}>
@@ -262,20 +277,28 @@ function CreateListingPage() {
                     <h3>Pricing</h3>
                   </HStack>
                   <VStack spacing={4} align="stretch">
-                    <HStack {...group} spacing={4} width="100%">
-                      {pricingOptions.map((value) => {
-                        const radio = getRadioProps({ value });
-                        return (
-                          <RadioCard key={value} {...radio} flex="1">
-                            {value}
-                          </RadioCard>
-                        );
-                      })}
+                    <HStack spacing={4} width="100%">
+                      <RadioCard
+                        key={"sell"}
+                        value={"sell"}
+                        isChecked={formData.sellType === "sell"}
+                        onChange={() => handleRadioChange("sell")}
+                      >
+                        For Sale
+                      </RadioCard>
+                      <RadioCard
+                        key={"rent"}
+                        value={"rent"}
+                        isChecked={formData.sellType === "rent"}
+                        onChange={() => handleRadioChange("rent")}
+                      >
+                        To Rent
+                      </RadioCard>
                     </HStack>
                     <FormControl isRequired>
                       <HStack spacing={4}>
                         <Input type="number" flex="1" placeholder="ZAR" />
-                        {selectedOption === "To Rent" && <p className="text-sm">per month</p>}
+                        {selectedOption === "rent" && <p className="text-sm">per month</p>}
                       </HStack>
                     </FormControl>
                   </VStack>
@@ -290,14 +313,26 @@ function CreateListingPage() {
                     <FormControl isRequired>
                       <FormLabel>Total Floors</FormLabel>
                       <HStack spacing={4}>
-                        <Input type="number" flex="1" />
+                        <Input
+                          type="number"
+                          flex="1"
+                          name="numFloors"
+                          value={formData.numFloors}
+                          onChange={handleNumberChange}
+                        />
                         <p className="text-sm">floor(s)</p>
                       </HStack>
                     </FormControl>
                     <FormControl isRequired>
                       <FormLabel>Floor Size</FormLabel>
                       <HStack spacing={4}>
-                        <Input type="number" flex="1" />
+                        <Input
+                          type="number"
+                          flex="1"
+                          name="floorSize"
+                          value={formData.floorSize}
+                          onChange={handleNumberChange}
+                        />
                         <p className="text-sm">square meters</p>
                       </HStack>
                     </FormControl>
@@ -305,35 +340,99 @@ function CreateListingPage() {
                       <FormLabel>Rooms</FormLabel>
                       <VStack align="start">
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numBed"
+                            value={formData.numBed}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="bed" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numBath"
+                            value={formData.numBath}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="bath" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numKitchen"
+                            value={formData.numKitchen}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="kitchen" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numDining"
+                            value={formData.numDining}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="dining" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numGym"
+                            value={formData.numGym}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="gym" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numBilliard"
+                            value={formData.numBilliard}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="billiard" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numBasement"
+                            value={formData.numBasement}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="basement" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numGarage"
+                            value={formData.numGarage}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="garage" />
                         </HStack>
                       </VStack>
@@ -353,7 +452,13 @@ function CreateListingPage() {
                     <FormControl isRequired>
                       <FormLabel>Lot Size</FormLabel>
                       <HStack spacing={4}>
-                        <Input type="number" flex="1" />
+                        <Input
+                          type="number"
+                          flex="1"
+                          name="lotSize"
+                          value={formData.lotSize}
+                          onChange={handleNumberChange}
+                        />
                         <p className="text-sm">square meters</p>
                       </HStack>
                     </FormControl>
@@ -361,27 +466,75 @@ function CreateListingPage() {
                       <FormLabel>Exterior Spaces</FormLabel>
                       <VStack align="start">
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numPool"
+                            value={formData.numPool}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="pool" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numCourt"
+                            value={formData.numCourt}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="court" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numDeck"
+                            value={formData.numDeck}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="deck" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numFlowerGard"
+                            value={formData.numFlowerGard}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="flowerGard" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numVegGard"
+                            value={formData.numVegGard}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="vegGard" />
                         </HStack>
                         <HStack>
-                          <Input type="number" w={10} p={0} textAlign="center" />
+                          <Input
+                            type="number"
+                            w={10}
+                            p={0}
+                            textAlign="center"
+                            name="numOrchard"
+                            value={formData.numOrchard}
+                            onChange={handleNumberChange}
+                          />
                           <IconTextBlock type="orchard" />
                         </HStack>
                       </VStack>
@@ -401,50 +554,91 @@ function CreateListingPage() {
                         <CheckboxGroup>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="internet" />
-                            <Checkbox value="internet"></Checkbox>
+                            <Checkbox
+                              name="internet"
+                              value="internet"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="airCon" />
-                            <Checkbox value="aircon"></Checkbox>
+                            <Checkbox
+                              name="airCon"
+                              value="airCon"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="heating" />
-                            <Checkbox value="heating"></Checkbox>
+                            <Checkbox
+                              name="heating"
+                              value="heating"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="secSys" />
-                            <Checkbox value="securitysys"></Checkbox>
+                            <Checkbox
+                              name="secSys"
+                              value="secSys"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="solar" />
-                            <Checkbox value="solar"></Checkbox>
+                            <Checkbox
+                              name="solar"
+                              value="solar"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                         </CheckboxGroup>
                       </VStack>
                     </FormControl>
+
                     <FormControl isRequired>
                       <FormLabel>Exterior</FormLabel>
                       <VStack align="start">
                         <CheckboxGroup>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="gardServ" />
-                            <Checkbox value="gardenserv"></Checkbox>
+                            <Checkbox
+                              name="gardServ"
+                              value="gardServ"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="irrigation" />
-                            <Checkbox value="irrigation"></Checkbox>
+                            <Checkbox
+                              name="irrigation"
+                              value="irrigation"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="outdoorLight" />
-                            <Checkbox value="outLighting"></Checkbox>
+                            <Checkbox
+                              name="outdoorLight"
+                              value="outdoorLight"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="boma" />
-                            <Checkbox value="boma"></Checkbox>
+                            <Checkbox
+                              name="boma"
+                              value="boma"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="gatedCommunity" />
-                            <Checkbox value="gatedCommunity"></Checkbox>
+                            <Checkbox
+                              name="gatedCommunity"
+                              value="gatedCommunity"
+                              onChange={handleCheckboxChange}
+                            ></Checkbox>
                           </div>
                         </CheckboxGroup>
                       </VStack>
