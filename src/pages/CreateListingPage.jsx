@@ -72,8 +72,8 @@ function CreateListingPage() {
     availabilityStatus: "available",
     availableDate: "",
     realEstateId: "",
-    sellType: "For Sale",
-    price: "",
+    sellType: "sell",
+    price: 0,
     numFloors: 0,
     floorSize: 0,
     numBed: 0,
@@ -103,11 +103,6 @@ function CreateListingPage() {
     gatedCommunity: false,
   });
   // ------------------------------------------------
-
-  // TODO Temporary: Delete Later
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   // Input Handlers
   // ------------------------------------------------
@@ -144,6 +139,52 @@ function CreateListingPage() {
     }
   };
 
+  const handleClear = (e) => {
+    e.preventDefault();
+    setFormData({
+      title: "",
+      description: "",
+      street: "",
+      suburb: "",
+      city: "",
+      province: "",
+      zip: "",
+      style: "",
+      availabilityStatus: "available",
+      availableDate: "",
+      realEstateId: "",
+      sellType: "sell",
+      price: 0,
+      numFloors: 0,
+      floorSize: 0,
+      numBed: 0,
+      numBath: 0,
+      numKitchen: 0,
+      numDining: 0,
+      numGym: 0,
+      numBilliard: 0,
+      numBasement: 0,
+      numGarage: 0,
+      lotSize: 0,
+      numPool: 0,
+      numCourt: 0,
+      numDeck: 0,
+      numFlowerGard: 0,
+      numVegGard: 0,
+      numOrchard: 0,
+      internet: false,
+      airCon: false,
+      heating: false,
+      secSys: false,
+      solar: false,
+      gardServ: false,
+      irrigation: false,
+      outdoorLight: false,
+      boma: false,
+      gatedCommunity: false,
+    });
+  };
+
   // ------------------------------------------------
 
   return (
@@ -164,6 +205,7 @@ function CreateListingPage() {
                   size="lg"
                   mt={4}
                   leftIcon={<DeleteForeverOutlined />}
+                  onClick={handleClear}
                 >
                   Clear
                 </Button>

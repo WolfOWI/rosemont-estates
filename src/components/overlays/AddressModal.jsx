@@ -88,33 +88,40 @@ function AddressModal({ isOpen, onClose, handleAddressDone }) {
             />
             <FormControl isRequired>
               <FormLabel>Street Address</FormLabel>
-              <Input
-                name="street"
-                value={address.street}
-                onChange={handleChange}
-                placeholder="Start typing address..."
-              />
+              <Input name="street" value={address.street} onChange={handleChange} />
             </FormControl>
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Suburb</FormLabel>
               <Input name="suburb" value={address.suburb} onChange={handleChange} />
             </FormControl>
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>City</FormLabel>
               <Input name="city" value={address.city} onChange={handleChange} />
             </FormControl>
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Province</FormLabel>
               <Input name="province" value={address.province} onChange={handleChange} />
             </FormControl>
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Zip Code</FormLabel>
               <Input name="zip" value={address.zip} onChange={handleChange} />
             </FormControl>
           </VStack>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={handleSubmit}>Done</Button>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            isDisabled={
+              !address.street ||
+              !address.suburb ||
+              !address.city ||
+              !address.province ||
+              !address.zip
+            }
+          >
+            Done
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
