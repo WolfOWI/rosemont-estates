@@ -128,12 +128,37 @@ function CreateListingPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Create a FormData object to handle the form submission
+    const formDataToSend = new FormData();
+
+    // Append all form fields to the FormData object
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
+    });
+
+    // Append selected files to the FormData object
+    selectedFiles.forEach((file) => {
+      formDataToSend.append("images[]", file);
+    });
+
+    console.log(...formDataToSend); // Log the formData to inspect its content
+
     try {
-      const response = await createHouse({
-        ...formData,
-        availableDate: formData.availableDate,
+      const response = await fetch("http://localhost/rosemont/backend/api/house/createHouse.php", {
+        method: "POST",
+        credentials: "include",
+        body: formDataToSend,
       });
-      alert(response.message);
+
+      // console.log("STARTTTT");
+      // console.log(formDataToSend);
+      // console.log("END");
+
+      const text = await response.text(); // Fetch as text
+      console.log(text); // Log the response text to see what is being returned
+      const data = JSON.parse(text); // Parse the text as JSON
+      alert(data.message);
     } catch (error) {
       console.error("Failed to create house listing", error);
     }
@@ -185,6 +210,21 @@ function CreateListingPage() {
     });
   };
 
+  // ------------------------------------------------
+
+  // Image Upload
+  // ------------------------------------------------
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  // Function to handle file selection
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      alert("You can only upload up to 5 images.");
+      return;
+    }
+    setSelectedFiles(files);
+  };
   // ------------------------------------------------
 
   return (
@@ -307,7 +347,7 @@ function CreateListingPage() {
                   <VStack spacing={4} align="stretch">
                     <FormControl isRequired>
                       <FormLabel>Images</FormLabel>
-                      <Input />
+                      <Input type="file" multiple accept="image/*" onChange={handleFileChange} />
                     </FormControl>
                     <Button size="lg" mt={4} leftIcon={<UploadFileOutlined />}>
                       Upload (Max 5)

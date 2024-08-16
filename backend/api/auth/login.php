@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 // Decode the JSON input from the request
 $data = json_decode(file_get_contents("php://input"), true);
 
+
 // Get email, password, and userType from the request
 $email = $data['email'];
 $password = $data['password'];
