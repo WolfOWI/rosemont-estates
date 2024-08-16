@@ -2,6 +2,10 @@ import { HStack } from "@chakra-ui/react";
 import tempImg from "../../assets/images/familyAtHome.jpg";
 import IconTextBlock from "../buildingblocks/IconTextBlock";
 import { houseCatchphrase } from "../../utils/houseCatchphrase";
+import { formatPrice } from "../../utils/formatPrice";
+import { getNumOfRooms } from "../../utils/getNumOfRooms";
+import { getAgencyById } from "../../services/agencyService";
+import logoMap from "../../utils/logoMap";
 import {
   WifiOutlined,
   AcUnitOutlined,
@@ -27,8 +31,24 @@ import remaxLogoColour from "../../assets/logos/agencyLogos/remaxLogoColour.png"
 import seeffLogoColour from "../../assets/logos/agencyLogos/seeffLogoColour.png";
 import tsungaiLogoColour from "../../assets/logos/agencyLogos/tsungaiLogoColour.png";
 import adminLogoColour from "../../assets/logos/agencyLogos/adminLogoColour.png";
+import { useState, useEffect } from "react";
 
 function ListingHouseCard({ house }) {
+  const [agency, setAgency] = useState(null);
+
+  useEffect(() => {
+    async function fetchAgency() {
+      try {
+        const agencyData = await getAgencyById(house.realEstateId);
+        setAgency(agencyData);
+      } catch (error) {
+        console.error("Failed to fetch agency:", error);
+      }
+    }
+
+    fetchAgency();
+  }, []);
+
   return (
     <>
       <div className="flex h-56 min-w-full p-4 rounded-3xl hover:bg-beige-P1 hover:cursor-pointer transition-all duration-300">
@@ -52,22 +72,26 @@ function ListingHouseCard({ house }) {
               <h3>{house.title}</h3>
               <p className="mb-2">{houseCatchphrase(house)}</p>
               <HStack>
-                <WifiOutlined />
-                <AcUnitOutlined />
-                <LocalFireDepartmentOutlined />
-                <VideocamOutlined />
-                <SolarPowerOutlined />
-                <YardOutlined />
-                <WaterDropOutlined />
-                <WbTwilightOutlined />
-                <OutdoorGrillOutlined />
-                <FenceOutlined />
+                {parseInt(house.internet) && <WifiOutlined />}
+                {parseInt(house.airCon) && <AcUnitOutlined />}
+                {parseInt(house.heating) && <LocalFireDepartmentOutlined />}
+                {parseInt(house.secSys) && <VideocamOutlined />}
+                {parseInt(house.solar) && <SolarPowerOutlined />}
+                {parseInt(house.gardServ) && <WaterDropOutlined />}
+                {parseInt(house.irrigation) && <WbTwilightOutlined />}
+                {parseInt(house.outdoorLight) && <OutdoorGrillOutlined />}
+                {parseInt(house.boma) && <WifiOutlined />}
+                {parseInt(house.gatedCommunity) && <FenceOutlined />}
               </HStack>
             </div>
-            <img src={remaxLogoColour} alt="estate logo" className="w-16" />
+            {agency ? (
+              <img src={logoMap[agency.logoColour]} alt="estate logo" className="w-16" />
+            ) : (
+              <div>Loading</div>
+            )}
           </div>
           {/* Pricing */}
-          <h3 className="text-thorn-0 font-bold font-alt">{house.price}</h3>
+          <h3 className="text-thorn-0 font-bold font-alt">{formatPrice(house.price)}</h3>
           {/* Badges */}
           <HStack>
             <IconTextBlock
@@ -78,13 +102,13 @@ function ListingHouseCard({ house }) {
             />
             <IconTextBlock
               type="rooms"
-              value={house.numRooms}
+              value={getNumOfRooms(house)}
               variant="beigeBadge"
               textHidden={true}
             />
             <IconTextBlock
               type="floors"
-              value={house.floors}
+              value={house.numFloors}
               variant="beigeBadge"
               textHidden={true}
             />

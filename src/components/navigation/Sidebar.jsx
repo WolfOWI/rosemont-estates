@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchAllAgencies } from "../../services/agencyService";
+import { getAgencyById } from "../../services/agencyService";
 import { getSession } from "../../services/authService";
 import { updateAgent } from "../../services/agentService";
 import {
@@ -63,27 +63,21 @@ function Sidebar() {
     fetchSessionData();
   }, []);
 
-  // Fetch agencies (after user details)
   useEffect(() => {
-    // If user agency is not null
-    if (user && user.realEstateId) {
-      async function loadAgencies() {
-        try {
-          const agencies = await fetchAllAgencies();
-          // console.log(user.realEstateId);
-          // console.log(agencies);
-          const foundAgency = agencies.find(
-            (a) => parseInt(a.realEstateId) === parseInt(user.realEstateId)
-          );
-          setAgency(foundAgency);
-          // console.log(foundAgency);
-        } catch (error) {
-          console.log("Error fetching agencies: ", error);
+    async function fetchAgency() {
+      try {
+        if (user && user.realEstateId) {
+          const agencyData = await getAgencyById(user.realEstateId);
+          setAgency(agencyData);
         }
+      } catch (error) {
+        console.error("Failed to fetch agency:", error);
       }
-      loadAgencies();
     }
+
+    fetchAgency();
   }, [user]);
+
   // -------------------------------------------
 
   // HANDLERS

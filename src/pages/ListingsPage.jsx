@@ -58,25 +58,6 @@ function ListingsPage() {
   };
   // ----------------------------------------------------
 
-  // TODO Temporary Home
-  const propertyA = {
-    title: "Modern Riversands Villa",
-    style: "Italian-Style",
-    availableDate: "01/09/2024",
-    address: "22 Century Boulevard, Riversands, Johannesburg, 1684",
-    description:
-      "Modern bedroom with en-suite bathroom available in two bedroom apartment. Are you looking for a vibrant living experience in the heart of River-sands, near the University of Johannesburg? Look no further than this fantastic opportunity at Urban Quarter!",
-    catchphrase: "6 Bedroom Italian-Style Mansion in Riversands",
-    floorSize: 1200,
-    floors: 5,
-    numRooms: 53,
-    numBath: 5,
-    numGarage: 2,
-    swimmingPools: 1,
-    sportsCourts: 1,
-    price: "R64,500,000",
-  };
-
   return (
     <>
       <div className="bg-beige-0 w-full min-h-screen">
@@ -270,7 +251,6 @@ function ListingsPage() {
             {houses.map((house) => (
               <ListingHouseCard key={house.houseId} house={house} />
             ))}
-            <ListingHouseCard house={propertyA} />
           </VStack>
         </div>
       </div>

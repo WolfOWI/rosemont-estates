@@ -19,24 +19,21 @@ export async function fetchAllAgencies() {
   }
 }
 
-// export async function fetchAgencyById(agencyId) {
-//   try {
-//     const response = await fetch(
-//       `http://localhost/rosemont/backend/api/agency/getAgencyById.php?id=${agencyId}`,
-//       {
-//         method: "GET",
-//         credentials: "include", // Include cookies in the request
-//       }
-//     );
+export async function getAgencyById(agencyId) {
+  const response = await fetch(
+    `http://localhost/rosemont/backend/api/agency/getAgencyById.php?agencyId=${agencyId}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
-//     if (!response.ok) {
-//       throw new Error("Network response was not ok");
-//     }
+  if (!response.ok) {
+    throw new Error("Failed to fetch agency details");
+  }
 
-//     const agency = await response.json();
-//     return agency;
-//   } catch (error) {
-//     console.error("Error fetching agency:", error);
-//     throw error;
-//   }
-// }
+  return response.json();
+}
