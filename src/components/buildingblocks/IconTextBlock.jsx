@@ -37,6 +37,8 @@ import {
 
 function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
   let icon = null;
+  let singleText = "";
+  let pluralText = "";
   let text = "";
   let m2Unit = false; // Show m² unit.
 
@@ -52,149 +54,230 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
     // Rooms
     case "bed":
       icon = <BedOutlined {...getIconProps()} />;
-      text = "Bedrooms";
+      singleText = "Bedroom";
+      pluralText = "Bedrooms";
+
       break;
     case "bath":
       icon = <ShowerOutlined {...getIconProps()} />;
-      text = "Bathrooms";
+      singleText = "Bathroom";
+      pluralText = "Bathrooms";
+
       break;
     case "kitchen":
       icon = <KitchenOutlined {...getIconProps()} />;
-      text = "Kitchens";
+      singleText = "Kitchen";
+      pluralText = "Kitchens";
+
       break;
     case "dining":
       icon = <RestaurantOutlined {...getIconProps()} />;
-      text = "Dining Rooms";
+      singleText = "Dining Room";
+      pluralText = "Dining Rooms";
+
       break;
     case "gym":
       icon = <FitnessCenterOutlined {...getIconProps()} />;
-      text = "Gymnasiums";
+      singleText = "Gymnasium";
+      pluralText = "Gymnasiums";
+
       break;
     case "billiard":
       icon = <ImportContactsOutlined {...getIconProps()} />;
-      text = "Billiard Rooms";
+      singleText = "Billiard Room";
+      pluralText = "Billiard Rooms";
+
       break;
     case "basement":
       icon = <FoundationOutlined {...getIconProps()} />;
-      text = "Basements";
+      singleText = "Basement";
+      pluralText = "Basements";
+
       break;
     case "garage":
       icon = <DirectionsCarOutlined {...getIconProps()} />;
-      text = "Garages";
+      singleText = "Garage";
+      pluralText = "Garages";
+
       break;
     case "pool":
       icon = <PoolOutlined {...getIconProps()} />;
-      text = "Swimming Pools";
+      singleText = "Swimming Pool";
+      pluralText = "Swimming Pools";
+
       break;
     case "court":
       icon = <SportsTennisOutlined {...getIconProps()} />;
-      text = "Sports Courts";
+      singleText = "Sports Court";
+      pluralText = "Sports Courts";
+
       break;
     case "deck":
       icon = <DeckOutlined {...getIconProps()} />;
-      text = "Decks";
+      singleText = "Deck";
+      pluralText = "Decks";
+
       break;
     case "flowerGard":
       icon = <LocalFloristOutlined {...getIconProps()} />;
-      text = "Flower Gardens";
+      singleText = "Flower Garden";
+      pluralText = "Flower Gardens";
+
       break;
     case "vegGard":
       icon = <SpaOutlined {...getIconProps()} />;
-      text = "Veg Gardens";
+      singleText = "Veg Garden";
+      pluralText = "Veg Gardens";
+
       break;
     case "orchard":
       icon = <NatureOutlined {...getIconProps()} />;
-      text = "Orchards";
+      singleText = "Orchard";
+      pluralText = "Orchards";
+
       break;
 
     // Home Info
     case "floorSize":
       icon = <CropFreeOutlined {...getIconProps()} />;
-      text = "Floor Size";
+      singleText = "Floor Size";
+      pluralText = "Floor Size";
+
       m2Unit = true;
       break;
     case "floors":
       icon = <StairsOutlined {...getIconProps()} />;
-      text = "Floors";
+      singleText = "Floor";
+      pluralText = "Floors";
+
       break;
     case "rooms":
       icon = <CabinOutlined {...getIconProps()} />;
-      text = "Rooms";
+      singleText = "Room";
+      pluralText = "Rooms";
+
       break;
     case "lotSize":
       icon = <YardOutlined {...getIconProps()} />;
-      text = "Lot Size";
+      singleText = "Lot Size";
+      pluralText = "Lot Size";
+
       m2Unit = true;
       break;
     case "toRent":
       icon = <CurrencyExchangeOutlined {...getIconProps()} />;
-      text = "To Rent";
+      singleText = "To Rent";
+      pluralText = "To Rent";
+
       break;
     case "forSale":
       icon = <SellOutlined {...getIconProps()} />;
-      text = "For Sale";
+      singleText = "For Sale";
+      pluralText = "For Sale";
+
       break;
 
     // Home Features
     case "internet":
       icon = <WifiOutlined {...getIconProps()} />;
-      text = "Internet Connection";
+      singleText = "Internet Connection";
+      pluralText = "Internet Connection Points";
+
       break;
     case "airCon":
       icon = <AcUnitOutlined {...getIconProps()} />;
-      text = "Air Conditioning";
+      singleText = "Air Conditioning";
+      pluralText = "Air Conditioning";
+
       break;
     case "heating":
       icon = <LocalFireDepartmentOutlined {...getIconProps()} />;
-      text = "Central Heating";
+      singleText = "Central Heating";
+      pluralText = "Central Heating";
+
       break;
     case "secSys":
       icon = <VideocamOutlined {...getIconProps()} />;
-      text = "Security System";
+      singleText = "Security System";
+      pluralText = "Security Systems";
+
       break;
     case "solar":
       icon = <SolarPowerOutlined {...getIconProps()} />;
-      text = "Solar Panels";
+      singleText = "Solar Panels";
+      pluralText = "Solar Panels";
+
       break;
     case "gardServ":
       icon = <YardOutlined {...getIconProps()} />;
-      text = "Garden Services";
+      singleText = "Garden Services";
+      pluralText = "Garden Services";
+
       break;
     case "irrigation":
       icon = <WaterDropOutlined {...getIconProps()} />;
-      text = "Irrigation System";
+      singleText = "Irrigation System";
+      pluralText = "Irrigation Systems";
+
       break;
     case "outdoorLight":
       icon = <WbTwilightOutlined {...getIconProps()} />;
-      text = "Outdoor Lighting";
+      singleText = "Outdoor Lighting";
+      pluralText = "Outdoor Lighting";
+
       break;
     case "boma":
       icon = <OutdoorGrillOutlined {...getIconProps()} />;
-      text = "Outdoor Boma";
+      singleText = "Outdoor Boma";
+      pluralText = "Outdoor Bomas";
+
       break;
     case "gatedCommunity":
       icon = <FenceOutlined {...getIconProps()} />;
-      text = "Gated Community";
+      singleText = "Gated Community";
+      pluralText = "Gated Community";
+
       break;
 
     // User-related
     case "name":
       icon = <Person2Outlined {...getIconProps()} />;
-      text = "Name";
+      singleText = "Name";
+      pluralText = "Names";
+
       break;
     case "phone":
       icon = <PhoneOutlined {...getIconProps()} />;
-      text = "Phone Number";
+      singleText = "Phone Number";
+      pluralText = "Phone Numbers";
+
       break;
     case "email":
       icon = <EmailOutlined {...getIconProps()} />;
-      text = "Email Address";
+      singleText = "Email Address";
+      pluralText = "Email Addresses";
+
       break;
 
     default:
       icon = <ErrorOutline {...getIconProps()} />;
+      singleText = "Icon & Text Not Found";
+      pluralText = "Icon & Text Not Found";
       text = "Icon & Text Not Found";
       break;
+  }
+
+  // Singular, plural form, based on value prop
+  if (value !== null) {
+    if (parseInt(value) === 1) {
+      text = singleText;
+    } else if (parseInt(value) === 0) {
+      text = "No " + pluralText;
+    } else {
+      text = pluralText;
+    }
+  } else {
+    text = singleText;
   }
 
   return (
@@ -210,7 +293,7 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
       >
         {icon}
         <p className={fontWeight ? "font-bold" : ""}>
-          {value}
+          {parseInt(value) !== 0 && value} {/* If value is zero, don't display it */}
           {m2Unit && ` m²`}
           {textHidden ? "" : ` ${text}`}
         </p>
