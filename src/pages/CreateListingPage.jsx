@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navbar from "../components/navigation/Navbar";
 import AddressModal from "../components/overlays/AddressModal";
 import ImageUpload from "../components/input/ImageUpload";
+import { createHouse } from "../services/houseService";
 
 import {
   VStack,
@@ -128,34 +129,11 @@ function CreateListingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a FormData object to handle the form submission
-    const formDataToSend = new FormData();
-
-    // Append all form fields to the FormData object
-    Object.keys(formData).forEach((key) => {
-      formDataToSend.append(key, formData[key]);
-    });
-
-    // Append selected files to the FormData object
-    selectedFiles.forEach((file) => {
-      formDataToSend.append("images[]", file);
-    });
-
-    console.log(...formDataToSend); // Log the formData to inspect its content
-
     try {
-      const response = await fetch("http://localhost/rosemont/backend/api/house/createHouse.php", {
-        method: "POST",
-        credentials: "include",
-        body: formDataToSend,
-      });
-
-      const text = await response.text(); // Fetch as text
-      console.log(text); // Log the response text to see what is being returned
-      const data = JSON.parse(text); // Parse the text as JSON
-      alert(data.message);
+      const response = await createHouse(formData, selectedFiles);
+      alert(response.message);
     } catch (error) {
-      console.error("Failed to create house listing", error);
+      alert("Failed to create house listing. Please try again.");
     }
   };
 

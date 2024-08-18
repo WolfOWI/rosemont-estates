@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getHouseById } from "../services/houseService";
+import { getHouseById, updateHouse, getImagesByHouseId } from "../services/houseService";
 import Navbar from "../components/navigation/Navbar";
 import AddressModal from "../components/overlays/AddressModal";
+import ImageUpload from "../components/input/ImageUpload";
 
 import {
   VStack,
@@ -40,28 +41,23 @@ import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 
 function EditListingPage() {
   const { houseId } = useParams();
-  const [house, setHouse] = useState(null);
+  const [formData, setFormData] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const fetchHouseDetails = async () => {
       try {
-        const data = await getHouseById(houseId);
-        setHouse(data);
+        const houseData = await getHouseById(houseId);
+        setFormData(houseData); // Set formData directly with the fetched house data
+        const images = await getImagesByHouseId(houseId);
+        setSelectedFiles(images); // Preload existing images into the state
       } catch (error) {
         console.log("Error fetching the house's details:", error);
       }
     };
     fetchHouseDetails();
   }, [houseId]);
-
-  // SellType
-  // ------------------------------------------------
-  const [selectedOption, setSelectedOption] = useState("For Sale");
-  // ------------------------------------------------
-
-  // Address Modal
-  // ------------------------------------------------
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleAddressDone = (address) => {
     setFormData((prevData) => ({
@@ -74,131 +70,44 @@ function EditListingPage() {
     }));
     onClose();
   };
-  // ------------------------------------------------
-
-  // New House Data
-  // ------------------------------------------------
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    street: "",
-    suburb: "",
-    city: "",
-    province: "",
-    zip: "",
-    style: "",
-    availabilityStatus: "available",
-    availableDate: "",
-    realEstateId: "",
-    sellType: "sell",
-    price: 0,
-    numFloors: 0,
-    floorSize: 0,
-    numBed: 0,
-    numBath: 0,
-    numKitchen: 0,
-    numDining: 0,
-    numGym: 0,
-    numBilliard: 0,
-    numBasement: 0,
-    numGarage: 0,
-    lotSize: 0,
-    numPool: 0,
-    numCourt: 0,
-    numDeck: 0,
-    numFlowerGard: 0,
-    numVegGard: 0,
-    numOrchard: 0,
-    internet: false,
-    airCon: false,
-    heating: false,
-    secSys: false,
-    solar: false,
-    gardServ: false,
-    irrigation: false,
-    outdoorLight: false,
-    boma: false,
-    gatedCommunity: false,
-  });
-  // ------------------------------------------------
 
   // Input Handlers
-  // ------------------------------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleNumberChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: parseInt(value) });
+    setFormData((prevData) => ({ ...prevData, [name]: parseInt(value) }));
   };
 
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
-    setFormData({ ...formData, [name]: checked });
+    setFormData((prevData) => ({ ...prevData, [name]: checked }));
   };
 
   const handleRadioChange = (value) => {
-    setFormData({ ...formData, sellType: value });
-    setSelectedOption(value);
+    setFormData((prevData) => ({ ...prevData, sellType: value }));
+  };
+
+  const handleFileChange = (files) => {
+    setSelectedFiles(files);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Create a FormData object to handle the form submission
-    const formDataToSend = new FormData();
-
-    // Append all form fields to the FormData object
-    Object.keys(formData).forEach((key) => {
-      formDataToSend.append(key, formData[key]);
-    });
-
-    // Append selected files to the FormData object
-    selectedFiles.forEach((file) => {
-      formDataToSend.append("images[]", file);
-    });
-
-    console.log(...formDataToSend); // Log the formData to inspect its content
-
     try {
-      const response = await fetch("http://localhost/rosemont/backend/api/house/createHouse.php", {
-        method: "POST",
-        credentials: "include",
-        body: formDataToSend,
-      });
-
-      const text = await response.text(); // Fetch as text
-      console.log(text); // Log the response text to see what is being returned
-      const data = JSON.parse(text); // Parse the text as JSON
-      alert(data.message);
+      const response = await updateHouse(houseId, formData, selectedFiles);
+      alert(response.message);
     } catch (error) {
-      console.error("Failed to create house listing", error);
+      alert("Failed to update house listing. Please try again.");
     }
   };
 
-  // ------------------------------------------------
-
-  // Image Upload
-  // ------------------------------------------------
-  const [selectedFiles, setSelectedFiles] = useState([]);
-
-  // Function to handle file selection
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 5) {
-      alert("You can only upload up to 5 images.");
-      return;
-    }
-    setSelectedFiles(files);
-  };
-  // ------------------------------------------------
-
-  if (!house) {
-    return <div>Loading</div>;
+  if (!formData) {
+    return <div>Loading...</div>;
   }
-
   return (
     <>
       <Navbar />
@@ -210,11 +119,11 @@ function EditListingPage() {
               <div className="flex items-center">
                 <IconButton
                   as={Link}
-                  to={`/listing/${house.houseId}`}
+                  to={`/listing/${formData.houseId}`}
                   icon={<ArrowBack />}
                   minW={12}
                 />
-                <h2 className="mt-2 ml-4">Editing {house.title}</h2>
+                <h2 className="mt-2 ml-4">Editing {formData.title}</h2>
               </div>
               <HStack>
                 <Button
@@ -244,20 +153,25 @@ function EditListingPage() {
                   <VStack spacing={4} align="stretch">
                     <FormControl isRequired>
                       <FormLabel>Title</FormLabel>
-                      <Input type="text" name="title" value={house.title} onChange={handleChange} />
+                      <Input
+                        type="text"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                      />
                     </FormControl>
                     <FormControl isRequired>
                       <FormLabel>Description</FormLabel>
                       <Textarea
                         name="description"
-                        value={house.description}
+                        value={formData.description}
                         onChange={handleChange}
                       />
                     </FormControl>
                     <FormControl isRequired>
                       <FormLabel>Address</FormLabel>
                       <Input
-                        value={`${house.street}, ${house.suburb}, ${house.city}, ${house.province}, ${house.zip}`}
+                        value={`${formData.street}, ${formData.suburb}, ${formData.city}, ${formData.province}, ${formData.zip}`}
                         onClick={onOpen}
                         readOnly
                       />
@@ -267,7 +181,7 @@ function EditListingPage() {
                       <Select
                         placeholder="Select Style"
                         name="style"
-                        value={house.style}
+                        value={formData.style}
                         onChange={handleChange}
                       >
                         <option value="American Colonial">American Colonial</option>
@@ -285,7 +199,7 @@ function EditListingPage() {
                       <Input
                         type="date"
                         name="availableDate"
-                        value={house.availableDate}
+                        value={formData.availableDate}
                         onChange={handleChange}
                       />
                     </FormControl>
@@ -294,7 +208,7 @@ function EditListingPage() {
                       <Select
                         placeholder="Select Agency"
                         name="realEstateId"
-                        value={house.realEstateId}
+                        value={formData.realEstateId}
                         onChange={handleChange}
                       >
                         <option value="2">AIDA</option>
@@ -318,13 +232,7 @@ function EditListingPage() {
                   <VStack spacing={4} align="stretch">
                     <FormControl isRequired>
                       <FormLabel>Images</FormLabel>
-                      <Input
-                        type="file"
-                        multiple
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        variant="fileUploadStyle"
-                      />
+                      <ImageUpload onFileChange={handleFileChange} selectedFiles={selectedFiles} />
                     </FormControl>
                   </VStack>
                 </div>
@@ -342,7 +250,7 @@ function EditListingPage() {
                       <RadioCard
                         key={"sell"}
                         value={"sell"}
-                        isChecked={house.sellType === "sell"}
+                        isChecked={formData.sellType === "sell"}
                         onChange={() => handleRadioChange("sell")}
                       >
                         For Sale
@@ -350,7 +258,7 @@ function EditListingPage() {
                       <RadioCard
                         key={"rent"}
                         value={"rent"}
-                        isChecked={house.sellType === "rent"}
+                        isChecked={formData.sellType === "rent"}
                         onChange={() => handleRadioChange("rent")}
                       >
                         To Rent
@@ -363,10 +271,10 @@ function EditListingPage() {
                           flex="1"
                           placeholder="ZAR"
                           name={"price"}
-                          value={house.price}
+                          value={formData.price}
                           onChange={handleNumberChange}
                         />
-                        {selectedOption === "rent" && <p className="text-sm">per month</p>}
+                        {formData.sellType === "rent" && <p className="text-sm">per month</p>}
                       </HStack>
                     </FormControl>
                   </VStack>
@@ -385,7 +293,7 @@ function EditListingPage() {
                           type="number"
                           flex="1"
                           name="numFloors"
-                          value={house.numFloors}
+                          value={formData.numFloors}
                           onChange={handleNumberChange}
                         />
                         <p className="text-sm">floor(s)</p>
@@ -398,7 +306,7 @@ function EditListingPage() {
                           type="number"
                           flex="1"
                           name="floorSize"
-                          value={house.floorSize}
+                          value={formData.floorSize}
                           onChange={handleNumberChange}
                         />
                         <p className="text-sm">square meters</p>
@@ -414,7 +322,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBed"
-                            value={house.numBed}
+                            value={formData.numBed}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="bed" />
@@ -426,7 +334,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBath"
-                            value={house.numBath}
+                            value={formData.numBath}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="bath" />
@@ -438,7 +346,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numKitchen"
-                            value={house.numKitchen}
+                            value={formData.numKitchen}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="kitchen" />
@@ -450,7 +358,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numDining"
-                            value={house.numDining}
+                            value={formData.numDining}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="dining" />
@@ -462,7 +370,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numGym"
-                            value={house.numGym}
+                            value={formData.numGym}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="gym" />
@@ -474,7 +382,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBilliard"
-                            value={house.numBilliard}
+                            value={formData.numBilliard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="billiard" />
@@ -486,7 +394,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBasement"
-                            value={house.numBasement}
+                            value={formData.numBasement}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="basement" />
@@ -498,7 +406,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numGarage"
-                            value={house.numGarage}
+                            value={formData.numGarage}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="garage" />
@@ -524,7 +432,7 @@ function EditListingPage() {
                           type="number"
                           flex="1"
                           name="lotSize"
-                          value={house.lotSize}
+                          value={formData.lotSize}
                           onChange={handleNumberChange}
                         />
                         <p className="text-sm">square meters</p>
@@ -540,7 +448,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numPool"
-                            value={house.numPool}
+                            value={formData.numPool}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="pool" />
@@ -552,7 +460,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numCourt"
-                            value={house.numCourt}
+                            value={formData.numCourt}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="court" />
@@ -564,7 +472,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numDeck"
-                            value={house.numDeck}
+                            value={formData.numDeck}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="deck" />
@@ -576,7 +484,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numFlowerGard"
-                            value={house.numFlowerGard}
+                            value={formData.numFlowerGard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="flowerGard" />
@@ -588,7 +496,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numVegGard"
-                            value={house.numVegGard}
+                            value={formData.numVegGard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="vegGard" />
@@ -600,7 +508,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numOrchard"
-                            value={house.numOrchard}
+                            value={formData.numOrchard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="orchard" />

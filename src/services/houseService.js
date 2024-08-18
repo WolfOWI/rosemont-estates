@@ -92,20 +92,74 @@ export async function getPrimaryImageByHouseId(houseId) {
 // CREATE FUNCTIONS
 // ----------------------------------------------------------------------------
 // Create a House
-export async function createHouse(houseData) {
-  const response = await fetch("http://localhost/rosemont/backend/api/house/createHouse.php", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(houseData),
+export async function createHouse(formData, selectedFiles) {
+  // Create a FormData object to handle the form submission
+  const formDataToSend = new FormData();
+
+  // Append all form fields to the FormData object
+  Object.keys(formData).forEach((key) => {
+    formDataToSend.append(key, formData[key]);
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to create house listing");
-  }
+  // Append selected files to the FormData object
+  selectedFiles.forEach((file) => {
+    formDataToSend.append("images[]", file);
+  });
 
-  return response.json();
+  try {
+    const response = await fetch("http://localhost/rosemont/backend/api/house/createHouse.php", {
+      method: "POST",
+      credentials: "include",
+      body: formDataToSend,
+    });
+
+    const text = await response.text(); // Fetch as text
+    console.log(text); // Log the response text to see what is being returned
+    const data = JSON.parse(text); // Parse the text as JSON
+    return data;
+  } catch (error) {
+    console.error("Failed to create house: ", error);
+    throw error;
+  }
 }
+// ----------------------------------------------------------------------------
+
+// UPDATE FUNCTIONS
+// ----------------------------------------------------------------------------
+// Update a house
+export async function updateHouse(houseId, formData, selectedFiles) {
+  const formDataToSend = new FormData();
+
+  // Append all form fields to the FormData object
+  Object.keys(formData).forEach((key) => {
+    formDataToSend.append(key, formData[key]);
+  });
+
+  // Append selected files to the FormData object
+  selectedFiles.forEach((file) => {
+    formDataToSend.append("images[]", file);
+  });
+
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/house/updateHouseById.php?houseId=${houseId}`,
+      {
+        method: "POST",
+        credentials: "include",
+        body: formDataToSend,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update house");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating house:", error);
+    throw error;
+  }
+}
+
 // ----------------------------------------------------------------------------
