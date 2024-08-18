@@ -1,24 +1,37 @@
-import React, { useState } from "react";
-import { Box, Image, IconButton, VStack, Input } from "@chakra-ui/react";
-import { CloseOutlined } from "@mui/icons-material";
+import React, { useState, useRef } from "react";
+import { Box, Image, IconButton, VStack, Input, Button } from "@chakra-ui/react";
+import { CloseOutlined, UploadFileOutlined } from "@mui/icons-material";
 
 const ImageUpload = ({ onFileChange }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length > 5) {
-      alert("You can only upload up to 5 images.");
+    if (files.length + selectedFiles.length > 5) {
+      alert("You can only upload up to 5 images in total.");
       return;
     }
-    setSelectedFiles(files);
-    onFileChange(files); // Pass the files back to the parent component
+    const newFiles = selectedFiles.concat(files);
+    setSelectedFiles(newFiles);
+    onFileChange(newFiles);
   };
 
   const handleRemoveImage = (index) => {
     const newFiles = selectedFiles.filter((_, i) => i !== index);
     setSelectedFiles(newFiles);
     onFileChange(newFiles);
+
+    // Reset the file input value to allow re-selection of the same file
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   return (
@@ -45,12 +58,16 @@ const ImageUpload = ({ onFileChange }) => {
           </Box>
         ))}
       </Box>
+      <Button onClick={handleButtonClick} leftIcon={<UploadFileOutlined />}>
+        Upload Images
+      </Button>
       <Input
         type="file"
         multiple
         accept="image/*"
         onChange={handleFileChange}
-        variant="fileUploadStyle"
+        ref={fileInputRef}
+        display="none" // Hide the actual input element
       />
     </VStack>
   );
