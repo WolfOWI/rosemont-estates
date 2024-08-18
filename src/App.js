@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import ListingsPage from "./pages/ListingsPage";
 import ListingDetailPage from "./pages/ListingDetailPage";
 import CreateListingPage from "./pages/CreateListingPage";
+import EditListingPage from "./pages/EditListingPage";
 import ProfilePage from "./pages/ProfilePage";
 import AdminListingsDash from "./pages/AdminListingsDash";
 import AdminBuyDash from "./pages/AdminBuyDash";
@@ -23,8 +24,9 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/listings" element={<ListingsPage />} />
-          <Route path="/detail" element={<ListingDetailPage />} />
+          <Route path="/listing/:houseId" element={<ListingDetailPage />} />
           <Route path="/add" element={<CreateListingPage />} />
+          <Route path="/edit" element={<EditListingPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/admin-listings" element={<AdminListingsDash />} />
           <Route path="/admin-buyers" element={<AdminBuyDash />} />

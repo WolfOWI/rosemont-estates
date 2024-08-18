@@ -28,12 +28,13 @@ import {
   ParkOutlined,
   OtherHousesOutlined,
   DeleteForeverOutlined,
+  EditOutlined,
 } from "@mui/icons-material";
 
 import RadioCard from "../components/input/RadioCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 
-function CreateListingPage() {
+function EditListingPage() {
   // SellType
   // ------------------------------------------------
   const [selectedOption, setSelectedOption] = useState("For Sale");
@@ -149,10 +150,6 @@ function CreateListingPage() {
         body: formDataToSend,
       });
 
-      // console.log("STARTTTT");
-      // console.log(formDataToSend);
-      // console.log("END");
-
       const text = await response.text(); // Fetch as text
       console.log(text); // Log the response text to see what is being returned
       const data = JSON.parse(text); // Parse the text as JSON
@@ -234,21 +231,21 @@ function CreateListingPage() {
             {/* Top Section */}
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center">
-                <AddHomeOutlined sx={{ fontSize: 80, color: "#C3BDAE" }} />
-                <h2 className="mt-2 ml-4">New Property</h2>
+                <EditOutlined sx={{ fontSize: 80, color: "#C3BDAE" }} />
+                <h2 className="mt-2 ml-4">Editing Property</h2>
               </div>
               <HStack>
                 <Button
-                  variant="thornOutline"
+                  variant="roseOutlineDarker"
                   size="lg"
                   mt={4}
                   leftIcon={<DeleteForeverOutlined />}
                   onClick={handleClear}
                 >
-                  Clear
+                  Delete
                 </Button>
-                <Button size="lg" mt={4} rightIcon={<CheckCircleOutlineOutlined />} type="submit">
-                  Submit
+                <Button size="lg" mt={4} leftIcon={<EditOutlined />} type="submit">
+                  Submit Changes
                 </Button>
               </HStack>
             </div>
@@ -749,4 +746,4 @@ function CreateListingPage() {
   );
 }
 
-export default CreateListingPage;
+export default EditListingPage;

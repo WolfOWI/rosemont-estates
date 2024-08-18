@@ -1,5 +1,6 @@
 import { HStack } from "@chakra-ui/react";
 import tempImg from "../../assets/images/familyAtHome.jpg";
+import { useNavigate } from "react-router-dom";
 import IconTextBlock from "../buildingblocks/IconTextBlock";
 import { houseCatchphrase } from "../../utils/houseCatchphrase";
 import { formatPrice } from "../../utils/formatPrice";
@@ -25,6 +26,7 @@ import { useState, useEffect } from "react";
 
 function ListingHouseCard({ house }) {
   const [agency, setAgency] = useState(null);
+  const navigate = useNavigate();
 
   // When listing card mounts, fetch respective agency
   useEffect(() => {
@@ -36,13 +38,20 @@ function ListingHouseCard({ house }) {
         console.error("Failed to fetch agency:", error);
       }
     }
-
     fetchAgency();
   }, []);
 
+  // When card is clicked, go to individual house "ListingDetailPage"
+  const handleClick = () => {
+    navigate(`/listing/${house.houseId}`);
+  };
+
   return (
     <>
-      <div className="flex h-56 min-w-full p-4 rounded-3xl hover:bg-beige-P1 hover:cursor-pointer transition-all duration-300">
+      <div
+        className="flex h-56 min-w-full p-4 rounded-3xl hover:bg-beige-P1 hover:cursor-pointer transition-all duration-300"
+        onClick={handleClick}
+      >
         {/* Image (left) */}
         <div className="relative mr-4 group">
           <img

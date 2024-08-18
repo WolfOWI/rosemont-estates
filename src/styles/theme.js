@@ -39,6 +39,18 @@ const Button = {
         borderColor: "rosered.P2",
       },
     },
+    roseOutlineDarker: {
+      height: 12,
+      bg: "transparent",
+      color: "rosered.M1",
+      border: "2px solid",
+      borderColor: "rosered.0",
+      _hover: {
+        color: "beige.0",
+        bg: "rosered.0",
+        borderColor: "rosered.0",
+      },
+    },
     lightFilled: {
       height: 12,
       bg: "beige.0",
@@ -132,6 +144,28 @@ const Input = {
         },
         _placeholder: {
           color: "beige.M3",
+        },
+      },
+    },
+    fileUploadStyle: {
+      button: {
+        bg: "thorn.0",
+      },
+      field: {
+        borderWidth: "2px",
+        bg: "thorn.0",
+        color: "beige.0",
+        borderColor: "thorn.0",
+        borderRadius: "xl",
+        _hover: {
+          bg: "thorn.P2",
+          borderColor: "thorn.P2",
+        },
+        _focus: {
+          bg: "thorn.P2",
+          borderColor: "thorn.P2",
+          boxShadow: "0 0 0 1px thorn.0",
+          ring: "thorn.P2",
         },
       },
     },
