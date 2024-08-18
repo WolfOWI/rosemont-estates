@@ -49,9 +49,11 @@ function EditListingPage() {
     const fetchHouseDetails = async () => {
       try {
         const houseData = await getHouseById(houseId);
-        setFormData(houseData); // Set formData directly with the fetched house data
+        setFormData(houseData);
+        console.log(houseData);
         const images = await getImagesByHouseId(houseId);
         setSelectedFiles(images); // Preload existing images into the state
+        console.log(images);
       } catch (error) {
         console.log("Error fetching the house's details:", error);
       }
@@ -83,8 +85,11 @@ function EditListingPage() {
   };
 
   const handleCheckboxChange = (e) => {
+    console.log(e.target.name);
+    console.log(e.target.checked);
     const { name, checked } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: checked }));
+    setFormData((prevData) => ({ ...prevData, [name]: checked ? 1 : 0 }));
+    console.log(formData);
   };
 
   const handleRadioChange = (value) => {
@@ -136,7 +141,7 @@ function EditListingPage() {
                   Delete
                 </Button>
                 <Button size="lg" mt={4} leftIcon={<EditOutlined />} type="submit">
-                  Submit Changes
+                  Save Changes
                 </Button>
               </HStack>
             </div>
@@ -232,7 +237,7 @@ function EditListingPage() {
                   <VStack spacing={4} align="stretch">
                     <FormControl isRequired>
                       <FormLabel>Images</FormLabel>
-                      <ImageUpload onFileChange={handleFileChange} selectedFiles={selectedFiles} />
+                      <ImageUpload onFileChange={handleFileChange} addedFiles={selectedFiles} />
                     </FormControl>
                   </VStack>
                 </div>
@@ -532,7 +537,7 @@ function EditListingPage() {
                             <IconTextBlock type="internet" />
                             <Checkbox
                               name="internet"
-                              value="internet"
+                              isChecked={formData.internet === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -540,33 +545,33 @@ function EditListingPage() {
                             <IconTextBlock type="airCon" />
                             <Checkbox
                               name="airCon"
-                              value="airCon"
+                              isChecked={formData.airCon === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="heating" />
                             <Checkbox
                               name="heating"
-                              value="heating"
+                              isChecked={formData.heating === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="secSys" />
                             <Checkbox
                               name="secSys"
-                              value="secSys"
+                              isChecked={formData.secSys === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="solar" />
                             <Checkbox
                               name="solar"
-                              value="solar"
+                              isChecked={formData.solar === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                         </CheckboxGroup>
                       </VStack>
@@ -580,7 +585,7 @@ function EditListingPage() {
                             <IconTextBlock type="gardServ" />
                             <Checkbox
                               name="gardServ"
-                              value="gardServ"
+                              isChecked={formData.gardServ === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -588,7 +593,7 @@ function EditListingPage() {
                             <IconTextBlock type="irrigation" />
                             <Checkbox
                               name="irrigation"
-                              value="irrigation"
+                              isChecked={formData.irrigation === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -596,7 +601,7 @@ function EditListingPage() {
                             <IconTextBlock type="outdoorLight" />
                             <Checkbox
                               name="outdoorLight"
-                              value="outdoorLight"
+                              isChecked={formData.outdoorLight === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -604,7 +609,7 @@ function EditListingPage() {
                             <IconTextBlock type="boma" />
                             <Checkbox
                               name="boma"
-                              value="boma"
+                              isChecked={formData.boma === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -612,7 +617,7 @@ function EditListingPage() {
                             <IconTextBlock type="gatedCommunity" />
                             <Checkbox
                               name="gatedCommunity"
-                              value="gatedCommunity"
+                              isChecked={formData.gatedCommunity === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>

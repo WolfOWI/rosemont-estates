@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Box, Image, IconButton, VStack, Input, Button } from "@chakra-ui/react";
 import { CloseOutlined, UploadFileOutlined } from "@mui/icons-material";
 
-const ImageUpload = ({ onFileChange }) => {
+const ImageUpload = ({ onFileChange, addedFiles }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const fileInputRef = useRef(null);
 

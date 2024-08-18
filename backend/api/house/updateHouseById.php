@@ -52,16 +52,16 @@ $numDeck = $_POST['numDeck'];
 $numFlowerGard = $_POST['numFlowerGard'];
 $numVegGard = $_POST['numVegGard'];
 $numOrchard = $_POST['numOrchard'];
-$internet = isset($_POST['internet']) ? 1 : 0;
-$airCon = isset($_POST['airCon']) ? 1 : 0;
-$heating = isset($_POST['heating']) ? 1 : 0;
-$secSys = isset($_POST['secSys']) ? 1 : 0;
-$solar = isset($_POST['solar']) ? 1 : 0;
-$gardServ = isset($_POST['gardServ']) ? 1 : 0;
-$irrigation = isset($_POST['irrigation']) ? 1 : 0;
-$outdoorLight = isset($_POST['outdoorLight']) ? 1 : 0;
-$boma = isset($_POST['boma']) ? 1 : 0;
-$gatedCommunity = isset($_POST['gatedCommunity']) ? 1 : 0;
+$internet = $_POST['internet'];
+$airCon = $_POST['airCon'];
+$heating = $_POST['heating'];
+$secSys = $_POST['secSys'];
+$solar = $_POST['solar'];
+$gardServ = $_POST['gardServ'];
+$irrigation = $_POST['irrigation'];
+$outdoorLight = $_POST['outdoorLight'];
+$boma = $_POST['boma'];
+$gatedCommunity = $_POST['gatedCommunity'];
 
 // Image upload directory
 $target_dir = "../../../src/assets/uploads/";
