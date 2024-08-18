@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/navigation/Navbar";
 import AddressModal from "../components/overlays/AddressModal";
+import ImageUpload from "../components/input/ImageUpload";
 
 import {
   VStack,
@@ -149,10 +150,6 @@ function CreateListingPage() {
         body: formDataToSend,
       });
 
-      // console.log("STARTTTT");
-      // console.log(formDataToSend);
-      // console.log("END");
-
       const text = await response.text(); // Fetch as text
       console.log(text); // Log the response text to see what is being returned
       const data = JSON.parse(text); // Parse the text as JSON
@@ -213,16 +210,19 @@ function CreateListingPage() {
   // Image Upload
   // ------------------------------------------------
   const [selectedFiles, setSelectedFiles] = useState([]);
-
-  // Function to handle file selection
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 5) {
-      alert("You can only upload up to 5 images.");
-      return;
-    }
+  const handleFileChange = (files) => {
     setSelectedFiles(files);
   };
+
+  // Function to handle file selection
+  // const handleFileChange = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   if (files.length > 5) {
+  //     alert("You can only upload up to 5 images.");
+  //     return;
+  //   }
+  //   setSelectedFiles(files);
+  // };
   // ------------------------------------------------
 
   return (
@@ -344,13 +344,7 @@ function CreateListingPage() {
                   <VStack spacing={4} align="stretch">
                     <FormControl isRequired>
                       <FormLabel>Images</FormLabel>
-                      <Input
-                        type="file"
-                        multiple
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        variant="fileUploadStyle"
-                      />
+                      <ImageUpload onFileChange={handleFileChange} />
                     </FormControl>
                   </VStack>
                 </div>

@@ -7,6 +7,7 @@ const Button = {
   },
   variants: {
     thornFilled: {
+      fontSize: "14",
       height: 12,
       bg: "thorn.0",
       color: "beige.0",
@@ -16,6 +17,7 @@ const Button = {
       },
     },
     thornOutline: {
+      fontSize: "14",
       height: 12,
       bg: "transparent",
       color: "thorn.0",
@@ -28,6 +30,7 @@ const Button = {
       },
     },
     roseOutline: {
+      fontSize: "14",
       height: 12,
       bg: "transparent",
       color: "rosered.0",
@@ -40,6 +43,7 @@ const Button = {
       },
     },
     roseOutlineDarker: {
+      fontSize: "14",
       height: 12,
       bg: "transparent",
       color: "rosered.M1",
@@ -52,6 +56,7 @@ const Button = {
       },
     },
     lightFilled: {
+      fontSize: "14",
       height: 12,
       bg: "beige.0",
       color: "thorn.0",
@@ -61,6 +66,7 @@ const Button = {
       },
     },
     lightOutline: {
+      fontSize: "14",
       height: 12,
       bg: "transparent",
       color: "beige.0",
@@ -72,6 +78,7 @@ const Button = {
       },
     },
     tertiary: {
+      fontSize: "14",
       height: 12,
       bg: "transparent",
       color: "thorn.0",
@@ -81,6 +88,7 @@ const Button = {
       },
     },
     tertiaryBeige: {
+      fontSize: "14",
       height: 12,
       bg: "transparent",
       color: "beige.0",
