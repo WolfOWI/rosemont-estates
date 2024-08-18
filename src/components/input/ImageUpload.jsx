@@ -1,10 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Box, Image, IconButton, VStack, Input, Button } from "@chakra-ui/react";
 import { CloseOutlined, UploadFileOutlined } from "@mui/icons-material";
 
-const ImageUpload = ({ onFileChange, addedFiles }) => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
+const ImageUpload = ({ onFileChange, addedFiles = [] }) => {
+  // Initialize selectedFiles with addedFiles if provided
+  const [selectedFiles, setSelectedFiles] = useState(addedFiles);
   const fileInputRef = useRef(null);
+
+  // Use useEffect to update selectedFiles when addedFiles changes
+  useEffect(() => {
+    if (addedFiles.length > 0) {
+      setSelectedFiles(addedFiles);
+    }
+  }, [addedFiles]);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -40,7 +48,7 @@ const ImageUpload = ({ onFileChange, addedFiles }) => {
         {selectedFiles.map((file, index) => (
           <Box key={index} position="relative" w="100px" h="100px">
             <Image
-              src={URL.createObjectURL(file)}
+              src={file instanceof File ? URL.createObjectURL(file) : file.imagePath} // Handle both new and existing files
               boxSize="100px"
               objectFit="cover"
               borderRadius="xl"

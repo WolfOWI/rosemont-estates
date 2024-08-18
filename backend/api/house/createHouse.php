@@ -69,20 +69,20 @@ $numDeck = $_POST['numDeck'];
 $numFlowerGard = $_POST['numFlowerGard'];
 $numVegGard = $_POST['numVegGard'];
 $numOrchard = $_POST['numOrchard'];
-$internet = isset($_POST['internet']) ? 1 : 0;
-$airCon = isset($_POST['airCon']) ? 1 : 0;
-$heating = isset($_POST['heating']) ? 1 : 0;
-$secSys = isset($_POST['secSys']) ? 1 : 0;
-$solar = isset($_POST['solar']) ? 1 : 0;
-$gardServ = isset($_POST['gardServ']) ? 1 : 0;
-$irrigation = isset($_POST['irrigation']) ? 1 : 0;
-$outdoorLight = isset($_POST['outdoorLight']) ? 1 : 0;
-$boma = isset($_POST['boma']) ? 1 : 0;
-$gatedCommunity = isset($_POST['gatedCommunity']) ? 1 : 0;
+$internet = $_POST['internet'];
+$airCon = $_POST['airCon'];
+$heating = $_POST['heating'];
+$secSys = $_POST['secSys'];
+$solar = $_POST['solar'];
+$gardServ = $_POST['gardServ'];
+$irrigation = $_POST['irrigation'];
+$outdoorLight = $_POST['outdoorLight'];
+$boma = $_POST['boma'];
+$gatedCommunity = $_POST['gatedCommunity'];
 
 
 // Image upload directory
-$target_dir = "../../../src/assets/uploads/";
+$target_dir = realpath("../../../src/assets/uploads/");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -91,9 +91,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uploaded_files = [];
     if (isset($_FILES['images']) && is_array($_FILES['images']['name'])) {
         foreach ($_FILES['images']['name'] as $key => $filename) {
-            $target_file = $target_dir . basename($filename);
+            $target_file = $target_dir . "/" . basename($filename);
             if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_file)) {
-                $uploaded_files[] = $target_file;
+                $relative_path = str_replace(realpath("../../../src/"), '', $target_file);
+                $full_url = "http://localhost/rosemont/src/" . $relative_path;
+                $uploaded_files[] = $full_url;
             } else {
                 die("Error: Failed to upload file $filename.");
             }
@@ -163,12 +165,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $houseId = $conn->insert_id;
 
         // Insert image paths into houseImage table
-        foreach ($uploaded_files as $index => $fileName) {
-            $fullPath = "http://localhost/rosemont/src/assets/uploads/" . $fileName; // Construct the full URL
+        foreach ($uploaded_files as $index => $full_url) {
             $isPrimary = $index === 0 ? 1 : 0; // Mark the first image as primary
             $sql = "INSERT INTO houseImage (houseId, imagePath, isPrimary) VALUES (?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isi", $houseId, $fullPath, $isPrimary);
+            $stmt->bind_param("isi", $houseId, $full_url, $isPrimary);
             $stmt->execute();
         }
 

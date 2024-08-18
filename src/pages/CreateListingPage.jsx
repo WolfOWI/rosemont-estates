@@ -117,8 +117,11 @@ function CreateListingPage() {
   };
 
   const handleCheckboxChange = (e) => {
+    console.log(e.target.name);
+    console.log(e.target.checked);
     const { name, checked } = e.target;
-    setFormData({ ...formData, [name]: checked });
+    setFormData((prevData) => ({ ...prevData, [name]: checked ? 1 : 0 }));
+    console.log(formData);
   };
 
   const handleRadioChange = (value) => {
@@ -191,16 +194,6 @@ function CreateListingPage() {
   const handleFileChange = (files) => {
     setSelectedFiles(files);
   };
-
-  // Function to handle file selection
-  // const handleFileChange = (e) => {
-  //   const files = Array.from(e.target.files);
-  //   if (files.length > 5) {
-  //     alert("You can only upload up to 5 images.");
-  //     return;
-  //   }
-  //   setSelectedFiles(files);
-  // };
   // ------------------------------------------------
 
   return (
@@ -622,7 +615,7 @@ function CreateListingPage() {
                             <IconTextBlock type="internet" />
                             <Checkbox
                               name="internet"
-                              value="internet"
+                              isChecked={formData.internet === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -630,33 +623,33 @@ function CreateListingPage() {
                             <IconTextBlock type="airCon" />
                             <Checkbox
                               name="airCon"
-                              value="airCon"
+                              isChecked={formData.airCon === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="heating" />
                             <Checkbox
                               name="heating"
-                              value="heating"
+                              isChecked={formData.heating === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="secSys" />
                             <Checkbox
                               name="secSys"
-                              value="secSys"
+                              isChecked={formData.secSys === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                           <div className="w-full flex flex-row justify-between">
                             <IconTextBlock type="solar" />
                             <Checkbox
                               name="solar"
-                              value="solar"
+                              isChecked={formData.solar === 1}
                               onChange={handleCheckboxChange}
-                            ></Checkbox>
+                            />
                           </div>
                         </CheckboxGroup>
                       </VStack>
@@ -670,7 +663,7 @@ function CreateListingPage() {
                             <IconTextBlock type="gardServ" />
                             <Checkbox
                               name="gardServ"
-                              value="gardServ"
+                              isChecked={formData.gardServ === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -678,7 +671,7 @@ function CreateListingPage() {
                             <IconTextBlock type="irrigation" />
                             <Checkbox
                               name="irrigation"
-                              value="irrigation"
+                              isChecked={formData.irrigation === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -686,7 +679,7 @@ function CreateListingPage() {
                             <IconTextBlock type="outdoorLight" />
                             <Checkbox
                               name="outdoorLight"
-                              value="outdoorLight"
+                              isChecked={formData.outdoorLight === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -694,7 +687,7 @@ function CreateListingPage() {
                             <IconTextBlock type="boma" />
                             <Checkbox
                               name="boma"
-                              value="boma"
+                              isChecked={formData.boma === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
@@ -702,7 +695,7 @@ function CreateListingPage() {
                             <IconTextBlock type="gatedCommunity" />
                             <Checkbox
                               name="gatedCommunity"
-                              value="gatedCommunity"
+                              isChecked={formData.gatedCommunity === 1}
                               onChange={handleCheckboxChange}
                             ></Checkbox>
                           </div>
