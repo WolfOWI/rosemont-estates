@@ -43,7 +43,6 @@ function ListingDetailPage() {
       try {
         const imagePaths = await getImagesByHouseId(houseId);
         setImages(imagePaths);
-        console.log(imagePaths);
       } catch (error) {
         console.error("Error fetching house images:", error);
       }

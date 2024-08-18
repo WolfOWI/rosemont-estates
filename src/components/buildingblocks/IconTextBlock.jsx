@@ -272,7 +272,12 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
     if (parseInt(value) === 1) {
       text = singleText;
     } else if (parseInt(value) === 0) {
-      text = "No " + pluralText;
+      if (textHidden) {
+        value = "None";
+      } else {
+        value = "";
+        text = "No " + pluralText;
+      }
     } else {
       text = pluralText;
     }
@@ -293,7 +298,7 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
       >
         {icon}
         <p className={fontWeight ? "font-bold" : ""}>
-          {parseInt(value) !== 0 && value} {/* If value is zero, don't display it */}
+          {value}
           {m2Unit && ` m²`}
           {textHidden ? "" : ` ${text}`}
         </p>
