@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { getHouseById } from "../services/houseService";
 import Navbar from "../components/navigation/Navbar";
 import AddressModal from "../components/overlays/AddressModal";
 
@@ -15,6 +17,7 @@ import {
   Checkbox,
   Box,
   useDisclosure,
+  IconButton,
 } from "@chakra-ui/react";
 
 import {
@@ -29,12 +32,28 @@ import {
   OtherHousesOutlined,
   DeleteForeverOutlined,
   EditOutlined,
+  ArrowBack,
 } from "@mui/icons-material";
 
 import RadioCard from "../components/input/RadioCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 
 function EditListingPage() {
+  const { houseId } = useParams();
+  const [house, setHouse] = useState(null);
+
+  useEffect(() => {
+    const fetchHouseDetails = async () => {
+      try {
+        const data = await getHouseById(houseId);
+        setHouse(data);
+      } catch (error) {
+        console.log("Error fetching the house's details:", error);
+      }
+    };
+    fetchHouseDetails();
+  }, [houseId]);
+
   // SellType
   // ------------------------------------------------
   const [selectedOption, setSelectedOption] = useState("For Sale");
@@ -159,52 +178,6 @@ function EditListingPage() {
     }
   };
 
-  const handleClear = (e) => {
-    e.preventDefault();
-    setFormData({
-      title: "",
-      description: "",
-      street: "",
-      suburb: "",
-      city: "",
-      province: "",
-      zip: "",
-      style: "",
-      availabilityStatus: "available",
-      availableDate: "",
-      realEstateId: "",
-      sellType: "sell",
-      price: 0,
-      numFloors: 0,
-      floorSize: 0,
-      numBed: 0,
-      numBath: 0,
-      numKitchen: 0,
-      numDining: 0,
-      numGym: 0,
-      numBilliard: 0,
-      numBasement: 0,
-      numGarage: 0,
-      lotSize: 0,
-      numPool: 0,
-      numCourt: 0,
-      numDeck: 0,
-      numFlowerGard: 0,
-      numVegGard: 0,
-      numOrchard: 0,
-      internet: false,
-      airCon: false,
-      heating: false,
-      secSys: false,
-      solar: false,
-      gardServ: false,
-      irrigation: false,
-      outdoorLight: false,
-      boma: false,
-      gatedCommunity: false,
-    });
-  };
-
   // ------------------------------------------------
 
   // Image Upload
@@ -222,6 +195,10 @@ function EditListingPage() {
   };
   // ------------------------------------------------
 
+  if (!house) {
+    return <div>Loading</div>;
+  }
+
   return (
     <>
       <Navbar />
@@ -231,8 +208,13 @@ function EditListingPage() {
             {/* Top Section */}
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center">
-                <EditOutlined sx={{ fontSize: 80, color: "#C3BDAE" }} />
-                <h2 className="mt-2 ml-4">Editing Property</h2>
+                <IconButton
+                  as={Link}
+                  to={`/listing/${house.houseId}`}
+                  icon={<ArrowBack />}
+                  minW={12}
+                />
+                <h2 className="mt-2 ml-4">Editing {house.title}</h2>
               </div>
               <HStack>
                 <Button
@@ -240,7 +222,7 @@ function EditListingPage() {
                   size="lg"
                   mt={4}
                   leftIcon={<DeleteForeverOutlined />}
-                  onClick={handleClear}
+                  // TODO  onClick={handleClear}
                 >
                   Delete
                 </Button>
@@ -262,25 +244,20 @@ function EditListingPage() {
                   <VStack spacing={4} align="stretch">
                     <FormControl isRequired>
                       <FormLabel>Title</FormLabel>
-                      <Input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                      />
+                      <Input type="text" name="title" value={house.title} onChange={handleChange} />
                     </FormControl>
                     <FormControl isRequired>
                       <FormLabel>Description</FormLabel>
                       <Textarea
                         name="description"
-                        value={formData.description}
+                        value={house.description}
                         onChange={handleChange}
                       />
                     </FormControl>
                     <FormControl isRequired>
                       <FormLabel>Address</FormLabel>
                       <Input
-                        value={`${formData.street}, ${formData.suburb}, ${formData.city}, ${formData.province}, ${formData.zip}`}
+                        value={`${house.street}, ${house.suburb}, ${house.city}, ${house.province}, ${house.zip}`}
                         onClick={onOpen}
                         readOnly
                       />
@@ -290,7 +267,7 @@ function EditListingPage() {
                       <Select
                         placeholder="Select Style"
                         name="style"
-                        value={formData.style}
+                        value={house.style}
                         onChange={handleChange}
                       >
                         <option value="American Colonial">American Colonial</option>
@@ -308,7 +285,7 @@ function EditListingPage() {
                       <Input
                         type="date"
                         name="availableDate"
-                        value={formData.availableDate}
+                        value={house.availableDate}
                         onChange={handleChange}
                       />
                     </FormControl>
@@ -317,7 +294,7 @@ function EditListingPage() {
                       <Select
                         placeholder="Select Agency"
                         name="realEstateId"
-                        value={formData.realEstateId}
+                        value={house.realEstateId}
                         onChange={handleChange}
                       >
                         <option value="2">AIDA</option>
@@ -365,7 +342,7 @@ function EditListingPage() {
                       <RadioCard
                         key={"sell"}
                         value={"sell"}
-                        isChecked={formData.sellType === "sell"}
+                        isChecked={house.sellType === "sell"}
                         onChange={() => handleRadioChange("sell")}
                       >
                         For Sale
@@ -373,7 +350,7 @@ function EditListingPage() {
                       <RadioCard
                         key={"rent"}
                         value={"rent"}
-                        isChecked={formData.sellType === "rent"}
+                        isChecked={house.sellType === "rent"}
                         onChange={() => handleRadioChange("rent")}
                       >
                         To Rent
@@ -386,7 +363,7 @@ function EditListingPage() {
                           flex="1"
                           placeholder="ZAR"
                           name={"price"}
-                          value={formData.price}
+                          value={house.price}
                           onChange={handleNumberChange}
                         />
                         {selectedOption === "rent" && <p className="text-sm">per month</p>}
@@ -408,7 +385,7 @@ function EditListingPage() {
                           type="number"
                           flex="1"
                           name="numFloors"
-                          value={formData.numFloors}
+                          value={house.numFloors}
                           onChange={handleNumberChange}
                         />
                         <p className="text-sm">floor(s)</p>
@@ -421,7 +398,7 @@ function EditListingPage() {
                           type="number"
                           flex="1"
                           name="floorSize"
-                          value={formData.floorSize}
+                          value={house.floorSize}
                           onChange={handleNumberChange}
                         />
                         <p className="text-sm">square meters</p>
@@ -437,7 +414,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBed"
-                            value={formData.numBed}
+                            value={house.numBed}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="bed" />
@@ -449,7 +426,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBath"
-                            value={formData.numBath}
+                            value={house.numBath}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="bath" />
@@ -461,7 +438,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numKitchen"
-                            value={formData.numKitchen}
+                            value={house.numKitchen}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="kitchen" />
@@ -473,7 +450,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numDining"
-                            value={formData.numDining}
+                            value={house.numDining}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="dining" />
@@ -485,7 +462,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numGym"
-                            value={formData.numGym}
+                            value={house.numGym}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="gym" />
@@ -497,7 +474,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBilliard"
-                            value={formData.numBilliard}
+                            value={house.numBilliard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="billiard" />
@@ -509,7 +486,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numBasement"
-                            value={formData.numBasement}
+                            value={house.numBasement}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="basement" />
@@ -521,7 +498,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numGarage"
-                            value={formData.numGarage}
+                            value={house.numGarage}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="garage" />
@@ -547,7 +524,7 @@ function EditListingPage() {
                           type="number"
                           flex="1"
                           name="lotSize"
-                          value={formData.lotSize}
+                          value={house.lotSize}
                           onChange={handleNumberChange}
                         />
                         <p className="text-sm">square meters</p>
@@ -563,7 +540,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numPool"
-                            value={formData.numPool}
+                            value={house.numPool}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="pool" />
@@ -575,7 +552,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numCourt"
-                            value={formData.numCourt}
+                            value={house.numCourt}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="court" />
@@ -587,7 +564,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numDeck"
-                            value={formData.numDeck}
+                            value={house.numDeck}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="deck" />
@@ -599,7 +576,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numFlowerGard"
-                            value={formData.numFlowerGard}
+                            value={house.numFlowerGard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="flowerGard" />
@@ -611,7 +588,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numVegGard"
-                            value={formData.numVegGard}
+                            value={house.numVegGard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="vegGard" />
@@ -623,7 +600,7 @@ function EditListingPage() {
                             p={0}
                             textAlign="center"
                             name="numOrchard"
-                            value={formData.numOrchard}
+                            value={house.numOrchard}
                             onChange={handleNumberChange}
                           />
                           <IconTextBlock type="orchard" />

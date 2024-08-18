@@ -41,6 +41,52 @@ export async function getHouseById(houseId) {
 
   return response.json();
 }
+
+// Get Images of Houses By Their Ids
+export async function getImagesByHouseId(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/house/getImagesByHouseId.php?houseId=${houseId}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch house images");
+    }
+
+    const images = await response.json();
+    return images;
+  } catch (error) {
+    console.error("Error fetching images:", error);
+    throw error;
+  }
+}
+
+// Get Primary Image of a House By Their Ids
+export async function getPrimaryImageByHouseId(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/house/getPrimaryImageByHouseId.php?houseId=${houseId}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch primary house image");
+    }
+
+    const images = await response.json();
+    return images;
+  } catch (error) {
+    console.error("Error fetching images:", error);
+    throw error;
+  }
+}
 // ----------------------------------------------------------------------------
 
 // CREATE FUNCTIONS

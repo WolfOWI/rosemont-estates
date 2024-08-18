@@ -1,11 +1,16 @@
 import { HStack } from "@chakra-ui/react";
-import tempImg from "../../assets/images/familyAtHome.jpg";
+import missingImg from "../../assets/images/missingImg.png";
 import { useNavigate } from "react-router-dom";
 import IconTextBlock from "../buildingblocks/IconTextBlock";
+
+// Services
+import { getAgencyById } from "../../services/agencyService";
+import { getPrimaryImageByHouseId } from "../../services/houseService";
+
+// Utility Functions
 import { houseCatchphrase } from "../../utils/houseCatchphrase";
 import { formatPrice } from "../../utils/formatPrice";
 import { getNumOfRooms } from "../../utils/getNumOfRooms";
-import { getAgencyById } from "../../services/agencyService";
 import logoMap from "../../utils/logoMap";
 import {
   WifiOutlined,
@@ -26,6 +31,7 @@ import { useState, useEffect } from "react";
 
 function ListingHouseCard({ house }) {
   const [agency, setAgency] = useState(null);
+  const [priImage, setPriImage] = useState(null);
   const navigate = useNavigate();
 
   // When listing card mounts, fetch respective agency
@@ -38,7 +44,18 @@ function ListingHouseCard({ house }) {
         console.error("Failed to fetch agency:", error);
       }
     }
+
+    async function fetchPrimaryImage() {
+      try {
+        const imagePath = await getPrimaryImageByHouseId(house.houseId);
+        setPriImage(imagePath.imagePath);
+      } catch (error) {
+        console.error("Error fetching primary house image:", error);
+      }
+    }
+
     fetchAgency();
+    fetchPrimaryImage();
   }, []);
 
   // When card is clicked, go to individual house "ListingDetailPage"
@@ -55,9 +72,9 @@ function ListingHouseCard({ house }) {
         {/* Image (left) */}
         <div className="relative mr-4 group">
           <img
-            src={tempImg}
-            alt="home"
-            className="object-cover rounded-xl h-48 group-hover:brightness-50 transition duration-300"
+            src={priImage ? priImage : missingImg}
+            alt={JSON.stringify(priImage)}
+            className="object-cover rounded-xl h-48 w-64 group-hover:brightness-50 transition duration-300"
           />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
             <FavoriteOutlined className="text-rosered-0" fontSize="large" />

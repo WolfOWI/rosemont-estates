@@ -66,12 +66,6 @@ function Navbar({ transparent }) {
           <Button as={Link} to="/listings">
             Listings
           </Button>
-          <Button as={Link} to="/listing">
-            Specific
-          </Button>
-          <Button as={Link} to="/edit">
-            Edit
-          </Button>
           <Button as={Link} to="/admin-listings">
             Admin
           </Button>

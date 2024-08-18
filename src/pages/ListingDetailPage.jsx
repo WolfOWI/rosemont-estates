@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getHouseById } from "../services/houseService";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { getHouseById, getImagesByHouseId } from "../services/houseService";
 import { capitaliseString } from "../utils/capitaliseString.js";
 import { getNumOfRooms } from "../utils/getNumOfRooms.js";
 import { formatPrice } from "../utils/formatPrice.js";
@@ -20,16 +20,14 @@ import {
 } from "@mui/icons-material";
 import ImageCollection from "../components/visual/ImageCollection.jsx";
 
-import tempImgA from "../assets/images/familyAtHome.jpg";
-import tempImgB from "../assets/images/plant-wall-1.jpg";
-import tempImgC from "../assets/images/plant-wall-2.jpg";
-
 import IconTextBlock from "../components/buildingblocks/IconTextBlock.jsx";
 
 function ListingDetailPage() {
   const { houseId } = useParams();
   const [house, setHouse] = useState(null);
   const [agency, setAgency] = useState(null);
+  const [images, setImages] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHouseDetails = async () => {
@@ -40,20 +38,41 @@ function ListingDetailPage() {
         console.log("Error fetching the house's details:", error);
       }
     };
+
+    const fetchImages = async () => {
+      try {
+        const imagePaths = await getImagesByHouseId(houseId);
+        setImages(imagePaths);
+        console.log(imagePaths);
+      } catch (error) {
+        console.error("Error fetching house images:", error);
+      }
+    };
+
     fetchHouseDetails();
+    fetchImages();
   }, [houseId]);
 
+  // When house object changes, get agency info
   useEffect(() => {
-    async function fetchAgency() {
-      try {
-        const agencyData = await getAgencyById(house.realEstateId);
-        setAgency(agencyData);
-      } catch (error) {
-        console.error("Failed to fetch agency:", error);
+    // If house exists
+    if (house) {
+      async function fetchAgency() {
+        try {
+          const agencyData = await getAgencyById(house.realEstateId);
+          setAgency(agencyData);
+        } catch (error) {
+          console.error("Failed to fetch agency:", error);
+        }
       }
+      fetchAgency();
     }
-    fetchAgency();
   }, [house]);
+
+  // When edit btn is clicked, go to edit house page "editListingPage"
+  const handleEditClick = () => {
+    navigate(`/edit/${house.houseId}`);
+  };
 
   if (!house) {
     return <div>Loading</div>;
@@ -66,13 +85,13 @@ function ListingDetailPage() {
       <div className="mt-4 mb-24 mx-2 md:mx-8 lg:mx-16 xl:mx-32 2xl:mx-64">
         <HStack>
           <IconButton as={Link} to="/listings" icon={<ArrowBack />} minW={12} />
-          <Button leftIcon={<EditOutlined />} variant="thornOutline">
+          <Button leftIcon={<EditOutlined />} variant="thornOutline" onClick={handleEditClick}>
             Edit Listing
           </Button>
         </HStack>
         {/* House Imagery */}
         <div className="mt-4">
-          <ImageCollection images={[tempImgB, tempImgA, tempImgC, tempImgC, tempImgA]} />
+          {images.length > 0 ? <ImageCollection images={images} /> : <div>No images available</div>}
         </div>
         {/* House Info Box */}
         <div className="mt-4 bg-beige-0 rounded-2xl p-8 flex justify-between">

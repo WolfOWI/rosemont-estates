@@ -181,7 +181,7 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
     case "internet":
       icon = <WifiOutlined {...getIconProps()} />;
       singleText = "Internet Connection";
-      pluralText = "Internet Connection Points";
+      pluralText = "Internet Connection";
 
       break;
     case "airCon":
@@ -199,7 +199,7 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
     case "secSys":
       icon = <VideocamOutlined {...getIconProps()} />;
       singleText = "Security System";
-      pluralText = "Security Systems";
+      pluralText = "Security System";
 
       break;
     case "solar":
@@ -217,7 +217,7 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
     case "irrigation":
       icon = <WaterDropOutlined {...getIconProps()} />;
       singleText = "Irrigation System";
-      pluralText = "Irrigation Systems";
+      pluralText = "Irrigation System";
 
       break;
     case "outdoorLight":
@@ -229,7 +229,7 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
     case "boma":
       icon = <OutdoorGrillOutlined {...getIconProps()} />;
       singleText = "Outdoor Boma";
-      pluralText = "Outdoor Bomas";
+      pluralText = "Outdoor Boma";
 
       break;
     case "gatedCommunity":

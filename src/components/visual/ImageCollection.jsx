@@ -1,5 +1,3 @@
-import tempImg from "../../assets/images/familyAtHome.jpg";
-
 function ImageCollection({ images }) {
   return (
     <>

@@ -163,11 +163,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $houseId = $conn->insert_id;
 
         // Insert image paths into houseImage table
-        foreach ($uploaded_files as $index => $filePath) {
+        foreach ($uploaded_files as $index => $fileName) {
+            $fullPath = "http://localhost/rosemont/src/assets/uploads/" . $fileName; // Construct the full URL
             $isPrimary = $index === 0 ? 1 : 0; // Mark the first image as primary
             $sql = "INSERT INTO houseImage (houseId, imagePath, isPrimary) VALUES (?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isi", $houseId, $filePath, $isPrimary);
+            $stmt->bind_param("isi", $houseId, $fullPath, $isPrimary);
             $stmt->execute();
         }
 

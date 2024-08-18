@@ -25,8 +25,8 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/listings" element={<ListingsPage />} />
           <Route path="/listing/:houseId" element={<ListingDetailPage />} />
+          <Route path="/edit/:houseId" element={<EditListingPage />} />
           <Route path="/add" element={<CreateListingPage />} />
-          <Route path="/edit" element={<EditListingPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/admin-listings" element={<AdminListingsDash />} />
           <Route path="/admin-buyers" element={<AdminBuyDash />} />
