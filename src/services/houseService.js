@@ -113,9 +113,9 @@ export async function createHouse(formData, selectedFiles) {
       body: formDataToSend,
     });
 
-    const text = await response.text(); // Fetch as text
-    console.log(text); // Log the response text to see what is being returned
-    const data = JSON.parse(text); // Parse the text as JSON
+    const text = await response.text();
+    // console.log(text);
+    const data = JSON.parse(text);
     return data;
   } catch (error) {
     console.error("Failed to create house: ", error);
@@ -130,11 +130,11 @@ export async function createHouse(formData, selectedFiles) {
 export async function updateHouse(houseId, formData, selectedFiles) {
   const formDataToSend = new FormData();
 
-  console.log("updateHouse.js: 'I got the formData to send:'");
-  console.log(formData);
+  // console.log("updateHouse.js: 'I got the formData to send:'");
+  // console.log(formData);
 
-  console.log("updateHouse.js: 'I got these selectedFiles:'");
-  console.log(selectedFiles);
+  // console.log("updateHouse.js: 'I got these selectedFiles:'");
+  // console.log(selectedFiles);
 
   // Append all form fields to the FormData object
   Object.keys(formData).forEach((key) => {
@@ -150,8 +150,8 @@ export async function updateHouse(houseId, formData, selectedFiles) {
     }
   });
 
-  console.log("updateHouse.js: 'The formDataToSend is:'");
-  console.log(formDataToSend);
+  // console.log("updateHouse.js: 'The formDataToSend is:'");
+  // console.log(formDataToSend);
 
   try {
     const response = await fetch(

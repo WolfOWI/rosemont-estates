@@ -3,9 +3,8 @@ import { Box, Image, IconButton, VStack, Input, Button } from "@chakra-ui/react"
 import { CloseOutlined, UploadFileOutlined } from "@mui/icons-material";
 
 const ImageUpload = ({ onFileChange, addedFiles = [] }) => {
-  // Initialize selectedFiles with addedFiles if provided
-  console.log("ImageUpload: 'I've received the following addedFiles:'");
-  console.log(addedFiles);
+  // console.log("ImageUpload: 'I've received the following addedFiles:'");
+  // console.log(addedFiles);
 
   const [selectedFiles, setSelectedFiles] = useState(addedFiles);
   const fileInputRef = useRef(null);
@@ -13,16 +12,9 @@ const ImageUpload = ({ onFileChange, addedFiles = [] }) => {
   // Use useEffect to update selectedFiles when addedFiles changes
   useEffect(() => {
     if (addedFiles.length > 0) {
-      console.log("ImageUpload: 'Since there are addedFiles, I'm setting them to selectedFiles.'");
       setSelectedFiles(addedFiles);
     }
   }, [addedFiles]);
-
-  // TODO Delete Later
-  useEffect(() => {
-    console.log("ImageUpload: 'SelectedFiles are currently:'");
-    console.log(selectedFiles);
-  }, [selectedFiles]);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);

@@ -59,7 +59,7 @@ function EditListingPage() {
 
     const fetchHouseImages = async () => {
       try {
-        console.log("Fetching house images (fetchHouseImages)");
+        // console.log("Fetching house images (fetchHouseImages)");
         const images = await getImagesByHouseId(houseId);
         setSelectedFiles(images); // Preload existing images into the state
       } catch (error) {
@@ -69,12 +69,6 @@ function EditListingPage() {
     fetchHouseDetails();
     fetchHouseImages();
   }, [houseId]);
-
-  // TODO Delete Later
-  useEffect(() => {
-    console.log("Editlistingpage: 'selectedFiles are:'");
-    console.log(selectedFiles);
-  }, [selectedFiles]);
 
   const handleAddressDone = (address) => {
     setFormData((prevData) => ({
@@ -110,20 +104,20 @@ function EditListingPage() {
 
   const handleFileChange = (files) => {
     setSelectedFiles(files);
-    console.log(
-      "EditListingPage: My function, handleFileChange, has been activated. Setting selectedFiles to:"
-    );
-    console.log(files);
+    // console.log(
+    //   "EditListingPage: My function, handleFileChange, has been activated. Setting selectedFiles to:"
+    // );
+    // console.log(files);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("EditListingPage: 'I'm handling the submit now.'");
-      console.log("Editlistingpage: 'The formData is:'");
-      console.log(formData);
-      console.log("Editlistingpage: 'The selectedFiles are:'");
-      console.log(selectedFiles);
+      // console.log("EditListingPage: 'I'm handling the submit now.'");
+      // console.log("Editlistingpage: 'The formData is:'");
+      // console.log(formData);
+      // console.log("Editlistingpage: 'The selectedFiles are:'");
+      // console.log(selectedFiles);
       const response = await updateHouse(houseId, formData, selectedFiles);
       alert(response.message);
     } catch (error) {
