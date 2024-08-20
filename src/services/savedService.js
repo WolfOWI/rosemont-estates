@@ -2,10 +2,9 @@
 
 // Get SavedHouseIds by Logged in User's id
 export async function getSavedHouseIdsByUserId() {
-  console.log("inside getSavedHouseIdsByUserId");
   try {
     const response = await fetch(
-      `http://localhost/rosemont/backend/api/saved/getSavedHouseIdsByUserId.php`,
+      `http://localhost/rosemont/backend/api/saved/getSavedBySessionUserId.php`,
       {
         method: "GET",
         credentials: "include",

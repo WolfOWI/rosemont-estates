@@ -32,7 +32,7 @@ function ProfilePage() {
 
   // On page mount
   useEffect(() => {
-    setSavedHouseIdsArr([53, 66, 67]);
+    // setSavedHouseIdsArr([53, 66, 67]);
 
     // Fetch session info from the server
     fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
@@ -46,16 +46,21 @@ function ProfilePage() {
         }
       });
 
-    // const fetchSavedHouseIds = async () => {
-    //   try {
-    //     const idsArr = await getSavedHouseIdsByUserId();
-    //     setSavedHouseIdsArr(idsArr);
-    //   } catch (error) {
-    //     console.log("Error fetching the saved house ids:", error);
-    //   }
-    // };
-    // fetchSavedHouseIds();
+    const fetchSavedHouseIds = async () => {
+      try {
+        const idsArr = await getSavedHouseIdsByUserId();
+        setSavedHouseIdsArr(idsArr);
+      } catch (error) {
+        console.log("Error fetching the saved house ids:", error);
+      }
+    };
+    fetchSavedHouseIds();
   }, []);
+
+  useEffect(() => {
+    console.log("Saved House Ids Array");
+    console.log(savedHouseIdsArr);
+  }, [savedHouseIdsArr]);
 
   useEffect(() => {
     const fetchHouseDetails = async (houseId) => {
