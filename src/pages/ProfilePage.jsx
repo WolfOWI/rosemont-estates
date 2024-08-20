@@ -32,8 +32,6 @@ function ProfilePage() {
 
   // On page mount
   useEffect(() => {
-    // setSavedHouseIdsArr([53, 66, 67]);
-
     // Fetch session info from the server
     fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
       method: "GET",
@@ -57,13 +55,15 @@ function ProfilePage() {
     fetchSavedHouseIds();
   }, []);
 
+  // TODO Testing purposes
   useEffect(() => {
     console.log("Saved House Ids Array");
     console.log(savedHouseIdsArr);
   }, [savedHouseIdsArr]);
 
+  // When savedHouseIdsArr changes
   useEffect(() => {
-    const fetchHouseDetails = async (houseId) => {
+    const fetchHouseDetails = async () => {
       try {
         const houseInfoPromises = savedHouseIdsArr.map((houseId) => getHouseById(houseId));
         const allHouseDetails = await Promise.all(houseInfoPromises);
@@ -76,6 +76,13 @@ function ProfilePage() {
 
     fetchHouseDetails();
   }, [savedHouseIdsArr]);
+
+  // Handle removing a house from the saved list
+  const handleRemoveHouse = (houseId) => {
+    console.log("handleRemoveHouse");
+    setSavedHouseIdsArr((prevIds) => prevIds.filter((id) => id !== houseId));
+    setSavedHousesArr((prevHouses) => prevHouses.filter((house) => house.houseId !== houseId));
+  };
 
   // Log out function
   const handleLogout = () => {
@@ -159,7 +166,11 @@ function ProfilePage() {
             </HStack>
             <VStack spacing={4} align="stretch" mt={4}>
               {savedHousesArr.map((savedHouse) => (
-                <SavedHouseCard key={savedHouse.houseId} house={savedHouse} />
+                <SavedHouseCard
+                  key={savedHouse.houseId}
+                  house={savedHouse}
+                  onRemove={handleRemoveHouse}
+                />
               ))}
             </VStack>
           </div>

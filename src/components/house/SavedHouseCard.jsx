@@ -2,6 +2,7 @@ import { HStack } from "@chakra-ui/react";
 import missingImg from "../../assets/images/missingImg.png";
 import { useNavigate } from "react-router-dom";
 import IconTextBlock from "../buildingblocks/IconTextBlock";
+import { removeSavedHouse } from "../../services/savedService";
 
 // Services
 import { getPrimaryImageByHouseId } from "../../services/houseService";
@@ -26,7 +27,7 @@ import {
 
 import { useState, useEffect } from "react";
 
-function SavedHouseCard({ house }) {
+function SavedHouseCard({ house, onRemove }) {
   const [priImage, setPriImage] = useState(null);
   const navigate = useNavigate();
 
@@ -44,19 +45,26 @@ function SavedHouseCard({ house }) {
     fetchPrimaryImage();
   }, [house.houseId]);
 
-  // When card is clicked, go to individual house "ListingDetailPage"
-  const handleClick = () => {
-    navigate(`/listing/${house.houseId}`);
+  // Handle image click to remove the house from the saved list
+  const handleImageClick = async (e) => {
+    console.log("handleImageClick");
+    e.stopPropagation(); // Prevent navigation on click
+    try {
+      await removeSavedHouse(house.houseId);
+      onRemove(house.houseId); // Notify parent to remove this house from the list
+    } catch (error) {
+      console.error("Failed to remove saved house:", error);
+    }
   };
 
   return (
     <>
       <div
         className="flex min-w-full p-4 rounded-3xl hover:bg-beige-P1 hover:cursor-pointer transition-all duration-300"
-        onClick={handleClick}
+        onClick={() => navigate(`/listing/${house.houseId}`)}
       >
         {/* Image (left) */}
-        <div className="relative mr-4 group">
+        <div className="relative mr-4 group" onClick={handleImageClick}>
           <img
             src={priImage ? priImage : missingImg}
             alt={JSON.stringify(priImage)}
