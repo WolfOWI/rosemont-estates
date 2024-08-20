@@ -4,8 +4,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require "../../config/config.php";
-
 // Start the session
 session_start();
 
@@ -14,7 +12,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Content-Type: application/json; charset=UTF-8");
+header("Content-Type: application/json");
 
 // Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -22,35 +20,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
+require '../../config/config.php';
+
 // Get logged-in user's ID
 $userId = $_SESSION['user']['userId'] ?? '';
 
 // Get the house ID from the query string
 $houseId = isset($_GET['houseId']) ? intval($_GET['houseId']) : null;
 
-if (!$userId) {
-    echo json_encode(["message" => "User not logged in"]);
-}
+// When button is pressed (heart/save button)
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-if (!$houseId) {
-    echo json_encode(["message" => "HouseId ???"]);
-}
+    if ($userId && $houseId) {
+        $sql = "INSERT INTO saved (`userId`, `houseId`) VALUES (?, ? )";
+        $stmt = $conn->prepare($sql);
 
-if ($userId && $houseId) {
-    $sql = "DELETE FROM saved WHERE userId = ? AND houseId = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $userId, $houseId);
+        if ($stmt === false) {
+            die("Prepare failed: " . $conn->error);
+        }
 
-    if ($stmt->execute()) {
-        echo json_encode(["message" => "House removed from saved list"]);
+        $stmt->bind_param("ii", $userId, $houseId);
+
+        if ($stmt->execute()) {
+            echo json_encode(["message" => "House added to saved list"]);
+        } else {
+            echo json_encode(["message" => "Failed to add house to saved list"]);
+        }
+
     } else {
-        echo json_encode(["message" => "Failed to remove house"]);
+        echo json_encode(["message" => "User not logged in or houseId not provided."]);
     }
 
     $stmt->close();
-} else {
-    echo json_encode(["message" => "User not logged in or houseId not provided."]);
 }
+
+
 
 $conn->close();
 ?>

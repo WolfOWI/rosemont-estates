@@ -6,6 +6,7 @@ import IconTextBlock from "../buildingblocks/IconTextBlock";
 // Services
 import { getAgencyById } from "../../services/agencyService";
 import { getPrimaryImageByHouseId } from "../../services/houseService";
+import { addToSaved } from "../../services/savedService";
 
 // Utility Functions
 import { houseCatchphrase } from "../../utils/houseCatchphrase";
@@ -34,7 +35,7 @@ function ListingHouseCard({ house }) {
   const [priImage, setPriImage] = useState(null);
   const navigate = useNavigate();
 
-  // When listing card mounts, fetch respective agency
+  // When card mounts, fetch respective agency & image
   useEffect(() => {
     async function fetchAgency() {
       try {
@@ -63,6 +64,17 @@ function ListingHouseCard({ house }) {
     navigate(`/listing/${house.houseId}`);
   };
 
+  // Handle image click to remove the house from the saved list
+  const handleImageClick = async (e) => {
+    console.log("handleImageClick");
+    e.stopPropagation(); // Prevent navigation on click
+    try {
+      await addToSaved(house.houseId);
+    } catch (error) {
+      console.error("Failed to remove saved house:", error);
+    }
+  };
+
   return (
     <>
       <div
@@ -70,7 +82,7 @@ function ListingHouseCard({ house }) {
         onClick={handleClick}
       >
         {/* Image (left) */}
-        <div className="relative mr-4 group">
+        <div className="relative mr-4 group" onClick={handleImageClick}>
           <img
             src={priImage ? priImage : missingImg}
             alt={JSON.stringify(priImage)}

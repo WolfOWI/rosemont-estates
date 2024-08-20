@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
-
 require '../../config/config.php';
 
 $session_id = session_id();
@@ -34,8 +33,6 @@ if (!isset($_SESSION['user'])) {
     ]);
     exit;
 }
-
-
 
 // Extract data from the request
 $userId = $_SESSION['user']['userId'];
