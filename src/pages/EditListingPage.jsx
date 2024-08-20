@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { getHouseById, updateHouse, getImagesByHouseId } from "../services/houseService";
 import Navbar from "../components/navigation/Navbar";
 import AddressModal from "../components/overlays/AddressModal";
@@ -44,6 +44,7 @@ function EditListingPage() {
   const [formData, setFormData] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHouseDetails = async () => {
@@ -120,6 +121,7 @@ function EditListingPage() {
       // console.log(selectedFiles);
       const response = await updateHouse(houseId, formData, selectedFiles);
       alert(response.message);
+      navigate(`/listing/${houseId}`); // Navigate back to listing page
     } catch (error) {
       alert("Failed to update house listing. Please try again.");
     }
