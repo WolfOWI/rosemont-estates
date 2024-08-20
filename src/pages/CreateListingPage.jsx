@@ -3,6 +3,7 @@ import Navbar from "../components/navigation/Navbar";
 import AddressModal from "../components/overlays/AddressModal";
 import ImageUpload from "../components/input/ImageUpload";
 import { createHouse } from "../services/houseService";
+import { useNavigate } from "react-router-dom";
 
 import {
   VStack,
@@ -36,6 +37,8 @@ import RadioCard from "../components/input/RadioCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 
 function CreateListingPage() {
+  const navigate = useNavigate();
+
   // SellType
   // ------------------------------------------------
   const [selectedOption, setSelectedOption] = useState("For Sale");
@@ -117,11 +120,11 @@ function CreateListingPage() {
   };
 
   const handleCheckboxChange = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.checked);
+    // console.log(e.target.name);
+    // console.log(e.target.checked);
     const { name, checked } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: checked ? 1 : 0 }));
-    console.log(formData);
+    // console.log(formData);
   };
 
   const handleRadioChange = (value) => {
@@ -135,6 +138,7 @@ function CreateListingPage() {
     try {
       const response = await createHouse(formData, selectedFiles);
       alert(response.message);
+      navigate(`/profile`);
     } catch (error) {
       alert("Failed to create house listing. Please try again.");
     }
