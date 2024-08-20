@@ -1,5 +1,6 @@
 import Navbar from "../components/navigation/Navbar";
-import { getHouseById, getImagesByHouseId } from "../services/houseService";
+import { getSavedHouseIdsByUserId } from "../services/savedService";
+import { getHouseById } from "../services/houseService";
 import { VStack, HStack, Button } from "@chakra-ui/react";
 
 import {
@@ -26,25 +27,13 @@ import SavedHouseCard from "../components/house/SavedHouseCard";
 
 function ProfilePage() {
   const [user, setUser] = useState("");
-  const [savedHouses, setSavedHouses] = useState([]);
-  // TODO Temporary Variable
-  const houseId = 64;
-
-  useEffect(() => {
-    const fetchHouseDetails = async () => {
-      try {
-        const data = await getHouseById(houseId);
-        setSavedHouses(data);
-      } catch (error) {
-        console.log("Error fetching the house's details:", error);
-      }
-    };
-
-    fetchHouseDetails();
-  }, []);
+  const [savedHouseIdsArr, setSavedHouseIdsArr] = useState([]);
+  const [savedHousesArr, setSavedHousesArr] = useState([]);
 
   // On page mount
   useEffect(() => {
+    setSavedHouseIdsArr([53, 66, 67]);
+
     // Fetch session info from the server
     fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
       method: "GET",
@@ -56,7 +45,32 @@ function ProfilePage() {
           setUser(data.sessionData);
         }
       });
+
+    // const fetchSavedHouseIds = async () => {
+    //   try {
+    //     const idsArr = await getSavedHouseIdsByUserId();
+    //     setSavedHouseIdsArr(idsArr);
+    //   } catch (error) {
+    //     console.log("Error fetching the saved house ids:", error);
+    //   }
+    // };
+    // fetchSavedHouseIds();
   }, []);
+
+  useEffect(() => {
+    const fetchHouseDetails = async (houseId) => {
+      try {
+        const houseInfoPromises = savedHouseIdsArr.map((houseId) => getHouseById(houseId));
+        const allHouseDetails = await Promise.all(houseInfoPromises);
+
+        setSavedHousesArr(allHouseDetails);
+      } catch (error) {
+        console.log("Error fetching the house's details:", error);
+      }
+    };
+
+    fetchHouseDetails();
+  }, [savedHouseIdsArr]);
 
   // Log out function
   const handleLogout = () => {
@@ -139,7 +153,9 @@ function ProfilePage() {
               </Button>
             </HStack>
             <VStack spacing={4} align="stretch" mt={4}>
-              <SavedHouseCard house={savedHouses} />
+              {savedHousesArr.map((savedHouse) => (
+                <SavedHouseCard key={savedHouse.houseId} house={savedHouse} />
+              ))}
             </VStack>
           </div>
         </HStack>
