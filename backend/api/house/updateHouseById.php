@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
+
 // Get houseId from query parameters
 $houseId = isset($_GET['houseId']) ? $_GET['houseId'] : die(json_encode(["message" => "houseId not provided"]));
 
@@ -65,6 +66,11 @@ $gatedCommunity = $_POST['gatedCommunity'];
 
 // Image upload directory
 $target_dir = realpath("../../../src/assets/uploads/");
+
+// Log incoming data for debugging
+error_log("houseId: " . $houseId);
+error_log("Title: " . $title);
+error_log("Description: " . $description);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -131,6 +137,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
 
+        // Ensure existingImages is an array, even if it's not provided in the request
+        $existingImages = isset($_POST['existingImages']) && is_array($_POST['existingImages']) ? $_POST['existingImages'] : [];
+
         // Move uploaded files to the uploads directory
         $uploaded_files = [];
         if (isset($_FILES['images']) && is_array($_FILES['images']['name'])) {
@@ -138,39 +147,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $target_file = $target_dir . "/" . basename($filename);
                 if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_file)) {
                     $relative_path = str_replace(realpath("../../../src/"), '', $target_file);
-                    $full_url = "http://localhost/rosemont/src/" . $relative_path;
+                    $full_url = "http://localhost/rosemont/src" . $relative_path;
                     $uploaded_files[] = $full_url;
+
+                    // Log each uploaded file
+                    error_log("Uploaded file: " . $full_url);
                 } else {
+                    error_log("Failed to upload file: " . $filename);
                     die("Error: Failed to upload file $filename.");
                 }
             }
         }
 
-        // Insert new images into the houseImage table
-        if (!empty($uploaded_files)) {
+        // Debugging: Log the final array of uploaded files
+        error_log("Final list of uploaded files: " . json_encode($uploaded_files));
+
+        // Combine existing images and uploaded files
+        $all_images = array_merge($existingImages, $uploaded_files);
+
+        if (!empty($all_images)) {
             // Clear existing images for this house
             $deleteSql = "DELETE FROM houseImage WHERE houseId = ?";
             $deleteStmt = $conn->prepare($deleteSql);
             $deleteStmt->bind_param("i", $houseId);
             $deleteStmt->execute();
 
-            // Insert new images
-            foreach ($uploaded_files as $index => $full_url) {
+            // Reinsert all images (existing + newly uploaded)
+            foreach ($all_images as $index => $imagePath) {
                 $isPrimary = $index === 0 ? 1 : 0; // Mark the first image as primary
                 $sql = "INSERT INTO houseImage (houseId, imagePath, isPrimary) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("isi", $houseId, $full_url, $isPrimary);
+                $stmt->bind_param("isi", $houseId, $imagePath, $isPrimary);
                 $stmt->execute();
+
+                // Log each image being inserted
+                error_log("Inserting imagePath: " . $imagePath . " for houseId: " . $houseId);
             }
         }
 
+
         echo json_encode(["message" => "House listing updated successfully"]);
     } else {
+        error_log("Failed to update house listing: " . $stmt->error);
         echo json_encode(["message" => "Failed to update house listing", "error" => $stmt->error]);
     }
 
+
     $stmt->close();
 }
+
 
 $conn->close();
 ?>

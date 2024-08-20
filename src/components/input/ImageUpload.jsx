@@ -4,15 +4,25 @@ import { CloseOutlined, UploadFileOutlined } from "@mui/icons-material";
 
 const ImageUpload = ({ onFileChange, addedFiles = [] }) => {
   // Initialize selectedFiles with addedFiles if provided
+  console.log("ImageUpload: 'I've received the following addedFiles:'");
+  console.log(addedFiles);
+
   const [selectedFiles, setSelectedFiles] = useState(addedFiles);
   const fileInputRef = useRef(null);
 
   // Use useEffect to update selectedFiles when addedFiles changes
   useEffect(() => {
     if (addedFiles.length > 0) {
+      console.log("ImageUpload: 'Since there are addedFiles, I'm setting them to selectedFiles.'");
       setSelectedFiles(addedFiles);
     }
   }, [addedFiles]);
+
+  // TODO Delete Later
+  useEffect(() => {
+    console.log("ImageUpload: 'SelectedFiles are currently:'");
+    console.log(selectedFiles);
+  }, [selectedFiles]);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -48,7 +58,7 @@ const ImageUpload = ({ onFileChange, addedFiles = [] }) => {
         {selectedFiles.map((file, index) => (
           <Box key={index} position="relative" w="100px" h="100px">
             <Image
-              src={file instanceof File ? URL.createObjectURL(file) : file.imagePath} // Handle both new and existing files
+              src={file instanceof File ? URL.createObjectURL(file) : file} // Handle both new and existing files
               boxSize="100px"
               objectFit="cover"
               borderRadius="xl"

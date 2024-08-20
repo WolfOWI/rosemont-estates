@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $target_file = $target_dir . "/" . basename($filename);
             if (move_uploaded_file($_FILES['images']['tmp_name'][$key], $target_file)) {
                 $relative_path = str_replace(realpath("../../../src/"), '', $target_file);
-                $full_url = "http://localhost/rosemont/src/" . $relative_path;
+                $full_url = "http://localhost/rosemont/src" . $relative_path;
                 $uploaded_files[] = $full_url;
             } else {
                 die("Error: Failed to upload file $filename.");

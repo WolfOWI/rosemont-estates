@@ -50,16 +50,31 @@ function EditListingPage() {
       try {
         const houseData = await getHouseById(houseId);
         setFormData(houseData);
-        console.log(houseData);
-        const images = await getImagesByHouseId(houseId);
-        setSelectedFiles(images); // Preload existing images into the state
-        console.log(images);
+        // console.log("The houseData:");
+        // console.log(houseData);
       } catch (error) {
         console.log("Error fetching the house's details:", error);
       }
     };
+
+    const fetchHouseImages = async () => {
+      try {
+        console.log("Fetching house images (fetchHouseImages)");
+        const images = await getImagesByHouseId(houseId);
+        setSelectedFiles(images); // Preload existing images into the state
+      } catch (error) {
+        console.log("Error fetching the house images:", error);
+      }
+    };
     fetchHouseDetails();
+    fetchHouseImages();
   }, [houseId]);
+
+  // TODO Delete Later
+  useEffect(() => {
+    console.log("Editlistingpage: 'selectedFiles are:'");
+    console.log(selectedFiles);
+  }, [selectedFiles]);
 
   const handleAddressDone = (address) => {
     setFormData((prevData) => ({
@@ -85,11 +100,8 @@ function EditListingPage() {
   };
 
   const handleCheckboxChange = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.checked);
     const { name, checked } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: checked ? 1 : 0 }));
-    console.log(formData);
   };
 
   const handleRadioChange = (value) => {
@@ -98,11 +110,20 @@ function EditListingPage() {
 
   const handleFileChange = (files) => {
     setSelectedFiles(files);
+    console.log(
+      "EditListingPage: My function, handleFileChange, has been activated. Setting selectedFiles to:"
+    );
+    console.log(files);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("EditListingPage: 'I'm handling the submit now.'");
+      console.log("Editlistingpage: 'The formData is:'");
+      console.log(formData);
+      console.log("Editlistingpage: 'The selectedFiles are:'");
+      console.log(selectedFiles);
       const response = await updateHouse(houseId, formData, selectedFiles);
       alert(response.message);
     } catch (error) {
@@ -235,7 +256,7 @@ function EditListingPage() {
                     <h3>Imagery</h3>
                   </HStack>
                   <VStack spacing={4} align="stretch">
-                    <FormControl isRequired>
+                    <FormControl isRequired={!selectedFiles.length}>
                       <FormLabel>Images</FormLabel>
                       <ImageUpload onFileChange={handleFileChange} addedFiles={selectedFiles} />
                     </FormControl>

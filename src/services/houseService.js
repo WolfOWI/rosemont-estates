@@ -130,6 +130,12 @@ export async function createHouse(formData, selectedFiles) {
 export async function updateHouse(houseId, formData, selectedFiles) {
   const formDataToSend = new FormData();
 
+  console.log("updateHouse.js: 'I got the formData to send:'");
+  console.log(formData);
+
+  console.log("updateHouse.js: 'I got these selectedFiles:'");
+  console.log(selectedFiles);
+
   // Append all form fields to the FormData object
   Object.keys(formData).forEach((key) => {
     formDataToSend.append(key, formData[key]);
@@ -137,8 +143,15 @@ export async function updateHouse(houseId, formData, selectedFiles) {
 
   // Append selected files to the FormData object
   selectedFiles.forEach((file) => {
-    formDataToSend.append("images[]", file);
+    if (file instanceof File) {
+      formDataToSend.append("images[]", file);
+    } else {
+      formDataToSend.append("existingImages[]", file); // Send existing images as well
+    }
   });
+
+  console.log("updateHouse.js: 'The formDataToSend is:'");
+  console.log(formDataToSend);
 
   try {
     const response = await fetch(
