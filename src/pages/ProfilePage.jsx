@@ -1,5 +1,5 @@
 import Navbar from "../components/navigation/Navbar";
-
+import { getHouseById, getImagesByHouseId } from "../services/houseService";
 import { VStack, HStack, Button } from "@chakra-ui/react";
 
 import {
@@ -22,10 +22,28 @@ import {
 
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 import { useState, useEffect } from "react";
+import SavedHouseCard from "../components/house/SavedHouseCard";
 
 function ProfilePage() {
   const [user, setUser] = useState("");
+  const [savedHouses, setSavedHouses] = useState([]);
+  // TODO Temporary Variable
+  const houseId = 64;
 
+  useEffect(() => {
+    const fetchHouseDetails = async () => {
+      try {
+        const data = await getHouseById(houseId);
+        setSavedHouses(data);
+      } catch (error) {
+        console.log("Error fetching the house's details:", error);
+      }
+    };
+
+    fetchHouseDetails();
+  }, []);
+
+  // On page mount
   useEffect(() => {
     // Fetch session info from the server
     fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
@@ -58,7 +76,7 @@ function ProfilePage() {
         {/* Header */}
         <HStack align="center" mb={4}>
           <PersonOutlined sx={{ fontSize: 96, color: "#C3BDAE" }} />
-          <h2>Jane's Profile</h2>
+          <h2>{user.firstName}'s Profile</h2>
         </HStack>
         {/* Content */}
         <HStack w="full" align="stretch" justify="space-between" spacing={4}>
@@ -120,7 +138,9 @@ function ProfilePage() {
                 Clear All
               </Button>
             </HStack>
-            <VStack spacing={4} align="stretch"></VStack>
+            <VStack spacing={4} align="stretch" mt={4}>
+              <SavedHouseCard house={savedHouses} />
+            </VStack>
           </div>
         </HStack>
       </div>
