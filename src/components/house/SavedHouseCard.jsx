@@ -34,7 +34,6 @@ function SavedHouseCard({ house, onRemove }) {
 
   // Handle image click to remove the house from the saved list
   const handleImageClick = async (e) => {
-    console.log("handleImageClick");
     e.stopPropagation(); // Prevent navigation on click
     try {
       await removeSavedHouse(house.houseId);

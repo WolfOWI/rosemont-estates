@@ -73,6 +73,11 @@ function MyHouseCard({ house }) {
     }
   };
 
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    navigate(`/edit/${house.houseId}`);
+  };
+
   return (
     <>
       <div
@@ -99,7 +104,9 @@ function MyHouseCard({ house }) {
                 <HStack pt={2}>{renderStatus()}</HStack>
               </div>
               <HStack>
-                <Button leftIcon={<EditOutlined />}>Edit</Button>
+                <Button leftIcon={<EditOutlined />} onClick={handleEditClick}>
+                  Edit
+                </Button>
                 <Button leftIcon={<DeleteOutline />} variant="roseOutline">
                   Delete
                 </Button>
