@@ -6,7 +6,11 @@ import IconTextBlock from "../buildingblocks/IconTextBlock";
 // Services
 import { getAgencyById } from "../../services/agencyService";
 import { getPrimaryImageByHouseId } from "../../services/houseService";
-import { addToSaved } from "../../services/savedService";
+import {
+  addToSaved,
+  getSavedHouseIdsByUserId,
+  removeSavedHouse,
+} from "../../services/savedService";
 
 // Utility Functions
 import { houseCatchphrase } from "../../utils/houseCatchphrase";
@@ -26,6 +30,7 @@ import {
   FenceOutlined,
   ErrorOutline,
   FavoriteOutlined,
+  FavoriteBorderOutlined,
 } from "@mui/icons-material";
 
 import { useState, useEffect } from "react";
@@ -33,9 +38,11 @@ import { useState, useEffect } from "react";
 function ListingHouseCard({ house }) {
   const [agency, setAgency] = useState(null);
   const [priImage, setPriImage] = useState(null);
+  const [userSavedHouses, setUserSavedHouses] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
 
-  // When card mounts, fetch respective agency & image
+  // When card mounts, fetch respective agency, image, and saved status
   useEffect(() => {
     async function fetchAgency() {
       try {
@@ -55,23 +62,52 @@ function ListingHouseCard({ house }) {
       }
     }
 
+    async function fetchSavedHouseIds() {
+      try {
+        const idsArr = await getSavedHouseIdsByUserId();
+        if (idsArr) {
+          setIsSaved(idsArr.includes(parseInt(house.houseId)));
+        }
+        setUserSavedHouses(idsArr);
+      } catch (error) {
+        console.log("Error fetching the saved house ids:", error);
+      }
+    }
+
+    fetchSavedHouseIds();
     fetchAgency();
     fetchPrimaryImage();
-  }, []);
+  }, [house.houseId, house.realEstateId]);
+
+  // useEffect(() => {
+  //   console.log("userSavedHouses are:");
+  //   console.log(userSavedHouses);
+  // }, [userSavedHouses]);
+
+  // useEffect(() => {
+  //   console.log(`The house with id: ${house.houseId} is ${isSaved}`);
+  // }, [isSaved]);
 
   // When card is clicked, go to individual house "ListingDetailPage"
   const handleClick = () => {
     navigate(`/listing/${house.houseId}`);
   };
 
-  // Handle image click to remove the house from the saved list
+  // Handle image click to toggle the house in the saved list
   const handleImageClick = async (e) => {
-    console.log("handleImageClick");
     e.stopPropagation(); // Prevent navigation on click
     try {
-      await addToSaved(house.houseId);
+      // If house is in saved list
+      if (isSaved) {
+        await removeSavedHouse(house.houseId);
+        console.log("Removing house from saved list");
+      } else {
+        await addToSaved(house.houseId);
+        console.log("Adding house to saved list");
+      }
+      setIsSaved((prevState) => !prevState); // Toggle saved status
     } catch (error) {
-      console.error("Failed to remove saved house:", error);
+      console.error(`Failed to ${isSaved ? "remove" : "add"} saved house:`, error);
     }
   };
 
@@ -89,7 +125,11 @@ function ListingHouseCard({ house }) {
             className="object-cover rounded-xl h-48 w-64 group-hover:brightness-50 transition duration-300"
           />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
-            <FavoriteOutlined className="text-rosered-0" fontSize="large" />
+            {isSaved ? (
+              <FavoriteOutlined className="text-rosered-0" fontSize="large" />
+            ) : (
+              <FavoriteBorderOutlined className="text-rosered-0" fontSize="large" />
+            )}
           </div>
         </div>
 

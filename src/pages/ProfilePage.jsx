@@ -55,12 +55,6 @@ function ProfilePage() {
     fetchSavedHouseIds();
   }, []);
 
-  // TODO Testing purposes
-  useEffect(() => {
-    console.log("Saved House Ids Array");
-    console.log(savedHouseIdsArr);
-  }, [savedHouseIdsArr]);
-
   // When savedHouseIdsArr changes
   useEffect(() => {
     const fetchHouseDetails = async () => {
