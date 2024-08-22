@@ -2,6 +2,7 @@ import Navbar from "../components/navigation/Navbar";
 import { getSavedHouseIdsByUserId } from "../services/savedService";
 import { getSubmissionBySessionUserId } from "../services/submissionService";
 import { getHouseById } from "../services/houseService";
+import { updateUser } from "../services/userService";
 import {
   VStack,
   HStack,
@@ -151,6 +152,15 @@ function ProfilePage() {
 
   const handleEditClick = () => {
     setIsEditingDetails((prevState) => !prevState);
+    console.log(user);
+    if (isEditingDetails) {
+      updateUser({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        email: user.email,
+      });
+    }
   };
 
   // Log out function
@@ -202,7 +212,14 @@ function ProfilePage() {
                   </div>
                   {isEditingDetails ? (
                     <>
-                      <Editable defaultValue={`${user.firstName} ${user.lastName}`}>
+                      <Editable
+                        defaultValue={`${user.firstName} ${user.lastName}`}
+                        onSubmit={(value) => {
+                          const [firstName, ...rest] = value.split(" ");
+                          const lastName = rest.join(" ");
+                          setUser((prevUser) => ({ ...prevUser, firstName, lastName }));
+                        }}
+                      >
                         <EditablePreview />
                         <EditableInput />
                       </Editable>
@@ -217,13 +234,41 @@ function ProfilePage() {
                   <div className="w-[50%]">
                     <IconTextBlock type="phone" fontWeight={"bold"} />
                   </div>
-                  <p>{user.phone}</p>
+                  {isEditingDetails ? (
+                    <>
+                      <Editable
+                        defaultValue={user.phone}
+                        onSubmit={(value) => setUser((prevUser) => ({ ...prevUser, phone: value }))}
+                      >
+                        <EditablePreview />
+                        <EditableInput />
+                      </Editable>
+                    </>
+                  ) : (
+                    <>
+                      <p>{user.phone}</p>
+                    </>
+                  )}
                 </HStack>
                 <HStack w="full">
                   <div className="w-[50%]">
                     <IconTextBlock type="email" fontWeight={"bold"} />
                   </div>
-                  <p>{user.email}</p>
+                  {isEditingDetails ? (
+                    <>
+                      <Editable
+                        defaultValue={user.email}
+                        onSubmit={(value) => setUser((prevUser) => ({ ...prevUser, email: value }))}
+                      >
+                        <EditablePreview />
+                        <EditableInput />
+                      </Editable>
+                    </>
+                  ) : (
+                    <>
+                      <p>{user.email}</p>
+                    </>
+                  )}
                 </HStack>
                 <Button leftIcon={<LogoutOutlined />} onClick={handleLogout}>
                   Log Out
