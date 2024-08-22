@@ -243,19 +243,19 @@ function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
     case "name":
       icon = <Person2Outlined {...getIconProps()} />;
       singleText = "Name";
-      pluralText = "Names";
+      pluralText = "Name";
 
       break;
     case "phone":
       icon = <PhoneOutlined {...getIconProps()} />;
       singleText = "Phone Number";
-      pluralText = "Phone Numbers";
+      pluralText = "Phone Number";
 
       break;
     case "email":
       icon = <EmailOutlined {...getIconProps()} />;
       singleText = "Email Address";
-      pluralText = "Email Addresses";
+      pluralText = "Email Address";
 
       break;
 

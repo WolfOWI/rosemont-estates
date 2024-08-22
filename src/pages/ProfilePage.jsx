@@ -2,7 +2,16 @@ import Navbar from "../components/navigation/Navbar";
 import { getSavedHouseIdsByUserId } from "../services/savedService";
 import { getSubmissionBySessionUserId } from "../services/submissionService";
 import { getHouseById } from "../services/houseService";
-import { VStack, HStack, Button } from "@chakra-ui/react";
+import {
+  VStack,
+  HStack,
+  Button,
+  Editable,
+  EditableInput,
+  EditableTextarea,
+  EditablePreview,
+  useDisclosure,
+} from "@chakra-ui/react";
 import MyHouseCard from "../components/house/MyHouseCard";
 
 import {
@@ -39,6 +48,9 @@ function ProfilePage() {
   // Saved Houses ("Saved Properties")
   const [savedHouseIdsArr, setSavedHouseIdsArr] = useState([]);
   const [savedHousesArr, setSavedHousesArr] = useState([]);
+
+  // Edit User Details
+  const [isEditingDetails, setIsEditingDetails] = useState(false);
 
   // On page mount
   useEffect(() => {
@@ -137,6 +149,10 @@ function ProfilePage() {
     setSavedHousesArr((prevHouses) => prevHouses.filter((house) => house.houseId !== houseId));
   };
 
+  const handleEditClick = () => {
+    setIsEditingDetails((prevState) => !prevState);
+  };
+
   // Log out function
   const handleLogout = () => {
     fetch("http://localhost/rosemont/backend/api/auth/logout.php", {
@@ -167,16 +183,35 @@ function ProfilePage() {
                   <AccountCircleOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
                   <h3>Details</h3>
                 </HStack>
-                <Button leftIcon={<EditOutlined />} variant="thornOutline">
-                  Edit
-                </Button>
+                {isEditingDetails ? (
+                  <Button onClick={handleEditClick}>Done</Button>
+                ) : (
+                  <Button
+                    leftIcon={<EditOutlined />}
+                    variant="thornOutline"
+                    onClick={handleEditClick}
+                  >
+                    Edit
+                  </Button>
+                )}
               </HStack>
               <VStack mt={8} spacing={6} align="stretch">
                 <HStack w="full">
                   <div className="w-[50%]">
                     <IconTextBlock type="name" fontWeight={"bold"} />
                   </div>
-                  <p>{`${user.firstName} ${user.lastName}`}</p>
+                  {isEditingDetails ? (
+                    <>
+                      <Editable defaultValue={`${user.firstName} ${user.lastName}`}>
+                        <EditablePreview />
+                        <EditableInput />
+                      </Editable>
+                    </>
+                  ) : (
+                    <>
+                      <p>{`${user.firstName} ${user.lastName}`}</p>
+                    </>
+                  )}
                 </HStack>
                 <HStack w="full">
                   <div className="w-[50%]">

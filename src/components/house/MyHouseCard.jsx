@@ -107,6 +107,7 @@ function MyHouseCard({ house }) {
                 <Button leftIcon={<EditOutlined />} onClick={handleEditClick}>
                   Edit
                 </Button>
+                {/* TODO Delete Functionality */}
                 <Button leftIcon={<DeleteOutline />} variant="roseOutline">
                   Delete
                 </Button>
