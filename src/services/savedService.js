@@ -4,6 +4,7 @@
 // ----------------------------------------------------------------------------
 // Get SavedHouseIds by Logged in User's id
 export async function getSavedHouseIdsByUserId() {
+  // TODO Update this function name of "ByUserId" to "BySessionUserId"
   try {
     const response = await fetch(
       `http://localhost/rosemont/backend/api/saved/getSavedBySessionUserId.php`,

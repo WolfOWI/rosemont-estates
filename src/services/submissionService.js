@@ -6,7 +6,7 @@
 export async function getSubmissionBySessionUserId() {
   try {
     const response = await fetch(
-      `http://localhost/rosemont/backend/api/saved/getSubmissionBySessionUserId.php`,
+      `http://localhost/rosemont/backend/api/submission/getSubmissionBySessionUserId.php`,
       {
         method: "GET",
         credentials: "include",

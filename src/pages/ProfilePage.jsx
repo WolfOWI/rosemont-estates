@@ -1,5 +1,6 @@
 import Navbar from "../components/navigation/Navbar";
 import { getSavedHouseIdsByUserId } from "../services/savedService";
+import { getSubmissionBySessionUserId } from "../services/submissionService";
 import { getHouseById } from "../services/houseService";
 import { VStack, HStack, Button } from "@chakra-ui/react";
 import MyHouseCard from "../components/house/MyHouseCard";
@@ -27,7 +28,15 @@ import { useState, useEffect } from "react";
 import SavedHouseCard from "../components/house/SavedHouseCard";
 
 function ProfilePage() {
+  // Logged in User
   const [user, setUser] = useState("");
+
+  // Submitted Houses ("My Properties")
+  const [submissionsArr, setSubmissionsArr] = useState([]);
+  const [submittedHousesArr, setSubmittedHousesArr] = useState([]);
+  const [completeSubmitArr, setCompleteSubmitArr] = useState([]); // Combo of both submissionsArr & submittedHousesArr
+
+  // Saved Houses ("Saved Properties")
   const [savedHouseIdsArr, setSavedHouseIdsArr] = useState([]);
   const [savedHousesArr, setSavedHousesArr] = useState([]);
 
@@ -45,6 +54,7 @@ function ProfilePage() {
         }
       });
 
+    // Fetch Saved House Ids
     const fetchSavedHouseIds = async () => {
       try {
         const idsArr = await getSavedHouseIdsByUserId();
@@ -53,10 +63,58 @@ function ProfilePage() {
         console.log("Error fetching the saved house ids:", error);
       }
     };
+
+    // Fetch Submission Entities (My Properties)
+    const fetchHouseSubmissions = async () => {
+      try {
+        const submArr = await getSubmissionBySessionUserId();
+        setSubmissionsArr(submArr);
+      } catch (error) {
+        console.log("Error fetching the house submissions:", error);
+      }
+    };
+
+    fetchHouseSubmissions();
     fetchSavedHouseIds();
   }, []);
 
-  // When savedHouseIdsArr changes
+  // When submissionsArr changes, get details of each house
+  useEffect(() => {
+    const fetchHouseDetails = async () => {
+      try {
+        const houseInfoPromises = submissionsArr.map((house) => getHouseById(house.houseId));
+        const allHouseDetails = await Promise.all(houseInfoPromises);
+        setSubmittedHousesArr(allHouseDetails);
+      } catch (error) {
+        console.log("Error fetching the house's details of submitted houses:", error);
+      }
+    };
+
+    fetchHouseDetails();
+  }, [submissionsArr]);
+
+  // Combine submissionsArr & submittedHousesArr into "completeSubmitArr"
+  useEffect(() => {
+    if (submissionsArr.length > 0 && submittedHousesArr.length > 0) {
+      const combinedData = submissionsArr.map((submission, index) => {
+        const houseDetails = submittedHousesArr.find(
+          (house) => house.houseId === submission.houseId
+        );
+        return {
+          ...submission,
+          ...houseDetails,
+        };
+      });
+      setCompleteSubmitArr(combinedData);
+    }
+  }, [submissionsArr, submittedHousesArr]);
+
+  // useEffect(() => {
+  //   console.log("completeSubmitArr is:");
+  //   console.log(completeSubmitArr);
+  // }, [completeSubmitArr]);
+
+  // When savedHouseIdsArr changes, get details of each house
   useEffect(() => {
     const fetchHouseDetails = async () => {
       try {
@@ -65,7 +123,7 @@ function ProfilePage() {
 
         setSavedHousesArr(allHouseDetails);
       } catch (error) {
-        console.log("Error fetching the house's details:", error);
+        console.log("Error fetching the house's details of saved houses:", error);
       }
     };
 
@@ -146,9 +204,8 @@ function ProfilePage() {
                 </HStack>
               </HStack>
               <VStack spacing={4} align="stretch">
-                {/* TODO Temporary savedHouses to be listed here (DELETE LATER) */}
-                {savedHousesArr.map((savedHouse) => (
-                  <MyHouseCard key={savedHouse.houseId} house={savedHouse} />
+                {completeSubmitArr.map((house) => (
+                  <MyHouseCard key={house.houseId} house={house} />
                 ))}
               </VStack>
             </div>

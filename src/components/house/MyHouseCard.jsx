@@ -9,7 +9,6 @@ import { HStack, VStack, Button } from "@chakra-ui/react";
 import { EditOutlined, DeleteOutline } from "@mui/icons-material";
 
 // Internal Components
-import IconTextBlock from "../buildingblocks/IconTextBlock";
 
 // Services
 import { getPrimaryImageByHouseId } from "../../services/houseService";
@@ -39,6 +38,41 @@ function MyHouseCard({ house }) {
     fetchPrimaryImage();
   }, [house.houseId]);
 
+  // Render of house submission status (pending / approved / rejected)
+  const renderStatus = () => {
+    switch (true) {
+      case house.submitStatus === "pending":
+        return (
+          <>
+            <div className="w-3 h-3 bg-amber-400 rounded-full">{/* Circle */}</div>
+            <p>Pending Review</p>
+          </>
+        );
+      case house.submitStatus === "approved":
+        return (
+          <>
+            <div className="w-3 h-3 bg-thorn-P2 rounded-full">{/* Circle */}</div>
+            <p>Submission Approved</p>
+          </>
+        );
+      case house.submitStatus === "rejected":
+        return (
+          <>
+            <div className="w-3 h-3 bg-rosered-0 rounded-full">{/* Circle */}</div>
+            <p>Submission Rejected</p>
+          </>
+        );
+
+      default:
+        return (
+          <>
+            <div className="w-3 h-3 bg-amber-400 rounded-full">{/* Circle */}</div>
+            <p>Status Not Found</p>
+          </>
+        );
+    }
+  };
+
   return (
     <>
       <div
@@ -61,11 +95,8 @@ function MyHouseCard({ house }) {
             <VStack align="start" justify="space-between" h={40}>
               <div>
                 <h3>{house.title}</h3>
-                <p className="text-sm">{"Submitted 21 September 1998"}</p>
-                <HStack pt={2}>
-                  <div className="w-3 h-3 bg-rosered-0 rounded-full">{/* Circle */}</div>
-                  <p>{"Pending Review"}</p>
-                </HStack>
+                <p className="text-sm">Submitted on {house.submitDate}</p>
+                <HStack pt={2}>{renderStatus()}</HStack>
               </div>
               <HStack>
                 <Button leftIcon={<EditOutlined />}>Edit</Button>
