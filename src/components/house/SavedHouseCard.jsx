@@ -10,20 +10,7 @@ import { getPrimaryImageByHouseId } from "../../services/houseService";
 // Utility Functions
 import { formatPrice } from "../../utils/formatPrice";
 import { getNumOfRooms } from "../../utils/getNumOfRooms";
-import {
-  WifiOutlined,
-  AcUnitOutlined,
-  LocalFireDepartmentOutlined,
-  VideocamOutlined,
-  SolarPowerOutlined,
-  YardOutlined,
-  WaterDropOutlined,
-  WbTwilightOutlined,
-  OutdoorGrillOutlined,
-  FenceOutlined,
-  ErrorOutline,
-  FavoriteOutlined,
-} from "@mui/icons-material";
+import { FavoriteOutlined } from "@mui/icons-material";
 
 import { useState, useEffect } from "react";
 

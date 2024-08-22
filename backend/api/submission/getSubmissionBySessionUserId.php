@@ -1,4 +1,5 @@
 <?php
+// My Properties (Properties Submitted by User - Profile Page)
 // SETUP
 // -------------------------------------------------
 // Setup error reporting
@@ -30,19 +31,19 @@ $userId = $_SESSION['user']['userId'] ?? '';
 
 
 if ($userId) {
-    $sql = "SELECT houseId FROM saved WHERE userId = ?";
+    $sql = "SELECT * FROM submission WHERE userId = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $userId);
 
     if ($stmt->execute()) {
         $result = $stmt->get_result();
-        $savedHouseIdsArr = [];
+        $submissionArr = [];
 
-        while ($houseId = $result->fetch_assoc()) {
-            $savedHouseIdsArr[] = $houseId['houseId'];
+        while ($submitHouse = $result->fetch_assoc()) {
+            $submissionArr[] = $submitHouse;
         }
     }
-    echo json_encode($savedHouseIdsArr);
+    echo json_encode($submissionArr);
 } else {
     echo json_encode(["message" => "User not logged in."]);
 }
