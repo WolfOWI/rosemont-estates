@@ -4,16 +4,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Services
+import { getPrimaryImageByHouseId } from "../../services/houseService";
+
+// Utility Functions
+// -
+
 // Third-Party Components
 import { HStack, VStack, Button } from "@chakra-ui/react";
 import { EditOutlined, DeleteOutline } from "@mui/icons-material";
 
 // Internal Components
-
-// Services
-import { getPrimaryImageByHouseId } from "../../services/houseService";
-
-// Utility Functions
+// -
 
 // Imagery
 import missingImg from "../../assets/images/missingImg.png";

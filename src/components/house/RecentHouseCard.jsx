@@ -1,5 +1,24 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import { HStack, VStack } from "@chakra-ui/react";
+
+// Internal Components
+// -
+
+// Imagery
 import tempImg from "../../assets/images/familyAtHome.jpg";
+
+// -----------------------------------------------------------
 
 function RecentHouseCard({ property }) {
   return (

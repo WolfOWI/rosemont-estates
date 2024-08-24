@@ -1,3 +1,24 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
+// -
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 function ImageCollection({ images }) {
   return (
     <>

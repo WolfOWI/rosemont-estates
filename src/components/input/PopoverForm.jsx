@@ -1,4 +1,15 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React from "react";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   Box,
   VStack,
@@ -23,6 +34,14 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { FocusLock } from "@chakra-ui/react";
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 // Reusable PopoverForm component
 const PopoverForm = ({ label, icon, title, children }) => {

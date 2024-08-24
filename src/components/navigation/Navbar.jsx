@@ -1,5 +1,16 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   Box,
   Flex,
@@ -17,7 +28,14 @@ import {
   AccountCircleOutlined,
   LogoutOutlined,
 } from "@mui/icons-material";
+
+// Internal Components
 import NavLogo from "./NavLogo";
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function Navbar({ transparent }) {
   // Logged in user

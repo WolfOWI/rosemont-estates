@@ -1,8 +1,18 @@
-import { Link } from "react-router-dom";
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+// Services
 import { getAgencyById } from "../../services/agencyService";
 import { getSession } from "../../services/authService";
 import { updateAgent } from "../../services/agentService";
+
+// Utility Functions
+import logoMap from "../../utils/logoMap";
+
+// Third-Party Components
 import {
   Button,
   Modal,
@@ -24,9 +34,12 @@ import {
   ShieldOutlined,
   WarningRounded,
 } from "@mui/icons-material";
-import rm_emblem from "../../assets/logos/rosemont_emblem.svg";
-import logoMap from "../../utils/logoMap";
 
+// Internal Components
+// -
+
+// Imagery
+import rm_emblem from "../../assets/logos/rosemont_emblem.svg";
 // Real Estate Colour Logos
 import aidaLogoColour from "../../assets/logos/agencyLogos/aidaLogoColour.png";
 import engelLogoColour from "../../assets/logos/agencyLogos/engelLogoColour.png";
@@ -37,6 +50,7 @@ import remaxLogoColour from "../../assets/logos/agencyLogos/remaxLogoColour.png"
 import seeffLogoColour from "../../assets/logos/agencyLogos/seeffLogoColour.png";
 import tsungaiLogoColour from "../../assets/logos/agencyLogos/tsungaiLogoColour.png";
 import adminLogoColour from "../../assets/logos/agencyLogos/adminLogoColour.png";
+// -----------------------------------------------------------
 
 function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();

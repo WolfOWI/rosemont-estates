@@ -1,4 +1,17 @@
 // Customer Card (Potential Buyers & Tenants) - Admin Dashboard
+
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import { Button, VStack, HStack } from "@chakra-ui/react";
 import {
   EmailOutlined,
@@ -7,6 +20,14 @@ import {
   CloseOutlined,
   PhoneOutlined,
 } from "@mui/icons-material";
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function CustomerCard({ type }) {
   let markAsText = "";

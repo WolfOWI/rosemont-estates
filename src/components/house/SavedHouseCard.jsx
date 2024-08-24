@@ -1,10 +1,11 @@
-import { HStack } from "@chakra-ui/react";
-import missingImg from "../../assets/images/missingImg.png";
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import IconTextBlock from "../buildingblocks/IconTextBlock";
-import { removeSavedHouse } from "../../services/savedService";
 
 // Services
+import { removeSavedHouse } from "../../services/savedService";
 import { getPrimaryImageByHouseId } from "../../services/houseService";
 
 // Utility Functions
@@ -12,7 +13,16 @@ import { formatPrice } from "../../utils/formatPrice";
 import { getNumOfRooms } from "../../utils/getNumOfRooms";
 import { FavoriteOutlined } from "@mui/icons-material";
 
-import { useState, useEffect } from "react";
+// Third-Party Components
+import { HStack } from "@chakra-ui/react";
+
+// Internal Components
+import IconTextBlock from "../buildingblocks/IconTextBlock";
+
+// Imagery
+import missingImg from "../../assets/images/missingImg.png";
+
+// -----------------------------------------------------------
 
 function SavedHouseCard({ house, onRemove }) {
   const [priImage, setPriImage] = useState(null);

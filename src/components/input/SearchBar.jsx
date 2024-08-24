@@ -1,5 +1,25 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import { Input, Select, IconButton } from "@chakra-ui/react";
 import { SearchOutlined } from "@mui/icons-material";
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function SearchBar() {
   return (

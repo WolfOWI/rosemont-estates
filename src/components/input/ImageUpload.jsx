@@ -1,6 +1,25 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useState, useRef, useEffect } from "react";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import { Box, Image, IconButton, VStack, Input, Button } from "@chakra-ui/react";
 import { CloseOutlined, UploadFileOutlined } from "@mui/icons-material";
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 const ImageUpload = ({ onFileChange, addedFiles = [] }) => {
   // console.log("ImageUpload: 'I've received the following addedFiles:'");

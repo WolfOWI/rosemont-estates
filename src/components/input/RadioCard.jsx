@@ -1,5 +1,25 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import { Box, useRadio, Flex } from "@chakra-ui/react";
 import { SellOutlined, CurrencyExchangeOutlined } from "@mui/icons-material";
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function RadioCard(props) {
   const { getInputProps, getRadioProps } = useRadio(props);

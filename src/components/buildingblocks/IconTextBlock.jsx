@@ -1,3 +1,15 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import { HStack } from "@chakra-ui/react";
 import {
   BedOutlined,
@@ -34,6 +46,14 @@ import {
   PhoneOutlined,
   EmailOutlined,
 } from "@mui/icons-material";
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function IconTextBlock({ type, value, variant, textHidden, fontWeight }) {
   let icon = null;

@@ -1,4 +1,15 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useState } from "react";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import { SearchBox } from "@mapbox/search-js-react";
 import {
   Modal,
@@ -14,6 +25,14 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
+
+// Internal Components
+// -
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function AddressModal({ isOpen, onClose, handleAddressDone }) {
   const [address, setAddress] = useState({

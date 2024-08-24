@@ -1,4 +1,15 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React from "react";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   Accordion,
   AccordionItem,
@@ -11,12 +22,15 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-
 import { CheckOutlined, CloseOutlined } from "@mui/icons-material";
 
-// TODO Temporary Image Placeholder (Delete later)
-import tempImg from "../../assets/images/familyAtHome.jpg";
+// Internal Components
 import IconTextBlock from "../buildingblocks/IconTextBlock";
+
+// Imagery
+import tempImg from "../../assets/images/familyAtHome.jpg"; // TODO Temporary Image Placeholder (Delete later)
+
+// -----------------------------------------------------------
 
 function PropertyAccordion({ property }) {
   return (

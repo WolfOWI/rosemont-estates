@@ -1,7 +1,8 @@
-import { HStack } from "@chakra-ui/react";
-import missingImg from "../../assets/images/missingImg.png";
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import IconTextBlock from "../buildingblocks/IconTextBlock";
 
 // Services
 import { getAgencyById } from "../../services/agencyService";
@@ -17,6 +18,9 @@ import { houseCatchphrase } from "../../utils/houseCatchphrase";
 import { formatPrice } from "../../utils/formatPrice";
 import { getNumOfRooms } from "../../utils/getNumOfRooms";
 import logoMap from "../../utils/logoMap";
+
+// Third-Party Components
+import { HStack } from "@chakra-ui/react";
 import {
   WifiOutlined,
   AcUnitOutlined,
@@ -33,7 +37,13 @@ import {
   FavoriteBorderOutlined,
 } from "@mui/icons-material";
 
-import { useState, useEffect } from "react";
+// Internal Components
+import IconTextBlock from "../buildingblocks/IconTextBlock";
+
+// Imagery
+import missingImg from "../../assets/images/missingImg.png";
+
+// -----------------------------------------------------------
 
 function ListingHouseCard({ house }) {
   const [agency, setAgency] = useState(null);
