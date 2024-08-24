@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 // Services
 import { fetchAllSubmissions } from "../services/submissionService";
+import { getHouseById } from "../services/houseService";
 
 // Utility Functions
 // -
@@ -22,20 +23,46 @@ import PropertyAccordion from "../components/admin/PropertyAccordion";
 // -----------------------------------------------------------
 
 function AdminListingsDash() {
-  const [submissions, setSubmissions] = useState([]);
+  const [pendingSubs, setPendingSubs] = useState([]); // Pending Submissions
+  const [subHouses, setSubHouses] = useState([]); // House Object (Submissions)
 
+  // On page mount, get submissions with status of 'pending'
   useEffect(() => {
-    const getAllSubmissions = async () => {
-      const response = await fetchAllSubmissions();
-      setSubmissions(response);
+    const getPendingSubmissions = async () => {
+      const allSubmissions = await fetchAllSubmissions();
+      const filteredSubs = allSubmissions.filter((subm) => subm.submitStatus === "pending");
+      setPendingSubs(filteredSubs);
     };
-
-    getAllSubmissions();
+    getPendingSubmissions();
   }, []);
 
+  // When pending submissions state changes, get house details
   useEffect(() => {
-    console.log(submissions);
-  }, [submissions]);
+    if (pendingSubs.length > 0) {
+      const getHouseDetails = async () => {
+        try {
+          const pendingHousePromises = pendingSubs.map((subm) => getHouseById(subm.houseId));
+          const allHouseDetails = await Promise.all(pendingHousePromises);
+          setSubHouses(allHouseDetails);
+        } catch (error) {
+          console.log("Error fetching the house's details of pending houses:", error);
+        }
+      };
+      getHouseDetails();
+    }
+  }, [pendingSubs]);
+
+  // TODO For Testing
+  useEffect(() => {
+    console.log("Pending Submissions");
+    console.log(pendingSubs);
+  }, [pendingSubs]);
+
+  // TODO For Testing
+  useEffect(() => {
+    console.log("Houses Submissions");
+    console.log(subHouses);
+  }, [subHouses]);
 
   const property = {
     title: "Modern Riversands Villa",
@@ -60,9 +87,9 @@ function AdminListingsDash() {
         <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
           <h1 className="mb-2">New Homes</h1>
           <div className=" w-full h-screen">
-            <PropertyAccordion property={property} />
-            <PropertyAccordion property={property} />
-            <PropertyAccordion property={property} />
+            {subHouses.map((house) => (
+              <PropertyAccordion key={house.houseId} house={house} />
+            ))}
           </div>
         </div>
       </div>

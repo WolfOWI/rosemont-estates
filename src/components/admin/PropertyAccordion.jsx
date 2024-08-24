@@ -2,12 +2,13 @@
 // -----------------------------------------------------------
 // React & Hooks
 import React from "react";
+import { useState, useEffect } from "react";
 
 // Services
-// -
+import { getPrimaryImageByHouseId } from "../../services/houseService";
 
 // Utility Functions
-// -
+import { formatPrice } from "../../utils/formatPrice";
 
 // Third-Party Components
 import {
@@ -22,17 +23,44 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import { CheckOutlined, CloseOutlined } from "@mui/icons-material";
+import {
+  WifiOutlined,
+  AcUnitOutlined,
+  LocalFireDepartmentOutlined,
+  VideocamOutlined,
+  SolarPowerOutlined,
+  YardOutlined,
+  WaterDropOutlined,
+  WbTwilightOutlined,
+  OutdoorGrillOutlined,
+  FenceOutlined,
+  ErrorOutline,
+  FavoriteOutlined,
+  FavoriteBorderOutlined,
+  CheckOutlined,
+  CloseOutlined,
+} from "@mui/icons-material";
 
 // Internal Components
 import IconTextBlock from "../buildingblocks/IconTextBlock";
 
 // Imagery
-import tempImg from "../../assets/images/familyAtHome.jpg"; // TODO Temporary Image Placeholder (Delete later)
+import missingImg from "../../assets/images/missingImg.png";
 
 // -----------------------------------------------------------
 
-function PropertyAccordion({ property }) {
+function PropertyAccordion({ house }) {
+  const [primaryImage, setPrimaryImage] = useState(null);
+
+  // When house.id changes/received, get the primaryImage
+  useEffect(() => {
+    const fetchPrimaryImage = async () => {
+      const response = await getPrimaryImageByHouseId(house.houseId);
+      setPrimaryImage(response.imagePath);
+    };
+    fetchPrimaryImage();
+  }, [house.houseId]);
+
   return (
     <Accordion allowToggle bg="beige.0" borderRadius="3xl">
       <AccordionItem border="none" p={4} mb={4}>
@@ -47,20 +75,20 @@ function PropertyAccordion({ property }) {
               {/* Basic Home Info */}
               <HStack spacing={4} align="start" w="70%">
                 <img
-                  src={tempImg}
+                  src={primaryImage ? primaryImage : missingImg}
                   alt="home"
                   className={`object-cover rounded-xl ${
                     isExpanded ? "w-84 h-64" : "w-24 h-24"
                   } transition-all duration-250`}
                 />
                 <VStack align="start" spacing={1}>
-                  <h3 className="text-thorn-0">{property.title}</h3>
+                  <h3 className="text-thorn-0">{house.title}</h3>
                   <HStack spacing={4}>
-                    <p>{property.style}</p>
-                    <p>Available: {property.availableDate}</p>
+                    <p>{house.style}</p>
+                    <p>Available: {house.availableDate}</p>
                   </HStack>
-                  <p className="font-bold">{property.address}</p>
-                  <p className={`${isExpanded ? "block" : "hidden"}`}>{property.description}</p>
+                  <p className="font-bold">{house.address}</p>
+                  <p className={`${isExpanded ? "block" : "hidden"}`}>{house.description}</p>
                 </VStack>
               </HStack>
               <div className="w-[25%] flex flex-col items-start relative">
@@ -84,16 +112,16 @@ function PropertyAccordion({ property }) {
                     <div>
                       <h3 className="mb-2">Features</h3>
                       <VStack align="start">
-                        <IconTextBlock type="internet" />
-                        <IconTextBlock type="airCon" />
-                        <IconTextBlock type="heating" />
-                        <IconTextBlock type="secSys" />
-                        <IconTextBlock type="solar" />
-                        <IconTextBlock type="gardServ" />
-                        <IconTextBlock type="irrigation" />
-                        <IconTextBlock type="outdoorLight" />
-                        <IconTextBlock type="boma" />
-                        <IconTextBlock type="gatedCommunity" />
+                        {parseInt(house.internet) && <IconTextBlock type="internet" />}
+                        {parseInt(house.airCon) && <IconTextBlock type="airCon" />}
+                        {parseInt(house.heating) && <IconTextBlock type="heating" />}
+                        {parseInt(house.secSys) && <IconTextBlock type="secSys" />}
+                        {parseInt(house.solar) && <IconTextBlock type="solar" />}
+                        {parseInt(house.gardServ) && <IconTextBlock type="gardServ" />}
+                        {parseInt(house.irrigation) && <IconTextBlock type="irrigation" />}
+                        {parseInt(house.outdoorLight) && <IconTextBlock type="outdoorLight" />}
+                        {parseInt(house.boma) && <IconTextBlock type="boma" />}
+                        {parseInt(house.gatedCommunity) && <IconTextBlock type="gatedCommunity" />}
                       </VStack>
                     </div>
                     {/* Pricing */}
@@ -101,12 +129,26 @@ function PropertyAccordion({ property }) {
                       <h3 className="mt-5 mb-2">Pricing</h3>
                       <VStack>
                         <div className="flex justify-center w-full bg-beige-M1 rounded-2xl py-2">
-                          <IconTextBlock type="toRent" />
+                          {house.sellType === "sell" ? (
+                            <IconTextBlock type="forSale" />
+                          ) : (
+                            <IconTextBlock type="toRent" />
+                          )}
                         </div>
-                        <div className="flex justify-between items-center w-full bg-beige-M1 rounded-2xl p-4">
-                          <p className="text-2xl">R64,500</p>
-                          <p>per month</p>
-                        </div>
+                        {house.sellType === "sell" ? (
+                          <>
+                            <div className="flex justify-center items-center w-full bg-beige-M1 rounded-2xl p-4">
+                              <p className="text-2xl">{formatPrice(house.price)}</p>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex justify-between items-center w-full bg-beige-M1 rounded-2xl p-4">
+                              <p className="text-2xl">{formatPrice(house.price)}</p>
+                              <p>per month</p>
+                            </div>
+                          </>
+                        )}
                       </VStack>
                     </div>
                   </div>
@@ -127,18 +169,20 @@ function PropertyAccordion({ property }) {
               <HStack bg="beige.M1" px={6} py={4} rounded="2xl" spacing={4} mt={4}>
                 <HStack w="full" spacing={4}>
                   <p className="font-bold min-w-fit">Total Floors</p>
-                  <div className="bg-beige-0 rounded-2xl p-2 w-full text-center">X</div>
+                  <div className="bg-beige-0 rounded-2xl p-2 w-full text-center">
+                    {house.numFloors}
+                  </div>
                 </HStack>
                 <HStack w="full" spacing={4}>
                   <p className="font-bold min-w-fit">Floor Size</p>
                   <div className="bg-beige-0 rounded-2xl p-2 w-full text-center">
-                    XX m<sup>2</sup>
+                    {house.floorSize} m<sup>2</sup>
                   </div>
                 </HStack>
                 <HStack w="full" spacing={4}>
                   <p className="font-bold min-w-fit">Lot Size</p>
                   <div className="bg-beige-0 rounded-2xl p-2 w-full text-center">
-                    XX,XXX m<sup>2</sup>
+                    {house.lotSize} m<sup>2</sup>
                   </div>
                 </HStack>
               </HStack>
@@ -150,7 +194,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numBed}
                       </div>
                       <IconTextBlock type="bed" />
                     </HStack>
@@ -159,7 +203,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numBath}
                       </div>
                       <IconTextBlock type="bath" />
                     </HStack>
@@ -168,7 +212,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numKitchen}
                       </div>
                       <IconTextBlock type="kitchen" />
                     </HStack>
@@ -177,7 +221,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numDining}
                       </div>
                       <IconTextBlock type="dining" />
                     </HStack>
@@ -186,7 +230,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numGym}
                       </div>
                       <IconTextBlock type="gym" />
                     </HStack>
@@ -195,7 +239,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numBilliard}
                       </div>
                       <IconTextBlock type="billiard" />
                     </HStack>
@@ -204,7 +248,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numBasement}
                       </div>
                       <IconTextBlock type="basement" />
                     </HStack>
@@ -213,7 +257,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numGarage}
                       </div>
                       <IconTextBlock type="garage" />
                     </HStack>
@@ -228,7 +272,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numPool}
                       </div>
                       <IconTextBlock type="pool" />
                     </HStack>
@@ -237,7 +281,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numCourt}
                       </div>
                       <IconTextBlock type="court" />
                     </HStack>
@@ -246,7 +290,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numDeck}
                       </div>
                       <IconTextBlock type="deck" />
                     </HStack>
@@ -255,7 +299,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numFlowerGard}
                       </div>
                       <IconTextBlock type="flowerGard" />
                     </HStack>
@@ -264,7 +308,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numVegGard}
                       </div>
                       <IconTextBlock type="vegGard" />
                     </HStack>
@@ -273,7 +317,7 @@ function PropertyAccordion({ property }) {
                   <WrapItem w="14em">
                     <HStack spacing={2}>
                       <div className="flex justify-center items-center bg-beige-0 rounded-full w-10 h-10">
-                        X
+                        {house.numOrchard}
                       </div>
                       <IconTextBlock type="orchard" />
                     </HStack>
