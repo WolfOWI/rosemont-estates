@@ -9,7 +9,7 @@
 // -
 
 // Utility Functions
-// -
+import { formatPrice } from "../../utils/formatPrice";
 
 // Third-Party Components
 import { Button, VStack, HStack } from "@chakra-ui/react";
@@ -29,7 +29,7 @@ import {
 
 // -----------------------------------------------------------
 
-function CustomerCard({ type }) {
+function CustomerCard({ type, interest }) {
   let markAsText = "";
   let markAsIcon = "";
 
@@ -54,26 +54,30 @@ function CustomerCard({ type }) {
           {/* Top Details */}
           <div className="flex justify-between">
             <VStack align="start" spacing={1}>
-              <h3 className="text-thorn-0">Elegant French Chateux</h3>
-              <p className="font-bold">7 Bedroom French Classic Mansion in Silver Lakes</p>
-              <p>15 Alexson Street, Silver Lakes, Pretoria, 0543</p>
-              <p>Available Now</p>
+              <h3 className="text-thorn-0">{interest.title}</h3>
+              <p className="font-bold">{`${interest.numBed} Bedroom ${interest.style} Mansion in ${interest.suburb}`}</p>
+              <p>{`${interest.street}, ${interest.suburb}, ${interest.city}, ${interest.zip}`}</p>
+              {interest.availabilityStatus === "available" ? (
+                <p>Available Now</p>
+              ) : (
+                <p>Not Available</p>
+              )}
             </VStack>
             <div className="flex flex-col items-center justify-center bg-beige-M1 px-8 rounded-2xl h-full">
-              <p className="text-xl font-bold">R4,500,000</p>
+              <p className="text-xl font-bold">{formatPrice(interest.price)}</p>
               <p className={type === "tenant" ? "block" : "hidden"}>monthly</p>
             </div>
           </div>
           {/* Bottom Contact Details */}
           <div className="flex items-center bg-beige-M1 p-4 rounded-2xl mt-4 w-full divide-x-2 divide-beige-M3">
-            <h3 className="pe-6">Carl Matthews</h3>
+            <h3 className="pe-6">{`${interest.firstName} ${interest.lastName}`}</h3>
             <HStack px={6}>
               <PhoneOutlined />
-              <p>012 345 6789</p>
+              <p>{interest.phone}</p>
             </HStack>
             <HStack px={6}>
               <EmailOutlined />
-              <p>carlmath@gmail.com</p>
+              <p>{interest.email}</p>
             </HStack>
           </div>
         </div>

@@ -159,7 +159,7 @@ function ProfilePage() {
 
   // Handle removing a house from the saved list
   const handleRemoveHouse = (houseId) => {
-    console.log("handleRemoveHouse");
+    // console.log("handleRemoveHouse");
     setSavedHouseIdsArr((prevIds) => prevIds.filter((id) => id !== houseId));
     setSavedHousesArr((prevHouses) => prevHouses.filter((house) => house.houseId !== houseId));
   };

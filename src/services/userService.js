@@ -6,6 +6,25 @@
 
 // READ FUNCTIONS
 // ----------------------------------------------------------------------------
+// Get User By Id
+export async function getUserById(userId) {
+  const response = await fetch(
+    `http://localhost/rosemont/backend/api/user/getUserById.php?userId=${userId}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch user's details");
+  }
+
+  return response.json();
+}
 // ----------------------------------------------------------------------------
 
 // UPDATE FUNCTIONS
