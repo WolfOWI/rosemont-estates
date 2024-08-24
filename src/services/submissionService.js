@@ -55,6 +55,28 @@ export async function getSubmissionBySessionUserId() {
 
 // UPDATE FUNCTIONS
 // ----------------------------------------------------------------------------
+// Update Submission details with houseId
+export async function updateSubmissionByHouseId(houseId, fields) {
+  // console.log(houseId);
+  // console.log(fields);
+  const response = await fetch(
+    `http://localhost/rosemont/backend/api/submission/updateSubmissionByHouseId.php?houseId=${houseId}`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update submission");
+  }
+
+  return response.json();
+}
 // ----------------------------------------------------------------------------
 
 // DELETE FUNCTIONS

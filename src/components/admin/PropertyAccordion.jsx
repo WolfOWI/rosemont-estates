@@ -6,9 +6,11 @@ import { useState, useEffect } from "react";
 
 // Services
 import { getPrimaryImageByHouseId } from "../../services/houseService";
+import { updateSubmissionByHouseId } from "../../services/submissionService";
 
 // Utility Functions
 import { formatPrice } from "../../utils/formatPrice";
+import { dateNow } from "../../utils/getDateNow";
 
 // Third-Party Components
 import {
@@ -49,7 +51,7 @@ import missingImg from "../../assets/images/missingImg.png";
 
 // -----------------------------------------------------------
 
-function PropertyAccordion({ house }) {
+function PropertyAccordion({ house, onDecision }) {
   const [primaryImage, setPrimaryImage] = useState(null);
 
   // When house.id changes/received, get the primaryImage
@@ -60,6 +62,20 @@ function PropertyAccordion({ house }) {
     };
     fetchPrimaryImage();
   }, [house.houseId]);
+
+  const handleDecisionClick = async (decicion) => {
+    try {
+      console.log("Handling Decision Click");
+      await updateSubmissionByHouseId(house.houseId, {
+        submitStatus: decicion,
+        decisionDate: dateNow(),
+      });
+
+      onDecision(house.houseId); // Notify parent to refresh homes.
+    } catch (error) {
+      console.log("Failed to update the submission: ", error);
+    }
+  };
 
   return (
     <Accordion allowToggle bg="beige.0" borderRadius="3xl">
@@ -153,11 +169,20 @@ function PropertyAccordion({ house }) {
                     </div>
                   </div>
                   <VStack>
-                    <Button w="full" leftIcon={<CheckOutlined />}>
+                    <Button
+                      w="full"
+                      leftIcon={<CheckOutlined />}
+                      onClick={() => handleDecisionClick("approved")}
+                    >
                       Approve
                     </Button>
-                    <Button w="full" leftIcon={<CloseOutlined />} variant="thornOutline">
-                      Decline
+                    <Button
+                      w="full"
+                      leftIcon={<CloseOutlined />}
+                      variant="thornOutline"
+                      onClick={() => handleDecisionClick("rejected")}
+                    >
+                      Reject
                     </Button>
                   </VStack>
                 </div>
