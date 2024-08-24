@@ -1,5 +1,12 @@
-// Real Estate Agency Functions
+// Real Estate Agencies CRUD Functionality
 
+// CREATE FUNCTIONS
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+// READ FUNCTIONS
+// ----------------------------------------------------------------------------
+// Get All Real Estate Agencies
 export async function fetchAllAgencies() {
   try {
     const response = await fetch("http://localhost/rosemont/backend/api/agency/getAgencies.php", {
@@ -19,6 +26,7 @@ export async function fetchAllAgencies() {
   }
 }
 
+// Get Real Estate Agency By Id
 export async function getAgencyById(agencyId) {
   const response = await fetch(
     `http://localhost/rosemont/backend/api/agency/getAgencyById.php?agencyId=${agencyId}`,
@@ -37,3 +45,12 @@ export async function getAgencyById(agencyId) {
 
   return response.json();
 }
+// ----------------------------------------------------------------------------
+
+// UPDATE FUNCTIONS
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+// DELETE FUNCTIONS
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------

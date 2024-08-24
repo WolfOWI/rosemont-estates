@@ -1,6 +1,32 @@
-// Saved Houses (Wishlist) Functions
+// Saved Houses (Wishlist) CRUD Functionality
 
-// GET FUNCTIONS
+// CREATE FUNCTIONS
+// ----------------------------------------------------------------------------
+// Create a new saved house by houseId
+export async function addToSaved(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/saved/addSavedByHouseId.php?houseId=${houseId}`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Couldn't create saved house item");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Failed to create saved item: ", error);
+    throw error;
+  }
+}
+// ----------------------------------------------------------------------------
+
+// READ FUNCTIONS
 // ----------------------------------------------------------------------------
 // Get SavedHouseIds by Logged in User's id
 export async function getSavedHouseIdsByUserId() {
@@ -27,30 +53,8 @@ export async function getSavedHouseIdsByUserId() {
 }
 // ----------------------------------------------------------------------------
 
-// CREATE FUNCTIONS
+// UPDATE FUNCTIONS
 // ----------------------------------------------------------------------------
-export async function addToSaved(houseId) {
-  try {
-    const response = await fetch(
-      `http://localhost/rosemont/backend/api/saved/addSavedByHouseId.php?houseId=${houseId}`,
-      {
-        method: "POST",
-        credentials: "include",
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Couldn't create saved house item");
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Failed to create saved item: ", error);
-    throw error;
-  }
-}
-
 // ----------------------------------------------------------------------------
 
 // DELETE FUNCTIONS
