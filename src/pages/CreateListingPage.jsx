@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import Navbar from "../components/navigation/Navbar";
-import AddressModal from "../components/overlays/AddressModal";
-import ImageUpload from "../components/input/ImageUpload";
-import { createHouse } from "../services/houseService";
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Services
+import { createHouse } from "../services/houseService";
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   VStack,
   HStack,
@@ -19,7 +25,6 @@ import {
   Box,
   useDisclosure,
 } from "@chakra-ui/react";
-
 import {
   AddHomeOutlined,
   CheckCircleOutlineOutlined,
@@ -33,8 +38,17 @@ import {
   DeleteForeverOutlined,
 } from "@mui/icons-material";
 
+// Internal Components
+import Navbar from "../components/navigation/Navbar";
+import AddressModal from "../components/overlays/AddressModal";
+import ImageUpload from "../components/input/ImageUpload";
 import RadioCard from "../components/input/RadioCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function CreateListingPage() {
   const navigate = useNavigate();

@@ -1,8 +1,18 @@
-import Navbar from "../components/navigation/Navbar";
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+import { useState, useEffect } from "react";
+
+// Services
 import { getSavedHouseIdsByUserId } from "../services/savedService";
 import { getSubmissionBySessionUserId } from "../services/submissionService";
 import { getHouseById } from "../services/houseService";
 import { updateUser } from "../services/userService";
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   VStack,
   HStack,
@@ -13,8 +23,6 @@ import {
   EditablePreview,
   useDisclosure,
 } from "@chakra-ui/react";
-import MyHouseCard from "../components/house/MyHouseCard";
-
 import {
   PersonOutlined,
   AccountCircleOutlined,
@@ -33,9 +41,15 @@ import {
   LogoutOutlined,
 } from "@mui/icons-material";
 
+// Internal Components
+import Navbar from "../components/navigation/Navbar";
+import MyHouseCard from "../components/house/MyHouseCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
-import { useState, useEffect } from "react";
 import SavedHouseCard from "../components/house/SavedHouseCard";
+
+// Imagery
+// -
+// -----------------------------------------------------------
 
 function ProfilePage() {
   // Logged in User
@@ -220,6 +234,7 @@ function ProfilePage() {
                           setUser((prevUser) => ({ ...prevUser, firstName, lastName }));
                         }}
                       >
+                        {/* TODO Style these elements to look give a more 'editing state' appearance */}
                         <EditablePreview />
                         <EditableInput />
                       </Editable>

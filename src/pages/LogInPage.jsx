@@ -1,4 +1,15 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useState } from "react";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   Box,
   FormControl,
@@ -17,10 +28,14 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 
-// TODO Delete Later (Temporary)
-import Navbar from "../components/navigation/Navbar";
+// Internal Components
+import Navbar from "../components/navigation/Navbar"; // TODO Delete Later (Temporary)
+
+// Imagery
 import plantWallImg from "../assets/images/plant-wall-1.jpg";
 import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
+
+// -----------------------------------------------------------
 
 function LogInPage() {
   const [email, setEmail] = useState("");

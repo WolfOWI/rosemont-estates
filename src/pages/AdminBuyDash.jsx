@@ -1,5 +1,25 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
+// -
+
+// Internal Components
 import CustomerCard from "../components/admin/CustomerCard";
 import Sidebar from "../components/navigation/Sidebar";
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function AdminBuyDash() {
   return (

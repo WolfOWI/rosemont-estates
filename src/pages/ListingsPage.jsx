@@ -1,10 +1,15 @@
-import Navbar from "../components/navigation/Navbar";
-import SearchBar from "../components/input/SearchBar";
-import PopoverForm from "../components/input/PopoverForm";
-import IconTextBlock from "../components/buildingblocks/IconTextBlock";
-import React, { useEffect, useState } from "react";
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+import { useEffect, useState } from "react";
+
+// Services
 import { fetchAllHouses } from "../services/houseService";
 
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   VStack,
   HStack,
@@ -21,7 +26,18 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { PriceCheckOutlined, BedOutlined, HouseOutlined, StarOutline } from "@mui/icons-material";
+
+// Internal Components
+import Navbar from "../components/navigation/Navbar";
+import SearchBar from "../components/input/SearchBar";
+import PopoverForm from "../components/input/PopoverForm";
+import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 import ListingHouseCard from "../components/house/ListingHouseCard";
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function ListingsPage() {
   // Houses in database

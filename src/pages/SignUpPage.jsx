@@ -1,4 +1,15 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useState } from "react";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   Box,
   Flex,
@@ -21,9 +32,14 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { VisibilityOutlined, VisibilityOffOutlined } from "@mui/icons-material";
+
+// Internal Components
 import Navbar from "../components/navigation/Navbar";
+
+// Imagery
 import plantWallImg from "../assets/images/plant-wall-1.jpg";
 import rosemontEmblemLogo from "../assets/logos/rosemont_emblem.svg";
+// -----------------------------------------------------------
 
 function SignUpPage() {
   // Form Variables

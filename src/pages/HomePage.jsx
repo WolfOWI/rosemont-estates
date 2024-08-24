@@ -1,4 +1,15 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useState } from "react";
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   VStack,
   HStack,
@@ -15,13 +26,18 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { PriceCheckOutlined, BedOutlined, HouseOutlined, StarOutline } from "@mui/icons-material";
+
+// Internal Components
 import Navbar from "../components/navigation/Navbar";
-import heroImg from "../assets/images/plant-wall-1.jpg";
 import SearchBar from "../components/input/SearchBar";
 import PopoverForm from "../components/input/PopoverForm";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 import RecentHouseCard from "../components/house/RecentHouseCard";
+
+// Imagery
+import heroImg from "../assets/images/plant-wall-1.jpg";
 import familyImg from "../assets/images/familyAtHome.jpg";
+// -----------------------------------------------------------
 
 function HomePage() {
   const [priceRange, setPriceRange] = useState([0, 150]);

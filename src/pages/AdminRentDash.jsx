@@ -1,5 +1,25 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+// -
+
+// Services
+// -
+
+// Utility Functions
+// -
+
+// Third-Party Components
+// -
+
+// Internal Components
 import Sidebar from "../components/navigation/Sidebar";
 import CustomerCard from "../components/admin/CustomerCard";
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function AdminRentDash() {
   return (

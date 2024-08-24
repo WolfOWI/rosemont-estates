@@ -1,7 +1,42 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
+import { useEffect, useState } from "react";
+
+// Services
+import { fetchAllSubmissions } from "../services/submissionService";
+
+// Utility Functions
+// -
+
+// Third-Party Components
+// -
+
+// Internal Components
 import Sidebar from "../components/navigation/Sidebar";
 import PropertyAccordion from "../components/admin/PropertyAccordion";
 
+// Imagery
+// -
+
+// -----------------------------------------------------------
+
 function AdminListingsDash() {
+  const [submissions, setSubmissions] = useState([]);
+
+  useEffect(() => {
+    const getAllSubmissions = async () => {
+      const response = await fetchAllSubmissions();
+      setSubmissions(response);
+    };
+
+    getAllSubmissions();
+  }, []);
+
+  useEffect(() => {
+    console.log(submissions);
+  }, [submissions]);
+
   const property = {
     title: "Modern Riversands Villa",
     style: "Italian-Style",

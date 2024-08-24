@@ -1,10 +1,16 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { getHouseById, updateHouse, getImagesByHouseId } from "../services/houseService";
-import Navbar from "../components/navigation/Navbar";
-import AddressModal from "../components/overlays/AddressModal";
-import ImageUpload from "../components/input/ImageUpload";
 
+// Services
+import { getHouseById, updateHouse, getImagesByHouseId } from "../services/houseService";
+
+// Utility Functions
+// -
+
+// Third-Party Components
 import {
   VStack,
   HStack,
@@ -20,7 +26,6 @@ import {
   useDisclosure,
   IconButton,
 } from "@chakra-ui/react";
-
 import {
   AddHomeOutlined,
   CheckCircleOutlineOutlined,
@@ -36,8 +41,17 @@ import {
   ArrowBack,
 } from "@mui/icons-material";
 
+// Internal Components
+import Navbar from "../components/navigation/Navbar";
+import AddressModal from "../components/overlays/AddressModal";
+import ImageUpload from "../components/input/ImageUpload";
 import RadioCard from "../components/input/RadioCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function EditListingPage() {
   const { houseId } = useParams();

@@ -1,14 +1,21 @@
+// IMPORT
+// -----------------------------------------------------------
+// React & Hooks
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+
+// Services
 import { getHouseById, getImagesByHouseId } from "../services/houseService";
+import { getAgencyById } from "../services/agencyService";
+
+// Utility Functions
 import { capitaliseString } from "../utils/capitaliseString.js";
 import { getNumOfRooms } from "../utils/getNumOfRooms.js";
 import { formatPrice } from "../utils/formatPrice.js";
-import { getAgencyById } from "../services/agencyService";
 import logoMap from "../utils/logoMap.js";
 
+// Third-Party Components
 import { Button, HStack, IconButton, VStack } from "@chakra-ui/react";
-import Navbar from "../components/navigation/Navbar.jsx";
 import {
   ArrowBack,
   ThumbUpOutlined,
@@ -18,9 +25,16 @@ import {
   LocationOnOutlined,
   CalendarMonthOutlined,
 } from "@mui/icons-material";
-import ImageCollection from "../components/visual/ImageCollection.jsx";
 
+// Internal Components
+import Navbar from "../components/navigation/Navbar.jsx";
+import ImageCollection from "../components/visual/ImageCollection.jsx";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock.jsx";
+
+// Imagery
+// -
+
+// -----------------------------------------------------------
 
 function ListingDetailPage() {
   const { houseId } = useParams();
