@@ -2,6 +2,28 @@
 
 // CREATE FUNCTIONS
 // ----------------------------------------------------------------------------
+// Create a new interested entity by houseId
+export async function createInterested(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/interested/createInterestedByHouseId.php?houseId=${houseId}`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Couldn't create interested entity");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Failed to create interested entity: ", error);
+    throw error;
+  }
+}
 // ----------------------------------------------------------------------------
 
 // READ FUNCTIONS
@@ -55,6 +77,7 @@ export async function fetchFullInterestList() {
 
 // UPDATE FUNCTIONS
 // ----------------------------------------------------------------------------
+
 // ----------------------------------------------------------------------------
 
 // DELETE FUNCTIONS

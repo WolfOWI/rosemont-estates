@@ -43,6 +43,7 @@ function ListingsPage() {
   // Houses in database
   const [houses, setHouses] = useState([]);
 
+  // On Page Load
   useEffect(() => {
     async function loadHouses() {
       try {

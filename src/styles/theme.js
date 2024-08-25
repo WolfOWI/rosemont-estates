@@ -99,6 +99,19 @@ const Button = {
         color: "beige.P2",
       },
     },
+    activated: {
+      fontSize: "14",
+      height: 12,
+      bg: "thorn.P3",
+      color: "thorn.0",
+      fontWeight: "bold",
+      border: "none",
+      _hover: {
+        bg: "rosered.M2",
+        fontWeight: "bold",
+        color: "beige.P2",
+      },
+    },
   },
   defaultProps: {
     variant: "thornFilled",

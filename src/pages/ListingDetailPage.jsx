@@ -7,6 +7,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 // Services
 import { getHouseById, getImagesByHouseId } from "../services/houseService";
 import { getAgencyById } from "../services/agencyService";
+import { createInterested } from "../services/interestedService.js";
 
 // Utility Functions
 import { capitaliseString } from "../utils/capitaliseString.js";
@@ -24,6 +25,12 @@ import {
   LocationCityOutlined,
   LocationOnOutlined,
   CalendarMonthOutlined,
+  ThumbUp,
+  CancelOutlined,
+  CircleNotificationsOutlined,
+  NotificationsOffOutlined,
+  ThumbDownAltOutlined,
+  EmailOutlined,
 } from "@mui/icons-material";
 
 // Internal Components
@@ -41,6 +48,8 @@ function ListingDetailPage() {
   const [house, setHouse] = useState(null);
   const [agency, setAgency] = useState(null);
   const [images, setImages] = useState([]);
+  const [interestActive, setInterestActive] = useState(false);
+  const [interestIsHovered, setInterestIsHovered] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,6 +94,17 @@ function ListingDetailPage() {
   // When edit btn is clicked, go to edit house page "editListingPage"
   const handleEditClick = () => {
     navigate(`/edit/${house.houseId}`);
+  };
+
+  // When Interested Button is clicked
+  const handleInterestedClick = () => {
+    if (!interestActive) {
+      createInterested(houseId);
+      setInterestActive(true);
+    } else {
+      // TODO Delete Interested
+      setInterestActive(false);
+    }
   };
 
   if (!house) {
@@ -176,8 +196,33 @@ function ListingDetailPage() {
               )}
             </div>
             <HStack w="full" mt={4}>
-              <Button w="full" leftIcon={<ThumbUpOutlined />}>
-                I'm Interested
+              <Button
+                w="full"
+                leftIcon={
+                  interestActive ? (
+                    interestIsHovered ? (
+                      <ThumbDownAltOutlined />
+                    ) : (
+                      <CircleNotificationsOutlined />
+                    )
+                  ) : interestIsHovered ? (
+                    <EmailOutlined />
+                  ) : (
+                    <ThumbUpOutlined />
+                  )
+                }
+                onClick={handleInterestedClick}
+                onMouseEnter={() => setInterestIsHovered(true)}
+                onMouseLeave={() => setInterestIsHovered(false)}
+                variant={interestActive ? "activated" : "thornFilled"}
+              >
+                {interestActive
+                  ? interestIsHovered
+                    ? "Cancel Interest"
+                    : "Interest Sent"
+                  : interestIsHovered
+                  ? "Notify Agent"
+                  : "Show Interest"}
               </Button>
               <IconButton icon={<FavoriteOutlined />} minW={12} variant="roseOutline" />
             </HStack>
