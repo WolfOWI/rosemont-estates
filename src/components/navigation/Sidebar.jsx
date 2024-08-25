@@ -52,7 +52,7 @@ import tsungaiLogoColour from "../../assets/logos/agencyLogos/tsungaiLogoColour.
 import adminLogoColour from "../../assets/logos/agencyLogos/adminLogoColour.png";
 // -----------------------------------------------------------
 
-function Sidebar() {
+function Sidebar({ realEstateChange }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Logged in user
@@ -111,6 +111,7 @@ function Sidebar() {
     try {
       const response = await updateAgent(updatedDetails);
       setUser(response.sessionData);
+      realEstateChange();
     } catch (error) {
       console.log("Failed to update real estate agency: ", error);
     }
