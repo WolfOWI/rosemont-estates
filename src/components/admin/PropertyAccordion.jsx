@@ -7,10 +7,12 @@ import { useState, useEffect } from "react";
 // Services
 import { getPrimaryImageByHouseId } from "../../services/houseService";
 import { updateSubmissionByHouseId } from "../../services/submissionService";
+import { getAgencyById } from "../../services/agencyService";
 
 // Utility Functions
 import { formatPrice } from "../../utils/formatPrice";
 import { dateNow } from "../../utils/getDateNow";
+import logoMap from "../../utils/logoMap";
 
 // Third-Party Components
 import {
@@ -52,16 +54,27 @@ import missingImg from "../../assets/images/missingImg.png";
 // -----------------------------------------------------------
 
 function PropertyAccordion({ house, onDecision }) {
+  const [agency, setAgency] = useState(null);
   const [primaryImage, setPrimaryImage] = useState(null);
 
-  // When house.id changes/received, get the primaryImage
+  // When house.id changes/received, get the primaryImage & agency
   useEffect(() => {
     const fetchPrimaryImage = async () => {
       const response = await getPrimaryImageByHouseId(house.houseId);
       setPrimaryImage(response.imagePath);
     };
+
+    async function fetchAgency() {
+      try {
+        const agencyData = await getAgencyById(house.realEstateId);
+        setAgency(agencyData);
+      } catch (error) {
+        console.error("Failed to fetch agency:", error);
+      }
+    }
     fetchPrimaryImage();
-  }, [house.houseId]);
+    fetchAgency();
+  }, [house.houseId, house.realEstateId]);
 
   const handleDecisionClick = async (decicion) => {
     try {
@@ -103,6 +116,11 @@ function PropertyAccordion({ house, onDecision }) {
                     <p>{house.style}</p>
                     <p>Available: {house.availableDate}</p>
                   </HStack>
+                  {agency ? (
+                    <img src={logoMap[agency.logoColour]} alt="estate logo" className="w-16" />
+                  ) : (
+                    <div>Loading</div>
+                  )}
                   <p className="font-bold">{house.address}</p>
                   <p className={`${isExpanded ? "block" : "hidden"}`}>{house.description}</p>
                 </VStack>
