@@ -7,7 +7,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 // Services
 import { getHouseById, getImagesByHouseId } from "../services/houseService";
 import { getAgencyById } from "../services/agencyService";
-import { createInterested } from "../services/interestedService.js";
+import { createInterested, fetchInterestedBySessionUserId } from "../services/interestedService.js";
 
 // Utility Functions
 import { capitaliseString } from "../utils/capitaliseString.js";
@@ -48,6 +48,7 @@ function ListingDetailPage() {
   const [house, setHouse] = useState(null);
   const [agency, setAgency] = useState(null);
   const [images, setImages] = useState([]);
+  const [interestArr, setInterestArr] = useState([]);
   const [interestActive, setInterestActive] = useState(false);
   const [interestIsHovered, setInterestIsHovered] = useState(false);
   const navigate = useNavigate();
@@ -71,9 +72,30 @@ function ListingDetailPage() {
       }
     };
 
+    const fetchUserInterests = async () => {
+      try {
+        const allUserInterested = await fetchInterestedBySessionUserId();
+        setInterestArr(allUserInterested);
+      } catch (error) {
+        console.error("Error fetching logged-in user's interests:", error);
+      }
+    };
+
     fetchHouseDetails();
     fetchImages();
+    fetchUserInterests();
   }, [houseId]);
+
+  useEffect(() => {
+    // Determine if logged-in user's interest list includes current house.id
+    const alreadyInterested = interestArr.some(
+      (interest) => interest.houseId === parseInt(houseId)
+    );
+
+    if (alreadyInterested) {
+      setInterestActive(true);
+    }
+  }, [houseId, interestArr]);
 
   // When house object changes, get agency info
   useEffect(() => {

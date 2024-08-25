@@ -51,6 +51,29 @@ export async function fetchInterested() {
   }
 }
 
+// Get Interested Entities by Session User Id
+export async function fetchInterestedBySessionUserId() {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/interested/getInterestedBySessionUserId.php`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch interested entities by session user");
+    }
+
+    const savedHouseIds = await response.json();
+    return savedHouseIds;
+  } catch (error) {
+    console.error("Error fetching interested entities by session user:", error);
+    throw error;
+  }
+}
+
 // Get Interested Customer & House Details (INNER JOIN)
 export async function fetchFullInterestList() {
   try {
