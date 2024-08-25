@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import { fetchAllHouses } from "../services/houseService";
 
 // Utility Functions
-// -
+import { filterHousesByPrice } from "../utils/houseFiltering";
+import { millionify } from "../utils/millionify";
 
 // Third-Party Components
 import {
@@ -40,8 +41,10 @@ import ListingHouseCard from "../components/house/ListingHouseCard";
 // -----------------------------------------------------------
 
 function ListingsPage() {
-  // Houses in database
-  const [houses, setHouses] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 150]); // Price Filtering
+  const [isFilterPrice, setIsFilterPrice] = useState(false);
+  const [houses, setHouses] = useState([]); // All Houses (default unfiltered)
+  const [filtHouses, setFiltHouses] = useState([]); // Filtered Houses
 
   // On Page Load
   useEffect(() => {
@@ -49,6 +52,7 @@ function ListingsPage() {
       try {
         const response = await fetchAllHouses();
         setHouses(response);
+        setFiltHouses(response);
       } catch (error) {
         console.log("Error fetching houses: ", error);
       }
@@ -57,10 +61,18 @@ function ListingsPage() {
     loadHouses();
   }, []);
 
-  // Price Filter
-  // ----------------------------------------------------
-  const [priceRange, setPriceRange] = useState([0, 150]);
+  useEffect(() => {
+    console.log("Filtered Houses:");
+    console.log(filtHouses);
+  }, [filtHouses]);
 
+  // useEffect(() => {
+  //   console.log("priceRange:");
+  //   console.log(priceRange);
+  // }, [priceRange]);
+
+  // Price Filter Components
+  // ----------------------------------------------------
   const handleSliderChange = (value) => {
     setPriceRange(value);
   };
@@ -74,6 +86,34 @@ function ListingsPage() {
     const value = parseInt(valueString, 10);
     setPriceRange([priceRange[0], value]);
   };
+
+  // Handle Apply Button (Price)
+  const handlePriceFilterApply = () => {
+    const priceFilteredHouses = filterHousesByPrice(
+      houses,
+      millionify(priceRange[0]),
+      millionify(priceRange[1])
+    );
+    console.log("priceFilteredHouses:");
+    console.log(priceFilteredHouses);
+
+    setFiltHouses(priceFilteredHouses);
+
+    // If filtering with max & min values (essentially off)
+    if (priceRange[0] === 0 && priceRange[0] === 150) {
+      setIsFilterPrice(false);
+    } else {
+      setIsFilterPrice(true);
+    }
+  };
+
+  // Handle Reset Button (Price)
+  const handlePriceFilterReset = () => {
+    console.log("Resetting Price Filter");
+    setPriceRange([0, 150]); // Reset to default
+    setFiltHouses(houses); // Reset filteredHouses to default
+    setIsFilterPrice(false);
+  };
   // ----------------------------------------------------
 
   return (
@@ -85,7 +125,14 @@ function ListingsPage() {
           {/* Filters */}
           <HStack my={2}>
             {/* Price Filtering */}
-            <PopoverForm label="Price" icon={<PriceCheckOutlined />} title="Price Filter">
+            <PopoverForm
+              label="Price"
+              icon={<PriceCheckOutlined />}
+              title="Price Filter"
+              isActive={isFilterPrice}
+              applyFilter={handlePriceFilterApply}
+              resetFilter={handlePriceFilterReset}
+            >
               <FormControl>
                 <RangeSlider
                   defaultValue={[0, 150]}
@@ -266,7 +313,7 @@ function ListingsPage() {
           </HStack>
           {/* Homes List */}
           <VStack w="full" mt={8} spacing={4}>
-            {houses.map((house) => (
+            {filtHouses.map((house) => (
               <ListingHouseCard key={house.houseId} house={house} />
             ))}
           </VStack>

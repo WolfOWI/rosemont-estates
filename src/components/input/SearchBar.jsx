@@ -28,7 +28,7 @@ function SearchBar() {
         <Input
           variant="searchbar"
           type="text"
-          placeholder="Search for a City, Suburb, Province or Zip Code"
+          placeholder="Search for a Suburb, City, Province or Zip Code"
           width="full"
         />
         <Select variant="filled" margin={4} w="25%">
