@@ -7,7 +7,11 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 // Services
 import { getHouseById, getImagesByHouseId } from "../services/houseService";
 import { getAgencyById } from "../services/agencyService";
-import { createInterested, fetchInterestedBySessionUserId } from "../services/interestedService.js";
+import {
+  createInterested,
+  fetchInterestedBySessionUserId,
+  deleteInterested,
+} from "../services/interestedService.js";
 
 // Utility Functions
 import { capitaliseString } from "../utils/capitaliseString.js";
@@ -124,7 +128,7 @@ function ListingDetailPage() {
       createInterested(houseId);
       setInterestActive(true);
     } else {
-      // TODO Delete Interested
+      deleteInterested(houseId);
       setInterestActive(false);
     }
   };

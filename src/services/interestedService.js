@@ -105,4 +105,26 @@ export async function fetchFullInterestList() {
 
 // DELETE FUNCTIONS
 // ----------------------------------------------------------------------------
+// Delete interest by houseId (and session user id)
+export async function deleteInterested(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/interested/deleteInterestedByHouseId.php?houseId=${houseId}`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Couldn't delete interested entity");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Failed to delete interested entity: ", error);
+    throw error;
+  }
+}
 // ----------------------------------------------------------------------------
