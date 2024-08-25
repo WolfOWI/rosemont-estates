@@ -7,6 +7,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 // Services
 import { getHouseById, getImagesByHouseId } from "../services/houseService";
 import { getAgencyById } from "../services/agencyService";
+import { addToSaved, getSavedHouseIdsByUserId, removeSavedHouse } from "../services/savedService";
 import {
   createInterested,
   fetchInterestedBySessionUserId,
@@ -26,6 +27,7 @@ import {
   ThumbUpOutlined,
   EditOutlined,
   FavoriteOutlined,
+  FavoriteBorderOutlined,
   LocationCityOutlined,
   LocationOnOutlined,
   CalendarMonthOutlined,
@@ -55,6 +57,7 @@ function ListingDetailPage() {
   const [interestArr, setInterestArr] = useState([]);
   const [interestActive, setInterestActive] = useState(false);
   const [interestIsHovered, setInterestIsHovered] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,7 +87,18 @@ function ListingDetailPage() {
         console.error("Error fetching logged-in user's interests:", error);
       }
     };
+    const fetchSavedHouseIds = async () => {
+      try {
+        const idsArr = await getSavedHouseIdsByUserId();
+        if (idsArr) {
+          setIsSaved(idsArr.includes(parseInt(houseId)));
+        }
+      } catch (error) {
+        console.log("Error fetching the saved house ids:", error);
+      }
+    };
 
+    fetchSavedHouseIds();
     fetchHouseDetails();
     fetchImages();
     fetchUserInterests();
@@ -130,6 +144,23 @@ function ListingDetailPage() {
     } else {
       deleteInterested(houseId);
       setInterestActive(false);
+    }
+  };
+
+  // When heart button is clicked
+  const handleHeartClick = async () => {
+    try {
+      // If house is in saved list
+      if (isSaved) {
+        await removeSavedHouse(houseId);
+        // console.log("Removing house from saved list");
+      } else {
+        await addToSaved(houseId);
+        // console.log("Adding house to saved list");
+      }
+      setIsSaved((prevState) => !prevState); // Toggle saved status
+    } catch (error) {
+      console.error(`Failed to ${isSaved ? "remove" : "add"} saved house:`, error);
     }
   };
 
@@ -250,7 +281,12 @@ function ListingDetailPage() {
                   ? "Notify Agent"
                   : "Show Interest"}
               </Button>
-              <IconButton icon={<FavoriteOutlined />} minW={12} variant="roseOutline" />
+              <IconButton
+                icon={isSaved ? <FavoriteOutlined /> : <FavoriteBorderOutlined />}
+                minW={12}
+                variant="roseOutline"
+                onClick={handleHeartClick}
+              />
             </HStack>
           </div>
         </div>
