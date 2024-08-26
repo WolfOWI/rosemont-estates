@@ -21,7 +21,7 @@ import { SearchOutlined } from "@mui/icons-material";
 
 // -----------------------------------------------------------
 
-function SearchBar({ searchChange }) {
+function SearchBar({ searchChange, selectChange }) {
   return (
     <div className="flex items-center relative w-full">
       <div className="flex items-center bg-beige-P2 rounded-xl transition border-2 hover:border-thorn-0 w-[100%] h-[80px]">
@@ -32,7 +32,7 @@ function SearchBar({ searchChange }) {
           width="full"
           onChange={(e) => searchChange(e.target.value)}
         />
-        <Select variant="filled" margin={4} w="25%">
+        <Select variant="filled" margin={4} w="25%" onChange={(e) => selectChange(e.target.value)}>
           <option value="all">All</option>
           <option value="sell">For Sale</option>
           <option value="rent">To Rent</option>

@@ -1,17 +1,17 @@
 // Filtering of Houses
 
-// STAGE 1A: Text Location Search Filtering
+// STAGE 1: Text Location Search Filtering
 export function filterHousesByLocationSearch(houseArr, textSearch) {
-  console.log("Houses Received:");
-  console.log(houseArr);
-  console.log("Text Search:");
-  console.log(textSearch);
+  // console.log("Houses Received:");
+  // console.log(houseArr);
+  // console.log("Text Search:");
+  // console.log(textSearch);
 
   // Only filter if textSearch exists
   if (textSearch) {
     // If textSearch is a zip code (number value)
     if (parseInt(textSearch) > 0) {
-      console.log("Zip code detected");
+      // console.log("Zip Code Detected");
       return houseArr.filter((house) => house.zip.includes(textSearch));
     } else {
       let text = textSearch.toLowerCase(); // Convert to lowercase for case insensitivity
@@ -28,10 +28,23 @@ export function filterHousesByLocationSearch(houseArr, textSearch) {
   }
 }
 
-// STAGE 1B: SellType Filtering
-export function filterHousesBySellType(houseArr, sellType) {}
+// STAGE 2: SellType Filtering
+export function filterHousesBySellType(houseArr, sellType) {
+  // console.log("Houses Received:");
+  // console.log(houseArr);
+  // console.log("Sell Type Value:");
+  // console.log(sellType);
 
-// STAGE 2: Min & Max Price Filtering
+  // If sellType is not all (thus no filtering)
+  if (sellType !== "all") {
+    // console.log(houseArr.filter((house) => house.sellType === sellType));
+    return houseArr.filter((house) => house.sellType === sellType);
+  } else {
+    return houseArr;
+  }
+}
+
+// STAGE 3: Min & Max Price Filtering
 // ----------------------------------------------------
 export function filterHousesByPrice(houseArr, minPrice, maxPrice) {
   //   console.log(houseArr);
@@ -42,7 +55,7 @@ export function filterHousesByPrice(houseArr, minPrice, maxPrice) {
 }
 // ----------------------------------------------------
 
-// STAGE 3: Interior Filtering
+// STAGE 4: Interior Filtering
 // ----------------------------------------------------
 export function filterHousesByRooms(houseArr, roomsFilterObj) {
   // console.log("Houses Received:");
@@ -114,7 +127,7 @@ export function filterHousesByRooms(houseArr, roomsFilterObj) {
 }
 // ----------------------------------------------------
 
-// STAGE 4: Exterior Filtering
+// STAGE 5: Exterior Filtering
 // ----------------------------------------------------
 export function filterHousesByOutdoors(houseArr, outdoorsFilterObj) {
   // console.log("Houses Received:");
@@ -177,7 +190,7 @@ export function filterHousesByOutdoors(houseArr, outdoorsFilterObj) {
 }
 // ----------------------------------------------------
 
-// STAGE 5: Features Filtering
+// STAGE 6: Features Filtering
 export function filterHousesByFeatures(houseArr, featureFilterObj) {
   // console.log("Houses Received:");
   // console.log(houseArr);

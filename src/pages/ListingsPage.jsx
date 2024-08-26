@@ -50,13 +50,13 @@ import ListingHouseCard from "../components/house/ListingHouseCard";
 function ListingsPage() {
   // FILTERING STATES
   // -----------------------------------------------------------
-
   // Location Text Search
   const [locSearchFilt, setLocSearchFilt] = useState("");
   const [isFiltLocSearch, setIsFiltLocSearch] = useState(false);
 
   // SellType
-  const [sellTypeFilt, setSellTypeFilt] = useState("");
+  const [sellTypeFilt, setSellTypeFilt] = useState("all");
+  const [isFiltSellType, setIsFiltSellType] = useState(false);
 
   // Price
   const [priceRangeFilt, setPriceRangeFilt] = useState([0, 150]);
@@ -123,16 +123,12 @@ function ListingsPage() {
 
   // LOCATION SEARCH FILTERING
   // ----------------------------------------------------
+  // Handle search text input change
   const handleSearchInputChange = (input) => {
     setLocSearchFilt(input);
   };
 
-  // Search Bar Submit
-  // const handleSearchSubmit = () => {
-  //   console.log("Search Submit Clicked");
-  //   console.log(locSearchFilt);
-  // };
-
+  // When search text is not empty, set filter state TRUE
   useEffect(() => {
     if (locSearchFilt === "") {
       // console.log("locSearchFilt is empty");
@@ -142,6 +138,28 @@ function ListingsPage() {
     }
     // console.log(locSearchFilt);
   }, [locSearchFilt]);
+  // ----------------------------------------------------
+
+  // SELL TYPE FILTERING
+  // ----------------------------------------------------
+  // Handle select type
+  const handleSelectSellTypeChange = (selection) => {
+    // console.log("Setting sellType Filter to " + selection);
+    setSellTypeFilt(selection);
+  };
+
+  // When sellType is anything but 'all', turn filter ON.
+  useEffect(() => {
+    if (sellTypeFilt === "all") {
+      // console.log("sellType filter off");
+      setIsFiltSellType(false);
+    } else {
+      // console.log("sellType filter on");
+      setIsFiltSellType(true);
+    }
+    // console.log("sellTypeFilt");
+    // console.log(sellTypeFilt);
+  }, [sellTypeFilt]);
   // ----------------------------------------------------
 
   // PRICE FILTERING
@@ -296,15 +314,21 @@ function ListingsPage() {
     const filterHouses = () => {
       let houseArr = houses;
 
-      // Stage 1A: Location Filtering
+      // Stage 1: Location Filtering
       if (isFiltLocSearch) {
-        console.log("Stage 1A: Filtering by Location");
+        console.log("Stage 1: Filtering by Location");
         houseArr = filterHousesByLocationSearch(houseArr, locSearchFilt);
       }
 
-      // Stage 2: Price Filtering
+      // Stage 2: SellType Filtering
+      if (isFiltSellType) {
+        console.log("Stage 2: Filtering by SellType");
+        houseArr = filterHousesBySellType(houseArr, sellTypeFilt);
+      }
+
+      // Stage 3: Price Filtering
       if (isFiltPrice) {
-        console.log("Stage 2: Filtering by Price");
+        console.log("Stage 3: Filtering by Price");
         houseArr = filterHousesByPrice(
           houseArr,
           millionify(priceRangeFilt[0]),
@@ -312,22 +336,22 @@ function ListingsPage() {
         );
       }
 
-      // Stage 3: Interior Filtering
+      // Stage 4: Interior Filtering
       if (isFiltInt) {
-        console.log("Stage 3: Filtering by Interior");
+        console.log("Stage 4: Filtering by Interior");
         houseArr = filterHousesByRooms(houseArr, intFilt);
       }
 
-      // Stage 4: Exterior Filtering
+      // Stage 5: Exterior Filtering
       if (isFiltExt) {
         houseArr = filterHousesByOutdoors(houseArr, extFilt);
-        console.log("Stage 4: Filtering by Exterior");
+        console.log("Stage 5: Filtering by Exterior");
       }
 
-      // Stage 5: Features Filtering
+      // Stage 6: Features Filtering
       if (isFiltFeat) {
         houseArr = filterHousesByFeatures(houseArr, featFilt);
-        console.log("Stage 5: Filtering by Features");
+        console.log("Stage 6: Filtering by Features");
       }
 
       setFiltHouses(houseArr);
@@ -337,11 +361,13 @@ function ListingsPage() {
   }, [
     houses,
     locSearchFilt,
+    sellTypeFilt,
     priceRangeFilt,
     intFilt,
     extFilt,
     featFilt,
     isFiltLocSearch,
+    isFiltSellType,
     isFiltPrice,
     isFiltInt,
     isFiltExt,
@@ -361,7 +387,10 @@ function ListingsPage() {
       <div className="bg-beige-0 w-full min-h-screen">
         <Navbar />
         <div className="mt-8 mx-4 md:mx-16 lg:mx-32 xl:mx-64 2xl:mx-96">
-          <SearchBar searchChange={handleSearchInputChange} />
+          <SearchBar
+            searchChange={handleSearchInputChange}
+            selectChange={handleSelectSellTypeChange}
+          />
           {/* Filters */}
           <HStack my={2}>
             {/* Price Filtering */}
