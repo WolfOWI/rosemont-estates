@@ -282,16 +282,30 @@ function ProfilePage() {
                 </HStack>
               </HStack>
               <VStack spacing={4} align="stretch">
-                {subHousesArr.map((house) => (
-                  <MyHouseCard
-                    key={house.houseId}
-                    house={house}
-                    onDeleteClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteClick(house.houseId);
-                    }}
-                  />
-                ))}
+                {subHousesArr.length > 0 ? (
+                  <>
+                    {subHousesArr.map((house) => (
+                      <MyHouseCard
+                        key={house.houseId}
+                        house={house}
+                        onDeleteClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteClick(house.houseId);
+                        }}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <div className="flex flex-col w-fit text-center mx-16 my-16">
+                      <h3>No Homes Listed By {user.firstName}</h3>
+                      <p>
+                        If you'd like to sell/rent your house, click on the create listing button in
+                        the top right.
+                      </p>
+                    </div>
+                  </>
+                )}
               </VStack>
             </div>
           </VStack>
@@ -311,13 +325,27 @@ function ProfilePage() {
               </Button>
             </HStack>
             <VStack spacing={4} align="stretch" mt={4}>
-              {savedHousesArr.map((savedHouse) => (
-                <SavedHouseCard
-                  key={savedHouse.houseId}
-                  house={savedHouse}
-                  onRemove={handleRemoveHouse}
-                />
-              ))}
+              {savedHousesArr.length > 0 ? (
+                <>
+                  {savedHousesArr.map((savedHouse) => (
+                    <SavedHouseCard
+                      key={savedHouse.houseId}
+                      house={savedHouse}
+                      onRemove={handleRemoveHouse}
+                    />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col w-fit text-center mx-16 mt-16">
+                    <h3>Nothing Saved</h3>
+                    <p>
+                      Save a house by clicking the heart button when hovering over its image or the
+                      save button in the detailed property view.
+                    </p>
+                  </div>
+                </>
+              )}
             </VStack>
           </div>
         </HStack>
