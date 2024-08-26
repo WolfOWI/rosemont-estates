@@ -104,7 +104,7 @@ function Navbar({ transparent }) {
               </MenuButton>
               <MenuList>
                 <MenuItem as={Link} to="/profile" icon={<AccountCircleOutlined />}>
-                  Profile
+                  <p className="font-normal">Profile</p>
                 </MenuItem>
                 <MenuItem icon={<LogoutOutlined />} onClick={handleLogout}>
                   Log Out
