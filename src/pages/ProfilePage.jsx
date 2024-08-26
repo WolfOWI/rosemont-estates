@@ -4,11 +4,8 @@
 import { useState, useEffect } from "react";
 
 // Services
-import { getSavedHouseIdsByUserId } from "../services/savedService";
-import {
-  getSubmissionBySessionUserId,
-  getSubmissionHouseListBySessionUserId,
-} from "../services/submissionService";
+import { getSavedHouseIdsByUserId, removeAllSavedBySessionUserId } from "../services/savedService";
+import { getSubmissionHouseListBySessionUserId } from "../services/submissionService";
 import { getHouseById, deleteHouseById } from "../services/houseService";
 import { updateUser } from "../services/userService";
 
@@ -112,11 +109,6 @@ function ProfilePage() {
     fetchSavedHouseIds();
   }, []);
 
-  useEffect(() => {
-    console.log("subHousesArr:");
-    console.log(subHousesArr);
-  }, [subHousesArr]);
-
   // When savedHouseIdsArr changes, get details of each house
   useEffect(() => {
     const fetchHouseDetails = async () => {
@@ -138,6 +130,12 @@ function ProfilePage() {
     // console.log("handleRemoveHouse");
     setSavedHouseIdsArr((prevIds) => prevIds.filter((id) => id !== houseId));
     setSavedHousesArr((prevHouses) => prevHouses.filter((house) => house.houseId !== houseId));
+  };
+
+  const handleClearAllSaved = () => {
+    removeAllSavedBySessionUserId();
+    setSavedHouseIdsArr([]);
+    setSavedHousesArr([]);
   };
 
   // Handle editing personal details toggle
@@ -304,7 +302,11 @@ function ProfilePage() {
                 <FavoriteBorderOutlined sx={{ fontSize: 40, color: "#D27A7A" }} />
                 <h3>Saved Properties</h3>
               </HStack>
-              <Button leftIcon={<DeleteOutline />} variant="thornOutline">
+              <Button
+                leftIcon={<DeleteOutline />}
+                variant="thornOutline"
+                onClick={handleClearAllSaved}
+              >
                 Clear All
               </Button>
             </HStack>

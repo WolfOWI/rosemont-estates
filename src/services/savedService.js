@@ -59,6 +59,34 @@ export async function getSavedHouseIdsByUserId() {
 
 // DELETE FUNCTIONS
 // ----------------------------------------------------------------------------
+// Remove all saved houses of a logged in user.
+export async function removeAllSavedBySessionUserId() {
+  // console.log("removeSavedHouse by houseId of");
+  // console.log(houseId);
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/saved/deleteAllSavedBySessionUserId.php`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to remove all saved house of logged in user.");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error removing all saved house of logged in user:", error);
+    throw error;
+  }
+}
+
 // Remove a saved house by its ID
 export async function removeSavedHouse(houseId) {
   // console.log("removeSavedHouse by houseId of");
