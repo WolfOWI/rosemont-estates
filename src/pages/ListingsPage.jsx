@@ -8,6 +8,8 @@ import { fetchAllApprovedHouses } from "../services/houseService";
 
 // Utility Functions
 import {
+  filterHousesByLocationSearch,
+  filterHousesBySellType,
   filterHousesByPrice,
   filterHousesByRooms,
   filterHousesByOutdoors,
@@ -48,6 +50,14 @@ import ListingHouseCard from "../components/house/ListingHouseCard";
 function ListingsPage() {
   // FILTERING STATES
   // -----------------------------------------------------------
+
+  // Location Text Search
+  const [locSearchFilt, setLocSearchFilt] = useState("");
+  const [isFiltLocSearch, setIsFiltLocSearch] = useState(false);
+
+  // SellType
+  const [sellTypeFilt, setSellTypeFilt] = useState("");
+
   // Price
   const [priceRangeFilt, setPriceRangeFilt] = useState([0, 150]);
   const [isFiltPrice, setIsFiltPrice] = useState(false);
@@ -110,6 +120,29 @@ function ListingsPage() {
 
     loadHouses();
   }, []);
+
+  // LOCATION SEARCH FILTERING
+  // ----------------------------------------------------
+  const handleSearchInputChange = (input) => {
+    setLocSearchFilt(input);
+  };
+
+  // Search Bar Submit
+  // const handleSearchSubmit = () => {
+  //   console.log("Search Submit Clicked");
+  //   console.log(locSearchFilt);
+  // };
+
+  useEffect(() => {
+    if (locSearchFilt === "") {
+      // console.log("locSearchFilt is empty");
+      setIsFiltLocSearch(false);
+    } else {
+      setIsFiltLocSearch(true);
+    }
+    // console.log(locSearchFilt);
+  }, [locSearchFilt]);
+  // ----------------------------------------------------
 
   // PRICE FILTERING
   // ----------------------------------------------------
@@ -227,7 +260,7 @@ function ListingsPage() {
 
   // On exterior filter changes, set filter ON/OFF states
   useEffect(() => {
-    console.log(featFilt);
+    // console.log(featFilt);
     // Check if all feature object values are 0
     const allValuesZero = Object.values(featFilt).every((value) => value === false);
     if (allValuesZero) {
@@ -263,9 +296,15 @@ function ListingsPage() {
     const filterHouses = () => {
       let houseArr = houses;
 
-      // Stage 1: Price Filtering
+      // Stage 1A: Location Filtering
+      if (isFiltLocSearch) {
+        console.log("Stage 1A: Filtering by Location");
+        houseArr = filterHousesByLocationSearch(houseArr, locSearchFilt);
+      }
+
+      // Stage 2: Price Filtering
       if (isFiltPrice) {
-        console.log("Stage 1: Filtering by Price");
+        console.log("Stage 2: Filtering by Price");
         houseArr = filterHousesByPrice(
           houseArr,
           millionify(priceRangeFilt[0]),
@@ -273,22 +312,22 @@ function ListingsPage() {
         );
       }
 
-      // Stage 2: Interior Filtering
+      // Stage 3: Interior Filtering
       if (isFiltInt) {
-        console.log("Stage 2: Filtering by Interior");
+        console.log("Stage 3: Filtering by Interior");
         houseArr = filterHousesByRooms(houseArr, intFilt);
       }
 
-      // Stage 3: Exterior Filtering
+      // Stage 4: Exterior Filtering
       if (isFiltExt) {
         houseArr = filterHousesByOutdoors(houseArr, extFilt);
-        console.log("Stage 3: Filtering by Exterior");
+        console.log("Stage 4: Filtering by Exterior");
       }
 
-      // Stage 4: Features Filtering
+      // Stage 5: Features Filtering
       if (isFiltFeat) {
         houseArr = filterHousesByFeatures(houseArr, featFilt);
-        console.log("Stage 4: Filtering by Features");
+        console.log("Stage 5: Filtering by Features");
       }
 
       setFiltHouses(houseArr);
@@ -297,10 +336,12 @@ function ListingsPage() {
     filterHouses();
   }, [
     houses,
+    locSearchFilt,
     priceRangeFilt,
     intFilt,
     extFilt,
     featFilt,
+    isFiltLocSearch,
     isFiltPrice,
     isFiltInt,
     isFiltExt,
@@ -308,12 +349,19 @@ function ListingsPage() {
   ]);
   // ----------------------------------------------------
 
+  // useEffect(() => {
+  //   console.log("Houses");
+  //   houses.forEach((house) => {
+  //     console.log(house.title);
+  //   });
+  // }, [houses]);
+
   return (
     <>
       <div className="bg-beige-0 w-full min-h-screen">
         <Navbar />
         <div className="mt-8 mx-4 md:mx-16 lg:mx-32 xl:mx-64 2xl:mx-96">
-          <SearchBar />
+          <SearchBar searchChange={handleSearchInputChange} />
           {/* Filters */}
           <HStack my={2}>
             {/* Price Filtering */}
@@ -673,8 +721,24 @@ function ListingsPage() {
               </VStack>
             </PopoverForm>
           </HStack>
+          {filtHouses.length > 0 ? (
+            <>
+              <div className="w-full flex justify-end px-5 mt-8 mb-2">
+                <h4 className="text-beige-M3">{filtHouses.length} Homes Found</h4>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* TODO Add No Homes Found Image */}
+              <div className="flex flex-col text-center w-full mt-20">
+                <h3 className="text-warmgray-600">No Homes Found.</h3>
+                <p>Please reset your filters and try again.</p>
+              </div>
+            </>
+          )}
+
           {/* Homes List */}
-          <VStack w="full" mt={8} spacing={4}>
+          <VStack w="full" spacing={4}>
             {filtHouses.map((house) => (
               <ListingHouseCard key={house.houseId} house={house} />
             ))}

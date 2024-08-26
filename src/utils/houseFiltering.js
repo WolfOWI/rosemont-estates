@@ -1,6 +1,28 @@
 // Filtering of Houses
 
-// STAGE 1: Min & Max Price Filtering
+// STAGE 1A: Text Location Search Filtering
+export function filterHousesByLocationSearch(houseArr, textSearch) {
+  console.log("Houses Received:");
+  console.log(houseArr);
+  console.log("Text Search:");
+  console.log(textSearch);
+
+  // If textSearch is a zip code (number value)
+  if (parseInt(textSearch) > 0) {
+    console.log("Zip code detected");
+    // console.log(houseArr.filter((house) => house.zip.includes(textSearch)));
+    return houseArr.filter((house) => house.zip.includes(textSearch));
+  } else {
+    // return houseArr;
+  }
+
+  // let filteredHouses = houseArr;
+}
+
+// STAGE 1B: SellType Filtering
+export function filterHousesBySellType(houseArr, sellType) {}
+
+// STAGE 2: Min & Max Price Filtering
 // ----------------------------------------------------
 export function filterHousesByPrice(houseArr, minPrice, maxPrice) {
   //   console.log(houseArr);
@@ -11,7 +33,7 @@ export function filterHousesByPrice(houseArr, minPrice, maxPrice) {
 }
 // ----------------------------------------------------
 
-// STAGE 2: Interior Filtering
+// STAGE 3: Interior Filtering
 // ----------------------------------------------------
 export function filterHousesByRooms(houseArr, roomsFilterObj) {
   // console.log("Houses Received:");
@@ -83,7 +105,7 @@ export function filterHousesByRooms(houseArr, roomsFilterObj) {
 }
 // ----------------------------------------------------
 
-// STAGE 3: Exterior Filtering
+// STAGE 4: Exterior Filtering
 // ----------------------------------------------------
 export function filterHousesByOutdoors(houseArr, outdoorsFilterObj) {
   // console.log("Houses Received:");
@@ -146,12 +168,12 @@ export function filterHousesByOutdoors(houseArr, outdoorsFilterObj) {
 }
 // ----------------------------------------------------
 
-// STAGE 4: Features Filtering
+// STAGE 5: Features Filtering
 export function filterHousesByFeatures(houseArr, featureFilterObj) {
-  console.log("Houses Received:");
-  console.log(houseArr);
-  console.log("Feature Filter Object:");
-  console.log(featureFilterObj);
+  // console.log("Houses Received:");
+  // console.log(houseArr);
+  // console.log("Feature Filter Object:");
+  // console.log(featureFilterObj);
 
   let filteredHouses = houseArr;
 
