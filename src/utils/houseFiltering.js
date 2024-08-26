@@ -7,16 +7,25 @@ export function filterHousesByLocationSearch(houseArr, textSearch) {
   console.log("Text Search:");
   console.log(textSearch);
 
-  // If textSearch is a zip code (number value)
-  if (parseInt(textSearch) > 0) {
-    console.log("Zip code detected");
-    // console.log(houseArr.filter((house) => house.zip.includes(textSearch)));
-    return houseArr.filter((house) => house.zip.includes(textSearch));
-  } else {
-    // return houseArr;
-  }
+  // Only filter if textSearch exists
+  if (textSearch) {
+    // If textSearch is a zip code (number value)
+    if (parseInt(textSearch) > 0) {
+      console.log("Zip code detected");
+      return houseArr.filter((house) => house.zip.includes(textSearch));
+    } else {
+      let text = textSearch.toLowerCase(); // Convert to lowercase for case insensitivity
 
-  // let filteredHouses = houseArr;
+      return houseArr.filter(
+        (house) =>
+          house.suburb.toLowerCase().includes(text) ||
+          house.city.toLowerCase().includes(text) ||
+          house.province.toLowerCase().includes(text)
+      );
+    }
+  } else {
+    return houseArr;
+  }
 }
 
 // STAGE 1B: SellType Filtering

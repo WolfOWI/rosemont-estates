@@ -724,7 +724,9 @@ function ListingsPage() {
           {filtHouses.length > 0 ? (
             <>
               <div className="w-full flex justify-end px-5 mt-8 mb-2">
-                <h4 className="text-beige-M3">{filtHouses.length} Homes Found</h4>
+                <h4 className="text-beige-M3">
+                  {filtHouses.length} Home{filtHouses.length > 1 ? "s" : ""} Found
+                </h4>
               </div>
             </>
           ) : (
