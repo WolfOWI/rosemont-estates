@@ -22,7 +22,7 @@ import missingImg from "../../assets/images/missingImg.png";
 
 // -----------------------------------------------------------
 
-function MyHouseCard({ house }) {
+function MyHouseCard({ house, onDeleteClick }) {
   const [priImage, setPriImage] = useState(null);
   const navigate = useNavigate();
 
@@ -109,8 +109,7 @@ function MyHouseCard({ house }) {
                 <Button leftIcon={<EditOutlined />} onClick={handleEditClick}>
                   Edit
                 </Button>
-                {/* TODO Delete Functionality */}
-                <Button leftIcon={<DeleteOutline />} variant="roseOutline">
+                <Button leftIcon={<DeleteOutline />} variant="roseOutline" onClick={onDeleteClick}>
                   Delete
                 </Button>
               </HStack>

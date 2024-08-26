@@ -201,4 +201,29 @@ export async function updateHouse(houseId, formData, selectedFiles) {
 
 // DELETE FUNCTIONS
 // ----------------------------------------------------------------------------
+// Delete House by its ID
+export async function deleteHouseById(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/house/deleteHouseByHouseId.php?houseId=${houseId}`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to remove saved house");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error removing saved house:", error);
+    throw error;
+  }
+}
 // ----------------------------------------------------------------------------

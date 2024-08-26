@@ -2,31 +2,6 @@
 
 // CREATE FUNCTIONS
 // ----------------------------------------------------------------------------
-// Create a new submission entity by session user Id
-export async function createSubmission(submissionData) {
-  console.log("Received submissionData:");
-  console.log(submissionData);
-  try {
-    const response = await fetch(
-      `http://localhost/rosemont/backend/api/submission/createSubmissionBySessionUserId.php`,
-      {
-        method: "POST",
-        credentials: "include",
-        body: submissionData,
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Couldn't create submission entity");
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Failed to create submission entity: ", error);
-    throw error;
-  }
-}
 // ----------------------------------------------------------------------------
 
 // READ FUNCTIONS
@@ -73,6 +48,29 @@ export async function getSubmissionBySessionUserId() {
     return submissions;
   } catch (error) {
     console.error("Error fetching user house submissions:", error);
+    throw error;
+  }
+}
+
+// Get Submissions with House Details by logged in user's id
+export async function getSubmissionHouseListBySessionUserId() {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/submission/getSubmissionHouseBySessionUserId.php`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch house-submissions by session user.");
+    }
+
+    const submissions = await response.json();
+    return submissions;
+  } catch (error) {
+    console.error("Error fetching house-submissions by session user:", error);
     throw error;
   }
 }

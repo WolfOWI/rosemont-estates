@@ -5,8 +5,11 @@ import { useState, useEffect } from "react";
 
 // Services
 import { getSavedHouseIdsByUserId } from "../services/savedService";
-import { getSubmissionBySessionUserId } from "../services/submissionService";
-import { getHouseById } from "../services/houseService";
+import {
+  getSubmissionBySessionUserId,
+  getSubmissionHouseListBySessionUserId,
+} from "../services/submissionService";
+import { getHouseById, deleteHouseById } from "../services/houseService";
 import { updateUser } from "../services/userService";
 
 // Utility Functions
@@ -56,9 +59,7 @@ function ProfilePage() {
   const [user, setUser] = useState("");
 
   // Submitted Houses ("My Properties")
-  const [submissionsArr, setSubmissionsArr] = useState([]);
-  const [submittedHousesArr, setSubmittedHousesArr] = useState([]);
-  const [completeSubmitArr, setCompleteSubmitArr] = useState([]); // Combo of both submissionsArr & submittedHousesArr
+  const [subHousesArr, setSubHousesArr] = useState([]);
 
   // Saved Houses ("Saved Properties")
   const [savedHouseIdsArr, setSavedHouseIdsArr] = useState([]);
@@ -67,8 +68,14 @@ function ProfilePage() {
   // Edit User Details
   const [isEditingDetails, setIsEditingDetails] = useState(false);
 
+  // useEffect(() => {
+  //   console.log("subHousesArr:");
+  //   console.log(subHousesArr);
+  // }, [subHousesArr]);
+
   // On page mount
   useEffect(() => {
+    // TODO Get Session through the front-end service
     // Fetch session info from the server
     fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
       method: "GET",
@@ -91,55 +98,24 @@ function ProfilePage() {
       }
     };
 
-    // Fetch Submission Entities (My Properties)
-    const fetchHouseSubmissions = async () => {
+    // Fetch House Submissions ("My Properties")
+    const fetchSubHouseList = async () => {
       try {
-        const submArr = await getSubmissionBySessionUserId();
-        setSubmissionsArr(submArr);
+        const submArr = await getSubmissionHouseListBySessionUserId();
+        setSubHousesArr(submArr);
       } catch (error) {
         console.log("Error fetching the house submissions:", error);
       }
     };
 
-    fetchHouseSubmissions();
+    fetchSubHouseList();
     fetchSavedHouseIds();
   }, []);
 
-  // When submissionsArr changes, get details of each house
   useEffect(() => {
-    const fetchHouseDetails = async () => {
-      try {
-        const houseInfoPromises = submissionsArr.map((house) => getHouseById(house.houseId));
-        const allHouseDetails = await Promise.all(houseInfoPromises);
-        setSubmittedHousesArr(allHouseDetails);
-      } catch (error) {
-        console.log("Error fetching the house's details of submitted houses:", error);
-      }
-    };
-
-    fetchHouseDetails();
-  }, [submissionsArr]);
-
-  // Combine submissionsArr & submittedHousesArr into "completeSubmitArr"
-  useEffect(() => {
-    if (submissionsArr.length > 0 && submittedHousesArr.length > 0) {
-      const combinedData = submissionsArr.map((submission, index) => {
-        const houseDetails = submittedHousesArr.find(
-          (house) => house.houseId === submission.houseId
-        );
-        return {
-          ...submission,
-          ...houseDetails,
-        };
-      });
-      setCompleteSubmitArr(combinedData);
-    }
-  }, [submissionsArr, submittedHousesArr]);
-
-  // useEffect(() => {
-  //   console.log("completeSubmitArr is:");
-  //   console.log(completeSubmitArr);
-  // }, [completeSubmitArr]);
+    console.log("subHousesArr:");
+    console.log(subHousesArr);
+  }, [subHousesArr]);
 
   // When savedHouseIdsArr changes, get details of each house
   useEffect(() => {
@@ -164,6 +140,7 @@ function ProfilePage() {
     setSavedHousesArr((prevHouses) => prevHouses.filter((house) => house.houseId !== houseId));
   };
 
+  // Handle editing personal details toggle
   const handleEditClick = () => {
     setIsEditingDetails((prevState) => !prevState);
     console.log(user);
@@ -175,6 +152,14 @@ function ProfilePage() {
         email: user.email,
       });
     }
+  };
+
+  // Handle Deletion of My Property
+  const handleDeleteClick = (receivedHouseId) => {
+    console.log("You clicked delete");
+    console.log(receivedHouseId);
+    deleteHouseById(receivedHouseId);
+    setSubHousesArr((prevData) => prevData.filter((house) => house.houseId !== receivedHouseId));
   };
 
   // Log out function
@@ -299,8 +284,15 @@ function ProfilePage() {
                 </HStack>
               </HStack>
               <VStack spacing={4} align="stretch">
-                {completeSubmitArr.map((house) => (
-                  <MyHouseCard key={house.houseId} house={house} />
+                {subHousesArr.map((house) => (
+                  <MyHouseCard
+                    key={house.houseId}
+                    house={house}
+                    onDeleteClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteClick(house.houseId);
+                    }}
+                  />
                 ))}
               </VStack>
             </div>
