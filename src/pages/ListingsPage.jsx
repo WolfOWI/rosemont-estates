@@ -239,6 +239,22 @@ function ListingsPage() {
     }
   }, [featFilt]);
 
+  // Handle Reset Button (Exterior)
+  const handleFeatFilterReset = () => {
+    console.log("Resetting Feature Filter");
+    setFeatFilt({
+      internet: false,
+      airCon: false,
+      heating: false,
+      secSys: false,
+      solar: false,
+      gardServ: false,
+      irrigation: false,
+      outdoorLight: false,
+      boma: false,
+      gatedCommunity: false,
+    });
+  };
   // ----------------------------------------------------
 
   // OVERALL FILTERING
@@ -564,7 +580,13 @@ function ListingsPage() {
             </PopoverForm>
 
             {/* Features Filter */}
-            <PopoverForm label="Features" icon={<StarOutline />} title="Include:">
+            <PopoverForm
+              label="Features"
+              icon={<StarOutline />}
+              title="Include"
+              isActive={isFiltFeat}
+              resetFilter={handleFeatFilterReset}
+            >
               <VStack align="start" mb={4}>
                 <CheckboxGroup>
                   <div className="w-full flex flex-row justify-between">
