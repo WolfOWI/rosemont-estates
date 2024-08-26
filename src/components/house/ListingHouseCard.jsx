@@ -150,17 +150,23 @@ function ListingHouseCard({ house }) {
             <div>
               <h3>{house.title}</h3>
               <p className="mb-2">{houseCatchphrase(house)}</p>
-              <HStack>
-                {parseInt(house.internet) && <WifiOutlined />}
-                {parseInt(house.airCon) && <AcUnitOutlined />}
-                {parseInt(house.heating) && <LocalFireDepartmentOutlined />}
-                {parseInt(house.secSys) && <VideocamOutlined />}
-                {parseInt(house.solar) && <SolarPowerOutlined />}
-                {parseInt(house.gardServ) && <WaterDropOutlined />}
-                {parseInt(house.irrigation) && <WbTwilightOutlined />}
-                {parseInt(house.outdoorLight) && <OutdoorGrillOutlined />}
-                {parseInt(house.boma) && <WifiOutlined />}
-                {parseInt(house.gatedCommunity) && <FenceOutlined />}
+              <HStack spacing={0}>
+                {parseInt(house.internet) && <IconTextBlock type="internet" textHidden={true} />}
+                {parseInt(house.airCon) && <IconTextBlock type="airCon" textHidden={true} />}
+                {parseInt(house.heating) && <IconTextBlock type="heating" textHidden={true} />}
+                {parseInt(house.secSys) && <IconTextBlock type="secSys" textHidden={true} />}
+                {parseInt(house.solar) && <IconTextBlock type="solar" textHidden={true} />}
+                {parseInt(house.gardServ) && <IconTextBlock type="gardServ" textHidden={true} />}
+                {parseInt(house.irrigation) && (
+                  <IconTextBlock type="irrigation" textHidden={true} />
+                )}
+                {parseInt(house.outdoorLight) && (
+                  <IconTextBlock type="outdoorLight" textHidden={true} />
+                )}
+                {parseInt(house.boma) && <IconTextBlock type="boma" textHidden={true} />}
+                {parseInt(house.gatedCommunity) && (
+                  <IconTextBlock type="gatedCommunity" textHidden={true} />
+                )}
               </HStack>
             </div>
             {agency ? (

@@ -11,6 +11,7 @@ import {
   filterHousesByPrice,
   filterHousesByRooms,
   filterHousesByOutdoors,
+  filterHousesByFeatures,
 } from "../utils/houseFiltering";
 import { millionify } from "../utils/millionify";
 
@@ -47,11 +48,11 @@ import ListingHouseCard from "../components/house/ListingHouseCard";
 function ListingsPage() {
   // FILTERING STATES
   // -----------------------------------------------------------
-  //    Price
+  // Price
   const [priceRangeFilt, setPriceRangeFilt] = useState([0, 150]);
   const [isFiltPrice, setIsFiltPrice] = useState(false);
 
-  //    Interior
+  // Interior
   const [intFilt, setIntFilt] = useState({
     bed: 0,
     bath: 0,
@@ -64,7 +65,7 @@ function ListingsPage() {
   });
   const [isFiltInt, setIsFiltInt] = useState(false);
 
-  //    Exterior
+  // Exterior
   const [extFilt, setExtFilt] = useState({
     pool: 0,
     court: 0,
@@ -74,6 +75,21 @@ function ListingsPage() {
     orchard: 0,
   });
   const [isFiltExt, setIsFiltExt] = useState(false);
+
+  // House Features
+  const [featFilt, setFeatFilt] = useState({
+    internet: false,
+    airCon: false,
+    heating: false,
+    secSys: false,
+    solar: false,
+    gardServ: false,
+    irrigation: false,
+    outdoorLight: false,
+    boma: false,
+    gatedCommunity: false,
+  });
+  const [isFiltFeat, setIsFiltFeat] = useState(false);
   // -----------------------------------------------------------
 
   // House Listings States
@@ -178,7 +194,7 @@ function ListingsPage() {
 
   // On exterior filter changes, set filter ON/OFF states
   useEffect(() => {
-    // Check if all interior form values are 0
+    // Check if all interior object values are 0
     const allValuesZero = Object.values(extFilt).every((value) => value === 0);
     if (allValuesZero) {
       setIsFiltExt(false);
@@ -199,6 +215,30 @@ function ListingsPage() {
       orchard: 0,
     });
   };
+  // ----------------------------------------------------
+
+  // FEATURE FILTERING
+  // ----------------------------------------------------
+  // Handle feature checkbox changes
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFeatFilt((prevData) => ({ ...prevData, [name]: checked }));
+  };
+
+  // On exterior filter changes, set filter ON/OFF states
+  useEffect(() => {
+    console.log(featFilt);
+    // Check if all feature object values are 0
+    const allValuesZero = Object.values(featFilt).every((value) => value === false);
+    if (allValuesZero) {
+      // console.log("setting isFiltFeat to false");
+      setIsFiltFeat(false);
+    } else {
+      // console.log("setting isFiltFeat to true");
+      setIsFiltFeat(true);
+    }
+  }, [featFilt]);
+
   // ----------------------------------------------------
 
   // OVERALL FILTERING
@@ -229,11 +269,27 @@ function ListingsPage() {
         console.log("Stage 3: Filtering by Exterior");
       }
 
+      // Stage 4: Features Filtering
+      if (isFiltFeat) {
+        houseArr = filterHousesByFeatures(houseArr, featFilt);
+        console.log("Stage 4: Filtering by Features");
+      }
+
       setFiltHouses(houseArr);
     };
 
     filterHouses();
-  }, [houses, priceRangeFilt, intFilt, extFilt, isFiltPrice, isFiltInt, isFiltExt]);
+  }, [
+    houses,
+    priceRangeFilt,
+    intFilt,
+    extFilt,
+    featFilt,
+    isFiltPrice,
+    isFiltInt,
+    isFiltExt,
+    isFiltFeat,
+  ]);
   // ----------------------------------------------------
 
   return (
@@ -513,43 +569,83 @@ function ListingsPage() {
                 <CheckboxGroup>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="internet" />
-                    <Checkbox value="internet"></Checkbox>
+                    <Checkbox
+                      name="internet"
+                      isChecked={featFilt.internet}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="airCon" />
-                    <Checkbox value="aircon"></Checkbox>
+                    <Checkbox
+                      name="airCon"
+                      isChecked={featFilt.airCon}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="heating" />
-                    <Checkbox value="heating"></Checkbox>
+                    <Checkbox
+                      name="heating"
+                      isChecked={featFilt.heating}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="secSys" />
-                    <Checkbox value="securitysys"></Checkbox>
+                    <Checkbox
+                      name="secSys"
+                      isChecked={featFilt.secSys}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="solar" />
-                    <Checkbox value="solar"></Checkbox>
+                    <Checkbox
+                      name="solar"
+                      isChecked={featFilt.solar}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="gardServ" />
-                    <Checkbox value="gardenserv"></Checkbox>
+                    <Checkbox
+                      name="gardServ"
+                      isChecked={featFilt.gardServ}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="irrigation" />
-                    <Checkbox value="irrigation"></Checkbox>
+                    <Checkbox
+                      name="irrigation"
+                      isChecked={featFilt.irrigation}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="outdoorLight" />
-                    <Checkbox value="outLighting"></Checkbox>
+                    <Checkbox
+                      name="outdoorLight"
+                      isChecked={featFilt.outdoorLight}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="boma" />
-                    <Checkbox value="boma"></Checkbox>
+                    <Checkbox
+                      name="boma"
+                      isChecked={featFilt.boma}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                   <div className="w-full flex flex-row justify-between">
                     <IconTextBlock type="gatedCommunity" />
-                    <Checkbox value="gatedCommunity"></Checkbox>
+                    <Checkbox
+                      name="gatedCommunity"
+                      isChecked={featFilt.gatedCommunity}
+                      onChange={handleCheckboxChange}
+                    ></Checkbox>
                   </div>
                 </CheckboxGroup>
               </VStack>
