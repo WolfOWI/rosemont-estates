@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { fetchAllHouses } from "../services/houseService";
 
 // Utility Functions
-import { filterHousesByPrice } from "../utils/houseFiltering";
+import { filterHousesByPrice, filterHousesByRooms } from "../utils/houseFiltering";
 import { millionify } from "../utils/millionify";
 
 // Third-Party Components
@@ -41,8 +41,25 @@ import ListingHouseCard from "../components/house/ListingHouseCard";
 // -----------------------------------------------------------
 
 function ListingsPage() {
-  const [priceRange, setPriceRange] = useState([0, 150]); // Price Filtering
-  const [isFilterPrice, setIsFilterPrice] = useState(false);
+  // Filtering States
+  //    Price
+  const [priceRangeFilt, setPriceRangeFilt] = useState([0, 150]);
+  const [isFiltPrice, setIsFiltPrice] = useState(false);
+
+  //    Interior
+  const [intFilt, setIntFilt] = useState({
+    bed: 0,
+    bath: 0,
+    kitchen: 0,
+    dining: 0,
+    gym: 0,
+    billiard: 0,
+    basement: 0,
+    garage: 0,
+  });
+  const [isFiltInt, setIsFiltInt] = useState(false);
+
+  // Houses
   const [houses, setHouses] = useState([]); // All Houses (default unfiltered)
   const [filtHouses, setFiltHouses] = useState([]); // Filtered Houses
 
@@ -61,59 +78,98 @@ function ListingsPage() {
     loadHouses();
   }, []);
 
-  useEffect(() => {
-    console.log("Filtered Houses:");
-    console.log(filtHouses);
-  }, [filtHouses]);
-
   // useEffect(() => {
-  //   console.log("priceRange:");
-  //   console.log(priceRange);
-  // }, [priceRange]);
+  //   console.log("Filtered Houses:");
+  //   console.log(filtHouses);
+  // }, [filtHouses]);
 
-  // Price Filter Components
+  // PRICE FILTERING
   // ----------------------------------------------------
+  // Inputs
+  // - - - - - - - - - - - - - - - - - - - -
   const handleSliderChange = (value) => {
-    setPriceRange(value);
-  };
-
-  const handleMinInputChange = (valueString) => {
-    const value = parseInt(valueString, 10);
-    setPriceRange([value, priceRange[1]]);
-  };
-
-  const handleMaxInputChange = (valueString) => {
-    const value = parseInt(valueString, 10);
-    setPriceRange([priceRange[0], value]);
-  };
-
-  // Handle Apply Button (Price)
-  const handlePriceFilterApply = () => {
-    const priceFilteredHouses = filterHousesByPrice(
-      houses,
-      millionify(priceRange[0]),
-      millionify(priceRange[1])
-    );
-    console.log("priceFilteredHouses:");
-    console.log(priceFilteredHouses);
-
-    setFiltHouses(priceFilteredHouses);
-
-    // If filtering with max & min values (essentially off)
-    if (priceRange[0] === 0 && priceRange[0] === 150) {
-      setIsFilterPrice(false);
+    setPriceRangeFilt(value);
+    if (value[0] === 0 && value[1] === 150) {
+      setIsFiltPrice(false);
     } else {
-      setIsFilterPrice(true);
+      setIsFiltPrice(true);
     }
   };
 
+  const handleMinInputChange = (valueString) => {
+    const value = parseInt(valueString);
+    setPriceRangeFilt([value, priceRangeFilt[1]]);
+  };
+
+  const handleMaxInputChange = (valueString) => {
+    const value = parseInt(valueString);
+    setPriceRangeFilt([priceRangeFilt[0], value]);
+  };
+  // - - - - - - - - - - - - - - - - - - - -
+
+  // Buttons
+  // - - - - - - - - - - - - - - - - - - - -
   // Handle Reset Button (Price)
   const handlePriceFilterReset = () => {
     console.log("Resetting Price Filter");
-    setPriceRange([0, 150]); // Reset to default
-    setFiltHouses(houses); // Reset filteredHouses to default
-    setIsFilterPrice(false);
+    setPriceRangeFilt([0, 150]); // Reset to default
+    setIsFiltPrice(false);
   };
+  // - - - - - - - - - - - - - - - - - - - -
+  // ----------------------------------------------------
+
+  // INTERIOR FILTERING
+  // ----------------------------------------------------
+  // Handle Interior Inputs
+  // - - - - - - - - - - - - - - - - - - - -
+  const handleInteriorInputChange = (e) => {
+    const { name, value } = e.target;
+    setIntFilt({ ...intFilt, [name]: parseInt(value) });
+  };
+  // - - - - - - - - - - - - - - - - - - - -
+  useEffect(() => {
+    // Check if all interior form values are 0
+    const allValuesZero = Object.values(intFilt).every((value) => value === 0);
+    if (allValuesZero) {
+      console.log("Setting isFiltInt to false");
+      setIsFiltInt(false);
+    } else {
+      console.log("Setting isFiltInt to true");
+      setIsFiltInt(true);
+    }
+    console.log(intFilt);
+  }, [intFilt]);
+  // ----------------------------------------------------
+
+  // FILTERING
+  // ----------------------------------------------------
+  useEffect(() => {
+    const filterHouses = () => {
+      let houseArr = houses;
+
+      // Stage 1: Price Filtering
+      if (isFiltPrice) {
+        console.log("Stage 1: Filtering by Price");
+        houseArr = filterHousesByPrice(
+          houseArr,
+          millionify(priceRangeFilt[0]),
+          millionify(priceRangeFilt[1])
+        );
+        console.log(houseArr);
+      }
+
+      // Stage 2: Interior Filtering
+      if (isFiltInt) {
+        console.log("Stage 2: Filtering by Interior");
+        houseArr = filterHousesByRooms(houseArr, intFilt);
+      }
+
+      setFiltHouses(houseArr);
+    };
+
+    filterHouses();
+  }, [houses, isFiltPrice, priceRangeFilt, isFiltInt, intFilt]);
+
   // ----------------------------------------------------
 
   return (
@@ -129,8 +185,7 @@ function ListingsPage() {
               label="Price"
               icon={<PriceCheckOutlined />}
               title="Price Filter"
-              isActive={isFilterPrice}
-              applyFilter={handlePriceFilterApply}
+              isActive={isFiltPrice}
               resetFilter={handlePriceFilterReset}
             >
               <FormControl>
@@ -139,7 +194,7 @@ function ListingsPage() {
                   min={0}
                   max={150}
                   step={1}
-                  value={priceRange}
+                  value={priceRangeFilt}
                   onChange={handleSliderChange}
                 >
                   <RangeSliderTrack bg="beige.M1">
@@ -157,12 +212,13 @@ function ListingsPage() {
                       R
                     </InputLeftElement>
                     <Input
-                      value={priceRange[0]}
+                      value={priceRangeFilt[0]}
                       min={0}
-                      max={priceRange[1]}
+                      max={priceRangeFilt[1]}
                       onChange={handleMinInputChange}
                       type="number"
                     ></Input>
+                    {/* TODO Text Input Not Working */}
                     <InputRightElement pointerEvents="none" color="warmgray.0" w="35%">
                       million
                     </InputRightElement>
@@ -177,8 +233,8 @@ function ListingsPage() {
                       R
                     </InputLeftElement>
                     <Input
-                      value={priceRange[1]}
-                      min={priceRange[0]}
+                      value={priceRangeFilt[1]}
+                      min={priceRangeFilt[0]}
                       max={150}
                       onChange={handleMaxInputChange}
                       type="number"
@@ -192,39 +248,103 @@ function ListingsPage() {
             </PopoverForm>
 
             {/* Interior Filter */}
-            <PopoverForm label="Interior" icon={<BedOutlined />} title="Rooms">
+            <PopoverForm label="Interior" icon={<BedOutlined />} title="Minimum # of Rooms">
               <FormControl>
                 <VStack align="start">
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="bed"
+                      value={intFilt.bed}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="bed" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="bath"
+                      value={intFilt.bath}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="bath" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="kitchen"
+                      value={intFilt.kitchen}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="kitchen" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="dining"
+                      value={intFilt.dining}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="dining" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="gym"
+                      value={intFilt.gym}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="gym" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="billiard"
+                      value={intFilt.billiard}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="billiard" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="basement"
+                      value={intFilt.basement}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="basement" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="garage"
+                      value={intFilt.garage}
+                      onChange={handleInteriorInputChange}
+                    />
                     <IconTextBlock type="garage" />
                   </HStack>
                 </VStack>

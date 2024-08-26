@@ -44,7 +44,7 @@ import { FocusLock } from "@chakra-ui/react";
 // -----------------------------------------------------------
 
 // Reusable PopoverForm component
-const PopoverForm = ({ label, icon, title, isActive, resetFilter, applyFilter, children }) => {
+const PopoverForm = ({ label, icon, title, isActive, resetFilter, children }) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const firstFieldRef = React.useRef(null);
 
@@ -84,14 +84,7 @@ const PopoverForm = ({ label, icon, title, isActive, resetFilter, applyFilter, c
                 >
                   Reset
                 </Button>
-                <Button
-                  onClick={() => {
-                    applyFilter();
-                    onClose();
-                  }}
-                >
-                  Apply
-                </Button>
+                <Button onClick={onClose}>Done</Button>
               </HStack>
             </PopoverBody>
           </FocusLock>
