@@ -1,6 +1,7 @@
 // Filtering of Houses
 
 // STAGE 1: Min & Max Price Filtering
+// ----------------------------------------------------
 export function filterHousesByPrice(houseArr, minPrice, maxPrice) {
   //   console.log(houseArr);
   //   console.log(minPrice);
@@ -8,7 +9,10 @@ export function filterHousesByPrice(houseArr, minPrice, maxPrice) {
 
   return houseArr.filter((house) => house.price >= minPrice && house.price <= maxPrice);
 }
+// ----------------------------------------------------
 
+// STAGE 2: Interior Filtering
+// ----------------------------------------------------
 export function filterHousesByRooms(houseArr, roomsFilterObj) {
   // console.log("Houses Received:");
   // console.log(houseArr);
@@ -77,3 +81,67 @@ export function filterHousesByRooms(houseArr, roomsFilterObj) {
 
   return filteredHouses;
 }
+// ----------------------------------------------------
+
+// STAGE 3: Exterior Filtering
+// ----------------------------------------------------
+export function filterHousesByOutdoors(houseArr, outdoorsFilterObj) {
+  console.log("Houses Received:");
+  console.log(houseArr);
+  console.log("Exterior Filter Object:");
+  console.log(outdoorsFilterObj);
+
+  let filteredHouses = houseArr;
+
+  // Filter by Swimming Pools
+  if (outdoorsFilterObj.pool > 0) {
+    filteredHouses = filteredHouses.filter((house) => house.numPool >= outdoorsFilterObj.pool);
+    console.log("Pool Filter:");
+    console.log(filteredHouses);
+  }
+
+  // Filter by Courts
+  if (outdoorsFilterObj.court > 0) {
+    filteredHouses = filteredHouses.filter((house) => house.numCourt >= outdoorsFilterObj.court);
+    console.log("Court Filter:");
+    console.log(filteredHouses);
+  }
+
+  // Filter by Decks
+  if (outdoorsFilterObj.deck > 0) {
+    filteredHouses = filteredHouses.filter((house) => house.numDeck >= outdoorsFilterObj.deck);
+    console.log("Deck Filter:");
+    console.log(filteredHouses);
+  }
+
+  // Filter by Flower Gardens
+  if (outdoorsFilterObj.flowerGard > 0) {
+    filteredHouses = filteredHouses.filter(
+      (house) => house.numFlowerGard >= outdoorsFilterObj.flowerGard
+    );
+    console.log("Flower Garden Filter:");
+    console.log(filteredHouses);
+  }
+
+  // Filter by Vegetable Gardens
+  if (outdoorsFilterObj.vegGard > 0) {
+    filteredHouses = filteredHouses.filter(
+      (house) => house.numVegGard >= outdoorsFilterObj.vegGard
+    );
+    console.log("Vegetable Garden Filter:");
+    console.log(filteredHouses);
+  }
+
+  // Filter by Orchards
+  if (outdoorsFilterObj.orchard > 0) {
+    filteredHouses = filteredHouses.filter(
+      (house) => house.numOrchard >= outdoorsFilterObj.orchard
+    );
+    console.log("Orchard Filter:");
+    console.log(filteredHouses);
+  }
+
+  // Return the final filtered array
+  return filteredHouses;
+}
+// ----------------------------------------------------

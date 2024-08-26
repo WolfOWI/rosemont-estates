@@ -4,10 +4,14 @@
 import { useEffect, useState } from "react";
 
 // Services
-import { fetchAllHouses, fetchAllApprovedHouses } from "../services/houseService";
+import { fetchAllApprovedHouses } from "../services/houseService";
 
 // Utility Functions
-import { filterHousesByPrice, filterHousesByRooms } from "../utils/houseFiltering";
+import {
+  filterHousesByPrice,
+  filterHousesByRooms,
+  filterHousesByOutdoors,
+} from "../utils/houseFiltering";
 import { millionify } from "../utils/millionify";
 
 // Third-Party Components
@@ -59,21 +63,28 @@ function ListingsPage() {
     garage: 0,
   });
   const [isFiltInt, setIsFiltInt] = useState(false);
+
+  //    Exterior
+  const [extFilt, setExtFilt] = useState({
+    pool: 0,
+    court: 0,
+    deck: 0,
+    flowerGard: 0,
+    vegGard: 0,
+    orchard: 0,
+  });
+  const [isFiltExt, setIsFiltExt] = useState(false);
   // -----------------------------------------------------------
 
   // House Listings States
   const [houses, setHouses] = useState([]); // All Houses (default unfiltered)
   const [filtHouses, setFiltHouses] = useState([]); // Filtered Houses
 
-  // On Page Load, load all houses with approved status
+  // On Page Load, fetch all houses with approved status
   useEffect(() => {
-    // TODO Only load houses with approved status.
     async function loadHouses() {
       try {
         const approvedHouses = await fetchAllApprovedHouses();
-
-        console.log(approvedHouses);
-
         setHouses(approvedHouses);
         setFiltHouses(approvedHouses);
       } catch (error) {
@@ -89,11 +100,6 @@ function ListingsPage() {
   // Slider Input
   const handleSliderChange = (value) => {
     setPriceRangeFilt(value);
-    if (value[0] === 0 && value[1] === 150) {
-      setIsFiltPrice(false);
-    } else {
-      setIsFiltPrice(true);
-    }
   };
 
   // Minimum Price Text Input
@@ -108,6 +114,15 @@ function ListingsPage() {
     setPriceRangeFilt([priceRangeFilt[0], value]);
   };
 
+  // On priceFilter changes, set filter ON/OFF states
+  useEffect(() => {
+    if (priceRangeFilt[0] === 0 && priceRangeFilt[1] === 150) {
+      setIsFiltPrice(false);
+    } else {
+      setIsFiltPrice(true);
+    }
+  }, [priceRangeFilt]);
+
   // Handle Reset Button (Price)
   const handlePriceFilterReset = () => {
     console.log("Resetting Price Filter");
@@ -119,27 +134,74 @@ function ListingsPage() {
   // INTERIOR FILTERING
   // ----------------------------------------------------
   // Handle Interior Inputs
-  // - - - - - - - - - - - - - - - - - - - -
   const handleInteriorInputChange = (e) => {
     const { name, value } = e.target;
     setIntFilt({ ...intFilt, [name]: parseInt(value) });
   };
-  // - - - - - - - - - - - - - - - - - - - -
+
+  // On interiorFilter changes, set filter ON/OFF states
   useEffect(() => {
     // Check if all interior form values are 0
     const allValuesZero = Object.values(intFilt).every((value) => value === 0);
     if (allValuesZero) {
-      console.log("Setting isFiltInt to false");
+      // console.log("Setting isFiltInt to false");
       setIsFiltInt(false);
     } else {
-      console.log("Setting isFiltInt to true");
+      // console.log("Setting isFiltInt to true");
       setIsFiltInt(true);
     }
-    console.log(intFilt);
   }, [intFilt]);
+
+  // Handle Reset Button (Interior)
+  const handleIntFilterReset = () => {
+    console.log("Resetting Interior Filter");
+    setIntFilt({
+      bed: 0,
+      bath: 0,
+      kitchen: 0,
+      dining: 0,
+      gym: 0,
+      billiard: 0,
+      basement: 0,
+      garage: 0,
+    });
+  };
   // ----------------------------------------------------
 
-  // FILTERING
+  // EXTERIOR FILTERING
+  // ----------------------------------------------------
+  // Handle Exterior Field Inputs
+  const handleExteriorInputChange = (e) => {
+    const { name, value } = e.target;
+    setExtFilt({ ...extFilt, [name]: parseInt(value) });
+  };
+
+  // On exterior filter changes, set filter ON/OFF states
+  useEffect(() => {
+    // Check if all interior form values are 0
+    const allValuesZero = Object.values(extFilt).every((value) => value === 0);
+    if (allValuesZero) {
+      setIsFiltExt(false);
+    } else {
+      setIsFiltExt(true);
+    }
+  }, [extFilt]);
+
+  // Handle Reset Button (Exterior)
+  const handleExtFilterReset = () => {
+    console.log("Resetting Exterior Filter");
+    setExtFilt({
+      pool: 0,
+      court: 0,
+      deck: 0,
+      flowerGard: 0,
+      vegGard: 0,
+      orchard: 0,
+    });
+  };
+  // ----------------------------------------------------
+
+  // OVERALL FILTERING
   // ----------------------------------------------------
   useEffect(() => {
     const filterHouses = () => {
@@ -153,7 +215,6 @@ function ListingsPage() {
           millionify(priceRangeFilt[0]),
           millionify(priceRangeFilt[1])
         );
-        console.log(houseArr);
       }
 
       // Stage 2: Interior Filtering
@@ -162,12 +223,17 @@ function ListingsPage() {
         houseArr = filterHousesByRooms(houseArr, intFilt);
       }
 
+      // Stage 3: Exterior Filtering
+      if (isFiltExt) {
+        houseArr = filterHousesByOutdoors(houseArr, extFilt);
+        console.log("Stage 3: Filtering by Exterior");
+      }
+
       setFiltHouses(houseArr);
     };
 
     filterHouses();
-  }, [houses, isFiltPrice, priceRangeFilt, isFiltInt, intFilt]);
-
+  }, [houses, priceRangeFilt, intFilt, extFilt, isFiltPrice, isFiltInt, isFiltExt]);
   // ----------------------------------------------------
 
   return (
@@ -251,6 +317,7 @@ function ListingsPage() {
               icon={<BedOutlined />}
               title="Minimum Rooms"
               isActive={isFiltInt}
+              resetFilter={handleIntFilterReset}
             >
               <FormControl>
                 <VStack align="start">
@@ -355,31 +422,85 @@ function ListingsPage() {
             </PopoverForm>
 
             {/* Exterior Filter */}
-            <PopoverForm label="Exterior" icon={<HouseOutlined />} title="Outdoor Areas">
+            <PopoverForm
+              label="Exterior"
+              icon={<HouseOutlined />}
+              title="Minimum Outdoor Areas"
+              isActive={isFiltExt}
+              resetFilter={handleExtFilterReset}
+            >
               <FormControl>
                 <VStack align="start">
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="pool"
+                      value={extFilt.pool}
+                      onChange={handleExteriorInputChange}
+                    />
                     <IconTextBlock type="pool" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="court"
+                      value={extFilt.court}
+                      onChange={handleExteriorInputChange}
+                    />
                     <IconTextBlock type="court" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="deck"
+                      value={extFilt.deck}
+                      onChange={handleExteriorInputChange}
+                    />
                     <IconTextBlock type="deck" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="flowerGard"
+                      value={extFilt.flowerGard}
+                      onChange={handleExteriorInputChange}
+                    />
                     <IconTextBlock type="flowerGard" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="vegGard"
+                      value={extFilt.vegGard}
+                      onChange={handleExteriorInputChange}
+                    />
                     <IconTextBlock type="vegGard" />
                   </HStack>
                   <HStack>
-                    <Input type="number" w={10} p={0} textAlign="center" />
+                    <Input
+                      type="number"
+                      w={10}
+                      p={0}
+                      textAlign="center"
+                      name="orchard"
+                      value={extFilt.orchard}
+                      onChange={handleExteriorInputChange}
+                    />
                     <IconTextBlock type="orchard" />
                   </HStack>
                 </VStack>
