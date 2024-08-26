@@ -1,14 +1,14 @@
 // IMPORT
 // -----------------------------------------------------------
 // React & Hooks
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Services
 import { createHouse } from "../services/houseService";
 
 // Utility Functions
-// -
+import { dateNow } from "../utils/getDateNow";
 
 // Third-Party Components
 import {
@@ -75,8 +75,9 @@ function CreateListingPage() {
   };
   // ------------------------------------------------
 
-  // New House Data
+  // DATA FOR CREATION
   // ------------------------------------------------
+  // House Form Data
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -118,8 +119,23 @@ function CreateListingPage() {
     outdoorLight: false,
     boma: false,
     gatedCommunity: false,
+    submitStatus: "pending",
+    submitDate: dateNow(),
+    decisionDate: "pending",
   });
+
+  // // Submission Data
+  // const [submissionData, setSubmissionData] = useState({
+  //   houseId: 7,
+  //   submitStatus: "pending",
+  //   submitDate: dateNow(),
+  //   decisionDate: "pending",
+  // });
   // ------------------------------------------------
+
+  // useEffect(() => {
+  //   console.log(submissionData);
+  // }, [submissionData]);
 
   // Input Handlers
   // ------------------------------------------------
@@ -152,6 +168,7 @@ function CreateListingPage() {
     try {
       const response = await createHouse(formData, selectedFiles);
       alert(response.message);
+
       navigate(`/profile`);
     } catch (error) {
       alert("Failed to create house listing. Please try again.");

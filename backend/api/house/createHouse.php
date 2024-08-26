@@ -77,6 +77,11 @@ $outdoorLight = $_POST['outdoorLight'];
 $boma = $_POST['boma'];
 $gatedCommunity = $_POST['gatedCommunity'];
 
+// For Submission Creation
+$submitStatus = $_POST['submitStatus'];
+$submitDate = $_POST['submitDate'];
+$decisionDate = $_POST['decisionDate'];
+
 
 // Image upload directory
 $target_dir = realpath("../../../src/assets/uploads/");
@@ -169,6 +174,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("isi", $houseId, $full_url, $isPrimary);
             $stmt->execute();
         }
+
+        // Create Submission table
+        $sql = "INSERT INTO submission (`houseId`, `userId`, `submitStatus`, `submitDate`, `decisionDate`) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iisss", $houseId, $userId, $submitStatus, $submitDate, $decisionDate);
+        $stmt->execute();
 
         echo json_encode(["message" => "House listing created successfully"]);
         exit();
