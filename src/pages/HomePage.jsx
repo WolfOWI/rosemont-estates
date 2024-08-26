@@ -2,6 +2,7 @@
 // -----------------------------------------------------------
 // React & Hooks
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Services
 // -
@@ -24,6 +25,7 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Button,
 } from "@chakra-ui/react";
 import { PriceCheckOutlined, BedOutlined, HouseOutlined, StarOutline } from "@mui/icons-material";
 
@@ -40,22 +42,6 @@ import familyImg from "../assets/images/familyAtHome.jpg";
 // -----------------------------------------------------------
 
 function HomePage() {
-  const [priceRange, setPriceRange] = useState([0, 150]);
-
-  const handleSliderChange = (value) => {
-    setPriceRange(value);
-  };
-
-  const handleMinInputChange = (valueString) => {
-    const value = parseInt(valueString, 10);
-    setPriceRange([value, priceRange[1]]);
-  };
-
-  const handleMaxInputChange = (valueString) => {
-    const value = parseInt(valueString, 10);
-    setPriceRange([priceRange[0], value]);
-  };
-
   const property = {
     title: "Modern Riversands Villa",
     style: "Italian-Style",
@@ -75,210 +61,27 @@ function HomePage() {
     <>
       <div className="bg-beige-0 w-full min-h-screen">
         {/* Hero Image */}
-        <div className="w-full h-[38vh] overflow-hidden relative bg-thorn-M1">
+        <div className="w-full h-[60vh] overflow-hidden relative bg-thorn-M1 flex flex-col items-center">
           <img
             src={heroImg}
             alt=""
             className="absolute top-0 left-0 w-full h-full object-cover z-0 blur-sm"
           />
-          <Navbar transparent={true} className="relative z-20" />
-          <div className="flex flex-col items-center h-[40vh]">
-            <h1 className="relative z-10 text-beige-0 mt-16">Discover your dream mansion</h1>
-            <p className="relative z-10 text-beige-M3">Find the right luxury home for you.</p>
+          <div className="absolute w-full">
+            <Navbar transparent={true} className=" z-20" />
+          </div>
+          <div className="flex flex-col items-start justify-center w-[70%] h-full">
+            <h1 className="z-10 text-beige-P2 mt-16">Your Dream Home Awaits</h1>
+            <h3 className="z-10 text-thorn-P3 font-">Find the right luxury home for you.</h3>
+            <Button size="lg" mt={16} py={8} variant="lightFilled" as={Link} to="/listings">
+              <h3 className="text-thorn-0">Explore Properties</h3>
+            </Button>
           </div>
         </div>
 
         <div className="flex w-full justify-center">
           {/* Home Page Content */}
           <div className="w-[70%]">
-            {/* Search bar */}
-            <div className="mt-[-40px]">
-              <SearchBar />
-            </div>
-            {/* Filters */}
-            <HStack my={2}>
-              {/* Price Filtering */}
-              <PopoverForm label="Price" icon={<PriceCheckOutlined />} title="Price Filter">
-                <FormControl>
-                  <RangeSlider
-                    defaultValue={[0, 150]}
-                    min={0}
-                    max={150}
-                    step={1}
-                    value={priceRange}
-                    onChange={handleSliderChange}
-                  >
-                    <RangeSliderTrack bg="beige.M1">
-                      <RangeSliderFilledTrack bg="thorn.0" />
-                    </RangeSliderTrack>
-                    <RangeSliderThumb boxSize={6} index={0} />
-                    <RangeSliderThumb boxSize={6} index={1} />
-                  </RangeSlider>
-                </FormControl>
-                <FormControl>
-                  <div className="flex items-center">
-                    <p className="pr-4">Min</p>
-                    <InputGroup>
-                      <InputLeftElement pointerEvents="none" color="warmgray.0">
-                        R
-                      </InputLeftElement>
-                      <Input
-                        value={priceRange[0]}
-                        min={0}
-                        max={priceRange[1]}
-                        onChange={handleMinInputChange}
-                        type="number"
-                      ></Input>
-                      <InputRightElement pointerEvents="none" color="warmgray.0" w="35%">
-                        million
-                      </InputRightElement>
-                    </InputGroup>
-                  </div>
-                </FormControl>
-                <FormControl>
-                  <div className="flex items-center">
-                    <p className="pr-4">Max</p>
-                    <InputGroup>
-                      <InputLeftElement pointerEvents="none" color="warmgray.0">
-                        R
-                      </InputLeftElement>
-                      <Input
-                        value={priceRange[1]}
-                        min={priceRange[0]}
-                        max={150}
-                        onChange={handleMaxInputChange}
-                        type="number"
-                      ></Input>
-                      <InputRightElement pointerEvents="none" color="warmgray.0" w="35%">
-                        million
-                      </InputRightElement>
-                    </InputGroup>
-                  </div>
-                </FormControl>
-              </PopoverForm>
-
-              {/* Interior Filter */}
-              <PopoverForm label="Interior" icon={<BedOutlined />} title="Rooms">
-                <FormControl>
-                  <VStack align="start">
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="bed" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="bath" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="kitchen" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="dining" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="gym" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="billiard" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="basement" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="garage" />
-                    </HStack>
-                  </VStack>
-                </FormControl>
-              </PopoverForm>
-
-              {/* Exterior Filter */}
-              <PopoverForm label="Exterior" icon={<HouseOutlined />} title="Outdoor Areas">
-                <FormControl>
-                  <VStack align="start">
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="pool" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="court" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="deck" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="flowerGard" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="vegGard" />
-                    </HStack>
-                    <HStack>
-                      <Input type="number" w={10} p={0} textAlign="center" />
-                      <IconTextBlock type="orchard" />
-                    </HStack>
-                  </VStack>
-                </FormControl>
-              </PopoverForm>
-
-              {/* Features Filter */}
-              <PopoverForm label="Features" icon={<StarOutline />} title="Include:">
-                <VStack align="start">
-                  <CheckboxGroup>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="internet" />
-                      <Checkbox value="internet"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="airCon" />
-                      <Checkbox value="aircon"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="heating" />
-                      <Checkbox value="heating"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="secSys" />
-                      <Checkbox value="securitysys"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="solar" />
-                      <Checkbox value="solar"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="gardServ" />
-                      <Checkbox value="gardenserv"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="irrigation" />
-                      <Checkbox value="irrigation"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="outdoorLight" />
-                      <Checkbox value="outLighting"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="boma" />
-                      <Checkbox value="boma"></Checkbox>
-                    </div>
-                    <div className="w-full flex flex-row justify-between">
-                      <IconTextBlock type="gatedCommunity" />
-                      <Checkbox value="gatedCommunity"></Checkbox>
-                    </div>
-                  </CheckboxGroup>
-                </VStack>
-              </PopoverForm>
-              <div className="w-[34%]">{/* Spacer */}</div>
-            </HStack>
-
             {/* Recently Viewed */}
             <VStack align="start" mt={16} spacing={8}>
               <h3 className="mb-[-16px]">Recently Viewed</h3>

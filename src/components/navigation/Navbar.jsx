@@ -68,13 +68,25 @@ function Navbar({ transparent }) {
   return (
     <Box px={4} bg={transparent ? "transparent" : "thorn.M2"} h={16}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Link to="/home">
-          <NavLogo />
-        </Link>
+        <HStack spacing={10}>
+          <Link to="/home">
+            <NavLogo />
+          </Link>
+          <Link to="/home">
+            <p className="text-beige-0 hover:text-thorn-P2">Home</p>
+          </Link>
+          <Link to="/listings">
+            <p className="text-beige-0 hover:text-thorn-P2">Properties</p>
+          </Link>
+          <Link to="/home">
+            <p className="text-beige-0 hover:text-thorn-P2">About Us</p>
+          </Link>
+        </HStack>
 
         {/* TODO Delete Later */}
-        <Flex>
+        {/* <Flex>
           <p className="text-white">Delete Later</p>
+          <p>Link</p>
           <Button as={Link} to="/">
             Log In
           </Button>
@@ -87,7 +99,7 @@ function Navbar({ transparent }) {
           <Button as={Link} to="/admin-listings">
             Admin
           </Button>
-        </Flex>
+        </Flex> */}
 
         {user ? (
           <HStack spacing={2}>
