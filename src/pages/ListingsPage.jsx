@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 
 // Services
-import { fetchAllHouses } from "../services/houseService";
+import { fetchAllHouses, fetchAllApprovedHouses } from "../services/houseService";
 
 // Utility Functions
 import { filterHousesByPrice, filterHousesByRooms } from "../utils/houseFiltering";
@@ -41,7 +41,8 @@ import ListingHouseCard from "../components/house/ListingHouseCard";
 // -----------------------------------------------------------
 
 function ListingsPage() {
-  // Filtering States
+  // FILTERING STATES
+  // -----------------------------------------------------------
   //    Price
   const [priceRangeFilt, setPriceRangeFilt] = useState([0, 150]);
   const [isFiltPrice, setIsFiltPrice] = useState(false);
@@ -58,18 +59,23 @@ function ListingsPage() {
     garage: 0,
   });
   const [isFiltInt, setIsFiltInt] = useState(false);
+  // -----------------------------------------------------------
 
-  // Houses
+  // House Listings States
   const [houses, setHouses] = useState([]); // All Houses (default unfiltered)
   const [filtHouses, setFiltHouses] = useState([]); // Filtered Houses
 
-  // On Page Load
+  // On Page Load, load all houses with approved status
   useEffect(() => {
+    // TODO Only load houses with approved status.
     async function loadHouses() {
       try {
-        const response = await fetchAllHouses();
-        setHouses(response);
-        setFiltHouses(response);
+        const approvedHouses = await fetchAllApprovedHouses();
+
+        console.log(approvedHouses);
+
+        setHouses(approvedHouses);
+        setFiltHouses(approvedHouses);
       } catch (error) {
         console.log("Error fetching houses: ", error);
       }
@@ -78,15 +84,9 @@ function ListingsPage() {
     loadHouses();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("Filtered Houses:");
-  //   console.log(filtHouses);
-  // }, [filtHouses]);
-
   // PRICE FILTERING
   // ----------------------------------------------------
-  // Inputs
-  // - - - - - - - - - - - - - - - - - - - -
+  // Slider Input
   const handleSliderChange = (value) => {
     setPriceRangeFilt(value);
     if (value[0] === 0 && value[1] === 150) {
@@ -96,26 +96,24 @@ function ListingsPage() {
     }
   };
 
+  // Minimum Price Text Input
   const handleMinInputChange = (valueString) => {
     const value = parseInt(valueString);
     setPriceRangeFilt([value, priceRangeFilt[1]]);
   };
 
+  // Maximum Price Text Input
   const handleMaxInputChange = (valueString) => {
     const value = parseInt(valueString);
     setPriceRangeFilt([priceRangeFilt[0], value]);
   };
-  // - - - - - - - - - - - - - - - - - - - -
 
-  // Buttons
-  // - - - - - - - - - - - - - - - - - - - -
   // Handle Reset Button (Price)
   const handlePriceFilterReset = () => {
     console.log("Resetting Price Filter");
     setPriceRangeFilt([0, 150]); // Reset to default
     setIsFiltPrice(false);
   };
-  // - - - - - - - - - - - - - - - - - - - -
   // ----------------------------------------------------
 
   // INTERIOR FILTERING
@@ -248,7 +246,12 @@ function ListingsPage() {
             </PopoverForm>
 
             {/* Interior Filter */}
-            <PopoverForm label="Interior" icon={<BedOutlined />} title="Minimum # of Rooms">
+            <PopoverForm
+              label="Interior"
+              icon={<BedOutlined />}
+              title="Minimum Rooms"
+              isActive={isFiltInt}
+            >
               <FormControl>
                 <VStack align="start">
                   <HStack>
