@@ -4,7 +4,10 @@
 import { useState, useEffect } from "react";
 
 // Services
-import { fetchFullInterestList } from "../services/interestedService";
+import {
+  fetchFullInterestList,
+  deleteInterestedByUserIdHouseId,
+} from "../services/interestedService";
 import { getSession } from "../services/authService";
 import { getAgencyById } from "../services/agencyService";
 
@@ -101,6 +104,27 @@ function AdminBuyDash() {
     fetchSessionUser();
   };
 
+  // Handle dismiss click (customer card)
+  const handleDismiss = async (userId, houseId) => {
+    try {
+      await deleteInterestedByUserIdHouseId(userId, houseId);
+
+      // Filter out the dismissed interest from allInterestedArr
+      let allInterestMinusOne = allInterestedArr.filter(
+        (intr) => intr.houseId !== houseId || intr.userId !== userId
+      );
+      setAllInterestedArr(allInterestMinusOne);
+
+      // Filter out the dismissed interest from filtInterestArr
+      let allFiltInterMinusOne = filtInterestArr.filter(
+        (intr) => intr.houseId !== houseId || intr.userId !== userId
+      );
+      setFiltInterestArr(allFiltInterMinusOne);
+    } catch (error) {
+      console.error("Failed to dismiss interest:", error);
+    }
+  };
+
   return (
     <>
       <div className="flex">
@@ -116,7 +140,12 @@ function AdminBuyDash() {
           </h3>
           {/* <h3>{sessionUserAgency ? }</h3> */}
           {filtInterestArr.map((interest) => (
-            <CustomerCard type="buyer" key={interest.interestedId} interest={interest} />
+            <CustomerCard
+              type="buyer"
+              key={interest.interestedId}
+              interest={interest}
+              onDismiss={handleDismiss}
+            />
           ))}
         </div>
       </div>

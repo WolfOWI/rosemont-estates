@@ -21,7 +21,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 // SQL query with JOIN
 $sql = "
-    SELECT *
+    SELECT interested.interestedId,
+        interested.userId,
+        interested.houseId,
+        user.firstName,
+        user.lastName,
+        user.phone,
+        user.email,
+        house.realEstateId,
+        house.title,
+        house.numBed,
+        house.style,
+        house.street,
+        house.suburb,
+        house.city,
+        house.zip,
+        house.availabilityStatus,
+        house.price,
+        house.sellType
     FROM 
         interested
     INNER JOIN 

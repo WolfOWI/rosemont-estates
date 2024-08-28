@@ -30,7 +30,7 @@ import {
 
 // -----------------------------------------------------------
 
-function CustomerCard({ type, interest }) {
+function CustomerCard({ type, interest, onDismiss }) {
   const [agency, setAgency] = useState(null);
 
   // console.log(type);
@@ -114,7 +114,15 @@ function CustomerCard({ type, interest }) {
           <Button w="full" h={14} leftIcon={markAsIcon} variant="thornOutline">
             {markAsText}
           </Button>
-          <Button w="full" h={14} leftIcon={<CloseOutlined />} variant="roseOutline">
+          <Button
+            w="full"
+            h={14}
+            leftIcon={<CloseOutlined />}
+            variant="roseOutline"
+            onClick={() => {
+              onDismiss(interest.userId, interest.houseId);
+            }}
+          >
             Dismiss
           </Button>
         </VStack>

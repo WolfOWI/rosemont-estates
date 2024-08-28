@@ -110,7 +110,6 @@ function AdminListingsDash() {
       <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
         <h1 className="mb-2">New Homes</h1>
         <div className=" w-full h-screen">
-          {/* TODO Rerender after decision not working */}
           {filteredHouseSubs.map((house) => (
             <PropertyAccordion key={house.houseId} house={house} onDecision={handleDecision} />
           ))}

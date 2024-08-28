@@ -27,23 +27,7 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import {
-  WifiOutlined,
-  AcUnitOutlined,
-  LocalFireDepartmentOutlined,
-  VideocamOutlined,
-  SolarPowerOutlined,
-  YardOutlined,
-  WaterDropOutlined,
-  WbTwilightOutlined,
-  OutdoorGrillOutlined,
-  FenceOutlined,
-  ErrorOutline,
-  FavoriteOutlined,
-  FavoriteBorderOutlined,
-  CheckOutlined,
-  CloseOutlined,
-} from "@mui/icons-material";
+import { CheckOutlined, CloseOutlined } from "@mui/icons-material";
 
 // Internal Components
 import IconTextBlock from "../buildingblocks/IconTextBlock";

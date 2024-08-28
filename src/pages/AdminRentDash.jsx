@@ -4,7 +4,10 @@
 import { useState, useEffect } from "react";
 
 // Services
-import { fetchFullInterestList } from "../services/interestedService";
+import {
+  fetchFullInterestList,
+  deleteInterestedByUserIdHouseId,
+} from "../services/interestedService";
 import { getSession } from "../services/authService";
 import { getAgencyById } from "../services/agencyService";
 
@@ -79,12 +82,32 @@ function AdminRentDash() {
 
   // Handle real estate change (in sidebar)
   const handleRealEstateChange = () => {
-    console.log("realEstate change");
     const fetchSessionUser = async () => {
       const sessionDetails = await getSession();
       setSessionUser(sessionDetails.sessionData);
     };
     fetchSessionUser();
+  };
+
+  // Handle dismiss click (customer card)
+  const handleDismiss = async (userId, houseId) => {
+    try {
+      await deleteInterestedByUserIdHouseId(userId, houseId);
+
+      // Filter out the dismissed interest from allInterestedArr
+      let allInterestMinusOne = allInterestedArr.filter(
+        (intr) => intr.houseId !== houseId || intr.userId !== userId
+      );
+      setAllInterestedArr(allInterestMinusOne);
+
+      // Filter out the dismissed interest from filtInterestArr
+      let allFiltInterMinusOne = filtInterestArr.filter(
+        (intr) => intr.houseId !== houseId || intr.userId !== userId
+      );
+      setFiltInterestArr(allFiltInterMinusOne);
+    } catch (error) {
+      console.error("Failed to dismiss interest:", error);
+    }
   };
 
   return (
@@ -101,7 +124,12 @@ function AdminRentDash() {
               : ""}
           </h3>
           {filtInterestArr.map((interest) => (
-            <CustomerCard type="tenant" key={interest.interestedId} interest={interest} />
+            <CustomerCard
+              type="tenant"
+              key={interest.interestedId}
+              interest={interest}
+              onDismiss={handleDismiss}
+            />
           ))}
         </div>
       </div>
