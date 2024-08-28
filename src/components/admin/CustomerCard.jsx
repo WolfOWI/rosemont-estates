@@ -33,20 +33,20 @@ import {
 function CustomerCard({ type, interest }) {
   const [agency, setAgency] = useState(null);
 
-  console.log(type);
-  console.log(interest);
+  // console.log(type);
+  // console.log(interest);
 
-  // useEffect(() => {
-  //   const fetchAgency = async () => {
-  //     try {
-  //       const agencyData = await getAgencyById(interest.realEstateId);
-  //       setAgency(agencyData);
-  //     } catch (error) {
-  //       console.error("Failed to fetch agency:", error);
-  //     }
-  //   }
-
-  // }, [])
+  useEffect(() => {
+    const fetchAgency = async () => {
+      try {
+        const agencyData = await getAgencyById(interest.realEstateId);
+        setAgency(agencyData);
+      } catch (error) {
+        console.error("Failed to fetch agency:", error);
+      }
+    };
+    fetchAgency();
+  }, [interest]);
 
   let markAsText = "";
   let markAsIcon = "";
@@ -72,7 +72,14 @@ function CustomerCard({ type, interest }) {
           {/* Top Details */}
           <div className="flex justify-between">
             <VStack align="start" spacing={1}>
-              <h3 className="text-thorn-0">{interest.title}</h3>
+              <HStack spacing={8}>
+                <h3 className="text-thorn-0">{interest.title}</h3>
+                {agency ? (
+                  <img src={logoMap[agency.logoColour]} alt="estate logo" className="w-16" />
+                ) : (
+                  <div>Loading</div>
+                )}
+              </HStack>
               <p className="font-bold">{`${interest.numBed} Bedroom ${interest.style} Mansion in ${interest.suburb}`}</p>
               <p>{`${interest.street}, ${interest.suburb}, ${interest.city}, ${interest.zip}`}</p>
               {interest.availabilityStatus === "available" ? (
