@@ -3,13 +3,14 @@
 // IMPORT
 // -----------------------------------------------------------
 // React & Hooks
-// -
+import { useState, useEffect } from "react";
 
 // Services
-// -
+import { getAgencyById } from "../../services/agencyService";
 
 // Utility Functions
 import { formatPrice } from "../../utils/formatPrice";
+import logoMap from "../../utils/logoMap";
 
 // Third-Party Components
 import { Button, VStack, HStack } from "@chakra-ui/react";
@@ -30,6 +31,23 @@ import {
 // -----------------------------------------------------------
 
 function CustomerCard({ type, interest }) {
+  const [agency, setAgency] = useState(null);
+
+  console.log(type);
+  console.log(interest);
+
+  // useEffect(() => {
+  //   const fetchAgency = async () => {
+  //     try {
+  //       const agencyData = await getAgencyById(interest.realEstateId);
+  //       setAgency(agencyData);
+  //     } catch (error) {
+  //       console.error("Failed to fetch agency:", error);
+  //     }
+  //   }
+
+  // }, [])
+
   let markAsText = "";
   let markAsIcon = "";
 

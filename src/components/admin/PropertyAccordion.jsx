@@ -78,12 +78,11 @@ function PropertyAccordion({ house, onDecision }) {
 
   const handleDecisionClick = async (decicion) => {
     try {
-      console.log("Handling Decision Click");
+      // console.log("Handling Decision Click");
       await updateSubmissionByHouseId(house.houseId, {
         submitStatus: decicion,
         decisionDate: dateNow(),
       });
-
       onDecision(house.houseId); // Notify parent to refresh homes.
     } catch (error) {
       console.log("Failed to update the submission: ", error);
