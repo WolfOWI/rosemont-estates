@@ -5,18 +5,18 @@ import { useEffect, useState, useCallback } from "react";
 
 // Services
 import { fetchAllSubmissions } from "../services/submissionService";
-import { getHouseById } from "../services/houseService";
+import { getHouseById, fetchAllApprovedSoldRentedHouses } from "../services/houseService";
 import { getSession } from "../services/authService";
 
 // Utility Functions
 // -
 
 // Third-Party Components
-// -
+import { Wrap, WrapItem } from "@chakra-ui/react";
 
 // Internal Components
 import Sidebar from "../components/navigation/Sidebar";
-import PropertyAccordion from "../components/admin/PropertyAccordion";
+import ClosedHouseCard from "../components/admin/ClosedHouseCard";
 
 // Imagery
 // -
@@ -25,9 +25,8 @@ import PropertyAccordion from "../components/admin/PropertyAccordion";
 
 function AdminClosedDealsDash() {
   const [sessionUser, setSessionUser] = useState(null); // Logged in user details
-  const [pendingSubs, setPendingSubs] = useState([]); // Submissions entities (pending)
-  const [allHouseSubs, setAllHouseSubs] = useState([]); // All house entities (pending)
-  const [filteredHouseSubs, setFilteredHouseSubs] = useState([]); // Filtered real estate House Entities (pending)
+  const [closedSubs, setClosedSubs] = useState([]); // Closed submissions (sold/rented houses)
+  const [filteredHouseSubs, setFilteredHouseSubs] = useState([]); // Filtered real estate House Entities (sold/rented houses)
 
   // Fetch logged-in user data on mount, and store in sessionUser
   useEffect(() => {
@@ -40,60 +39,38 @@ function AdminClosedDealsDash() {
     fetchSessionUser();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("sessionUser");
-  //   console.log(sessionUser);
-  // }, [sessionUser]);
-
   // Fetch all submission entities & filter by pending
   const fetchPendingSubmissions = useCallback(async () => {
-    const allSubmissions = await fetchAllSubmissions();
-    const filteredSubs = allSubmissions.filter((subm) => subm.submitStatus === "pending");
-    setPendingSubs(filteredSubs);
+    const allSubmissions = await fetchAllApprovedSoldRentedHouses();
+    // const filteredSubs = allSubmissions.filter((subm) => subm.submitStatus === "pending");
+    setClosedSubs(allSubmissions);
   }, []);
 
   useEffect(() => {
     fetchPendingSubmissions();
   }, [fetchPendingSubmissions]);
 
-  // Fetch house detail when pending submissions is received/changes, set to allHouseSubs
-  const fetchHouseDetails = useCallback(async () => {
-    if (pendingSubs.length > 0) {
-      const pendingHousePromises = pendingSubs.map((subm) => getHouseById(subm.houseId));
-      const allHouseDetails = await Promise.all(pendingHousePromises);
-      setAllHouseSubs(allHouseDetails);
-    }
-  }, [pendingSubs]);
+  useEffect(() => {
+    console.log(closedSubs);
+  }, [closedSubs]);
 
   // Filter house submissions based on logged in user, set to filteredHouseSubs
   const filterHouseSubmissions = useCallback(() => {
-    if (sessionUser && allHouseSubs.length > 0) {
+    if (sessionUser && closedSubs.length > 0) {
       if (sessionUser.realEstateId === 1) {
-        setFilteredHouseSubs(allHouseSubs);
+        setFilteredHouseSubs(closedSubs);
       } else {
-        const filteredHouseArr = allHouseSubs.filter(
+        const filteredHouseArr = closedSubs.filter(
           (house) => parseInt(house.realEstateId) === parseInt(sessionUser.realEstateId)
         );
         setFilteredHouseSubs(filteredHouseArr);
       }
     }
-  }, [sessionUser, allHouseSubs]);
-
-  useEffect(() => {
-    fetchHouseDetails();
-  }, [pendingSubs, fetchHouseDetails]);
+  }, [sessionUser, closedSubs]);
 
   useEffect(() => {
     filterHouseSubmissions();
-  }, [sessionUser, allHouseSubs, filterHouseSubmissions]);
-
-  // Handle approve / reject click
-  const handleDecision = (houseId) => {
-    setPendingSubs((prevSubs) => prevSubs.filter((sub) => sub.houseId !== JSON.stringify(houseId)));
-    setFilteredHouseSubs((prevHouses) =>
-      prevHouses.filter((house) => house.houseId !== JSON.stringify(houseId))
-    );
-  };
+  }, [sessionUser, closedSubs, filterHouseSubmissions]);
 
   // Handle real estate change (in sidebar)
   const handleRealEstateChange = () => {
@@ -108,12 +85,14 @@ function AdminClosedDealsDash() {
     <div className="flex">
       <Sidebar realEstateChange={handleRealEstateChange} />
       <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
-        <h1 className="mb-2">Closed Deals</h1>
-        <div className=" w-full h-screen">
+        <h1 className="mb-2">{filteredHouseSubs.length} Closed Deals</h1>
+        <Wrap spacing={4}>
           {filteredHouseSubs.map((house) => (
-            <PropertyAccordion key={house.houseId} house={house} onDecision={handleDecision} />
+            <WrapItem key={house.houseId}>
+              <ClosedHouseCard house={house} onRelist={""} />
+            </WrapItem>
           ))}
-        </div>
+        </Wrap>
       </div>
     </div>
   );

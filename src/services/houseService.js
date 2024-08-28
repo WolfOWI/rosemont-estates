@@ -80,6 +80,29 @@ export async function fetchAllApprovedAvailableHouses() {
   }
 }
 
+// Get All Approved & Sold/Rented Houses
+export async function fetchAllApprovedSoldRentedHouses() {
+  try {
+    const response = await fetch(
+      "http://localhost/rosemont/backend/api/house/getApprovedSoldRentedHouses.php",
+      {
+        method: "GET",
+        credentials: "include", // Include cookies in the request
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const apprHouses = await response.json();
+    return apprHouses;
+  } catch (error) {
+    console.error("Error fetching approved houses:", error);
+    throw error;
+  }
+}
+
 // Get House by Id
 export async function getHouseById(houseId) {
   const response = await fetch(
