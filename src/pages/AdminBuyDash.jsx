@@ -87,13 +87,13 @@ function AdminBuyDash() {
   //   console.log(allInterestedArr);
   // }, [allInterestedArr]);
 
-  useEffect(() => {
-    console.log(sessionUserAgency);
-  }, [sessionUserAgency]);
+  // useEffect(() => {
+  //   console.log(sessionUserAgency);
+  // }, [sessionUserAgency]);
 
   // Handle real estate change (in sidebar)
   const handleRealEstateChange = () => {
-    console.log("realEstate change");
+    // console.log("realEstate change");
     const fetchSessionUser = async () => {
       const sessionDetails = await getSession();
       setSessionUser(sessionDetails.sessionData);
