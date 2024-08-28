@@ -57,11 +57,11 @@ export async function fetchAllHouses() {
   }
 }
 
-// Get All Approved Houses
-export async function fetchAllApprovedHouses() {
+// Get All Approved & Available Houses
+export async function fetchAllApprovedAvailableHouses() {
   try {
     const response = await fetch(
-      "http://localhost/rosemont/backend/api/house/getApprovedHouses.php",
+      "http://localhost/rosemont/backend/api/house/getApprovedAvailableHouses.php",
       {
         method: "GET",
         credentials: "include", // Include cookies in the request

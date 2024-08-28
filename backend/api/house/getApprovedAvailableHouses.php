@@ -19,14 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
-// Query to get approved houses
+// Query to get approved & available houses
 $sql = "SELECT *
     FROM 
         house
     INNER JOIN 
         submission ON house.houseId = submission.houseId
     WHERE
-    	submission.submitStatus = 'approved'";
+    	submission.submitStatus = 'approved'
+    AND
+        house.availabilityStatus = 'available'";
 
 $result = $conn->query($sql);
 

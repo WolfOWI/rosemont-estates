@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 
 // Services
-import { fetchAllApprovedHouses } from "../services/houseService";
+import { fetchAllApprovedAvailableHouses } from "../services/houseService";
 
 // Utility Functions
 import {
@@ -106,11 +106,11 @@ function ListingsPage() {
   const [houses, setHouses] = useState([]); // All Houses (default unfiltered)
   const [filtHouses, setFiltHouses] = useState([]); // Filtered Houses
 
-  // On Page Load, fetch all houses with approved status
+  // On Page Load, fetch all houses with 'approved' status & 'available' availability status
   useEffect(() => {
     async function loadHouses() {
       try {
-        const approvedHouses = await fetchAllApprovedHouses();
+        const approvedHouses = await fetchAllApprovedAvailableHouses();
         setHouses(approvedHouses);
         setFiltHouses(approvedHouses);
       } catch (error) {
