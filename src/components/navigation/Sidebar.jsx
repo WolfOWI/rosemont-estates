@@ -31,8 +31,9 @@ import {
   SellOutlined,
   CurrencyExchangeOutlined,
   LogoutOutlined,
-  ShieldOutlined,
   WarningRounded,
+  MonetizationOnOutlined,
+  NotInterestedOutlined,
 } from "@mui/icons-material";
 
 // Internal Components
@@ -148,6 +149,22 @@ function Sidebar({ realEstateChange }) {
               leftIcon={<CurrencyExchangeOutlined />}
             >
               Tenants
+            </Button>
+            <Button
+              as={Link}
+              to="/admin-closed"
+              variant="tertiaryBeige"
+              leftIcon={<MonetizationOnOutlined />}
+            >
+              Closed Deals
+            </Button>
+            <Button
+              as={Link}
+              to="/admin-rejected"
+              variant="tertiaryBeige"
+              leftIcon={<NotInterestedOutlined />}
+            >
+              Rejected
             </Button>
           </div>
           <div className="flex flex-col items-center w-full">

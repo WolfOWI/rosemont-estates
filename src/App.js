@@ -14,6 +14,8 @@ import ProfilePage from "./pages/ProfilePage";
 import AdminListingsDash from "./pages/AdminListingsDash";
 import AdminBuyDash from "./pages/AdminBuyDash";
 import AdminRentDash from "./pages/AdminRentDash";
+import AdminClosedDealsDash from "./pages/AdminClosedDealsDash";
+import AdminRejectedDash from "./pages/AdminRejectedDash";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path="/admin-listings" element={<AdminListingsDash />} />
           <Route path="/admin-buyers" element={<AdminBuyDash />} />
           <Route path="/admin-tenants" element={<AdminRentDash />} />
+          <Route path="/admin-closed" element={<AdminClosedDealsDash />} />
+          <Route path="/admin-rejected" element={<AdminRejectedDash />} />
         </Routes>
       </Router>
     </ChakraProvider>
