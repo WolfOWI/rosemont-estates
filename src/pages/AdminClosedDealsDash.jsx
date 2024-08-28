@@ -4,8 +4,10 @@
 import { useEffect, useState, useCallback } from "react";
 
 // Services
-import { fetchAllSubmissions } from "../services/submissionService";
-import { getHouseById, fetchAllApprovedSoldRentedHouses } from "../services/houseService";
+import {
+  fetchAllApprovedSoldRentedHouses,
+  updateHouseStringsByHouseId,
+} from "../services/houseService";
 import { getSession } from "../services/authService";
 
 // Utility Functions
@@ -50,9 +52,9 @@ function AdminClosedDealsDash() {
     fetchPendingSubmissions();
   }, [fetchPendingSubmissions]);
 
-  useEffect(() => {
-    console.log(closedSubs);
-  }, [closedSubs]);
+  // useEffect(() => {
+  //   console.log(closedSubs);
+  // }, [closedSubs]);
 
   // Filter house submissions based on logged in user, set to filteredHouseSubs
   const filterHouseSubmissions = useCallback(() => {
@@ -81,15 +83,33 @@ function AdminClosedDealsDash() {
     fetchSessionUser();
   };
 
+  // Handle Relist Click
+  const handleRelistClick = async (submission) => {
+    // console.log("Relist clicked");
+    console.log(submission);
+
+    try {
+      await updateHouseStringsByHouseId(submission.houseId, {
+        availabilityStatus: "available",
+      });
+      setClosedSubs((prevSubs) => prevSubs.filter((sub) => sub.houseId !== submission.houseId));
+      setFilteredHouseSubs((prevHouses) =>
+        prevHouses.filter((house) => house.houseId !== submission.houseId)
+      );
+    } catch (error) {
+      console.log("Failed to update the house status: ", error);
+    }
+  };
+
   return (
     <div className="flex">
       <Sidebar realEstateChange={handleRealEstateChange} />
       <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
         <h1 className="mb-2">{filteredHouseSubs.length} Closed Deals</h1>
         <Wrap spacing={4}>
-          {filteredHouseSubs.map((house) => (
-            <WrapItem key={house.houseId}>
-              <ClosedHouseCard house={house} onRelist={""} />
+          {filteredHouseSubs.map((submission) => (
+            <WrapItem key={submission.houseId}>
+              <ClosedHouseCard submission={submission} onRelist={handleRelistClick} />
             </WrapItem>
           ))}
         </Wrap>

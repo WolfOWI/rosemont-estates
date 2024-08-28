@@ -220,6 +220,30 @@ export async function updateHouse(houseId, formData, selectedFiles) {
     throw error;
   }
 }
+
+// Update house values (strings/text only) by houseId
+export async function updateHouseStringsByHouseId(houseId, fields) {
+  // console.log(houseId);
+  // console.log(fields);
+  const response = await fetch(
+    `http://localhost/rosemont/backend/api/house/updateHouseStringsByHouseId.php?houseId=${houseId}`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update house");
+  }
+
+  return response.json();
+}
+
 // ----------------------------------------------------------------------------
 
 // DELETE FUNCTIONS

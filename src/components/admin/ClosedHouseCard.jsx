@@ -24,7 +24,7 @@ import missingImg from "../../assets/images/missingImg.png";
 
 // -----------------------------------------------------------
 
-function ClosedHouseCard({ house }) {
+function ClosedHouseCard({ submission, onRelist }) {
   const [agency, setAgency] = useState(null);
   const [priImage, setPriImage] = useState(null);
 
@@ -32,7 +32,7 @@ function ClosedHouseCard({ house }) {
   useEffect(() => {
     async function fetchAgency() {
       try {
-        const agencyData = await getAgencyById(house.realEstateId);
+        const agencyData = await getAgencyById(submission.realEstateId);
         setAgency(agencyData);
       } catch (error) {
         console.error("Failed to fetch agency:", error);
@@ -41,7 +41,7 @@ function ClosedHouseCard({ house }) {
 
     async function fetchPrimaryImage() {
       try {
-        const imagePath = await getPrimaryImageByHouseId(house.houseId);
+        const imagePath = await getPrimaryImageByHouseId(submission.houseId);
         setPriImage(imagePath.imagePath);
       } catch (error) {
         console.error("Error fetching primary house image:", error);
@@ -50,54 +50,54 @@ function ClosedHouseCard({ house }) {
 
     fetchAgency();
     fetchPrimaryImage();
-  }, [house.houseId, house.realEstateId]);
-
-  // useEffect(() => {
-  //   console.log("userSavedHouses are:");
-  //   console.log(userSavedHouses);
-  // }, [userSavedHouses]);
-
-  // useEffect(() => {
-  //   console.log(`The house with id: ${house.houseId} is ${isSaved}`);
-  // }, [isSaved]);
+  }, [submission.houseId, submission.realEstateId]);
 
   return (
     <>
-      <div className="flex h-56 p-4 rounded-3xl bg-beige-0 w-[700px]">
+      <div className="flex h-48 p-4 rounded-3xl bg-beige-0 w-[700px]">
         {/* Image (left) */}
         <img
           src={priImage ? priImage : missingImg}
           alt={JSON.stringify(priImage)}
-          className="object-cover rounded-xl h-48 w-48 mr-4 relative"
+          className="object-cover rounded-xl h-40 w-40 mr-4 relative"
         />
 
         <div className="flex flex-col justify-between h-full w-full">
           {/* Title, Catchphrase & Estate Group */}
           <div className="w-full">
             <HStack spacing={4}>
-              <h3>{house.title}</h3>
+              <h3>{submission.title}</h3>
               {agency ? (
                 <img src={logoMap[agency.logoColour]} alt="estate logo" className="w-10 mr-2" />
               ) : (
                 <div>Loading</div>
               )}
             </HStack>
-            <p className="mb-2">{houseCatchphrase(house)}</p>
+            <p className="mb-2">{houseCatchphrase(submission)}</p>
           </div>
           {/* Pricing */}
           <div className="w-full flex justify-between items-end">
-            {house.sellType === "sell" ? (
+            {submission.sellType === "sell" ? (
               <VStack align="start" spacing={0}>
                 <p className="text-sm font-bold text-thorn-0">Sold for</p>
-                <h3 className="text-thorn-0 font-bold font-alt">{formatPrice(house.price)}</h3>
+                <h3 className="text-thorn-0 font-bold font-alt">{formatPrice(submission.price)}</h3>
               </VStack>
             ) : (
               <VStack align="start" spacing={0}>
                 <p className="text-sm font-bold text-thorn-0">Renting for</p>
-                <h3 className="text-thorn-0 font-bold font-alt">{formatPrice(house.price)} /m</h3>
+                <h3 className="text-thorn-0 font-bold font-alt">
+                  {formatPrice(submission.price)} /m
+                </h3>
               </VStack>
             )}
-            <Button py={4} px={8} leftIcon={<ReplayOutlined />}>
+            <Button
+              py={4}
+              px={8}
+              leftIcon={<ReplayOutlined />}
+              onClick={() => {
+                onRelist(submission);
+              }}
+            >
               Relist Property
             </Button>
           </div>
