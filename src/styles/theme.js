@@ -1,4 +1,4 @@
-import { border, extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 
 // Button component
 const Button = {
@@ -122,6 +122,39 @@ const Button = {
         color: "beige.P2",
       },
     },
+  },
+  defaultProps: {
+    variant: "thornFilled",
+  },
+};
+
+// Badge component
+const Badge = {
+  baseStyle: {
+    borderRadius: "md",
+  },
+  variants: {
+    thornFilled: {
+      bg: "thorn.P2",
+      color: "beige.0",
+      _hover: {
+        bg: "thorn.P2",
+        color: "beige.0",
+      },
+    },
+    // thornOutline: {
+    //   fontSize: "14",
+    //   height: 12,
+    //   bg: "transparent",
+    //   color: "thorn.0",
+    //   border: "2px solid",
+    //   borderColor: "thorn.0",
+    //   _hover: {
+    //     color: "beige.0",
+    //     bg: "thorn.P2",
+    //     borderColor: "thorn.P2",
+    //   },
+    // },
   },
   defaultProps: {
     variant: "thornFilled",
@@ -358,6 +391,7 @@ const Popover = {
 const theme = extendTheme({
   components: {
     Button,
+    Badge,
     Menu,
     FormControl,
     Input,

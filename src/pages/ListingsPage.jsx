@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 // Services
 import { fetchAllApprovedAvailableHouses } from "../services/houseService";
+import { getSession } from "../services/authService";
 
 // Utility Functions
 import {
@@ -106,8 +107,12 @@ function ListingsPage() {
   const [houses, setHouses] = useState([]); // All Houses (default unfiltered)
   const [filtHouses, setFiltHouses] = useState([]); // Filtered Houses
 
-  // On Page Load, fetch all houses with 'approved' status & 'available' availability status
+  // Session (logged in) User State
+  const [sessionUser, setSessionUser] = useState(null);
+
+  // On Page Load
   useEffect(() => {
+    // Fetch all houses with 'approved' status & 'available' availability status
     async function loadHouses() {
       try {
         const approvedHouses = await fetchAllApprovedAvailableHouses();
@@ -118,8 +123,23 @@ function ListingsPage() {
       }
     }
 
+    // Get Logged in User Details
+    async function getLoggedInUser() {
+      try {
+        const sessionObj = await getSession();
+        setSessionUser(sessionObj.sessionData);
+      } catch (error) {
+        console.log("Couldn't get logged-in user details: ", error);
+      }
+    }
+
+    getLoggedInUser();
     loadHouses();
   }, []);
+
+  useEffect(() => {
+    console.log(sessionUser);
+  }, [sessionUser]);
 
   // LOCATION SEARCH FILTERING
   // ----------------------------------------------------
@@ -771,7 +791,7 @@ function ListingsPage() {
           {/* Homes List */}
           <VStack w="full" spacing={4}>
             {filtHouses.map((house) => (
-              <ListingHouseCard key={house.houseId} house={house} />
+              <ListingHouseCard key={house.houseId} house={house} sessionUser={sessionUser} />
             ))}
           </VStack>
         </div>

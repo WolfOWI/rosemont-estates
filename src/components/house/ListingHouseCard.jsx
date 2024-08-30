@@ -20,22 +20,8 @@ import { getNumOfRooms } from "../../utils/getNumOfRooms";
 import logoMap from "../../utils/logoMap";
 
 // Third-Party Components
-import { HStack } from "@chakra-ui/react";
-import {
-  WifiOutlined,
-  AcUnitOutlined,
-  LocalFireDepartmentOutlined,
-  VideocamOutlined,
-  SolarPowerOutlined,
-  YardOutlined,
-  WaterDropOutlined,
-  WbTwilightOutlined,
-  OutdoorGrillOutlined,
-  FenceOutlined,
-  ErrorOutline,
-  FavoriteOutlined,
-  FavoriteBorderOutlined,
-} from "@mui/icons-material";
+import { HStack, VStack, Badge } from "@chakra-ui/react";
+import { FavoriteOutlined, FavoriteBorderOutlined, EditOutlined } from "@mui/icons-material";
 
 // Internal Components
 import IconTextBlock from "../buildingblocks/IconTextBlock";
@@ -45,12 +31,20 @@ import missingImg from "../../assets/images/missingImg.png";
 
 // -----------------------------------------------------------
 
-function ListingHouseCard({ house }) {
+function ListingHouseCard({ house, sessionUser }) {
   const [agency, setAgency] = useState(null);
   const [priImage, setPriImage] = useState(null);
-  const [userSavedHouses, setUserSavedHouses] = useState([]);
+  // const [userSavedHouses, setUserSavedHouses] = useState([]);
   const [isSaved, setIsSaved] = useState(false);
+  const [isMine, setIsMine] = useState(false); // State if house belongs to logged in user
   const navigate = useNavigate();
+
+  // Check if house belongs to logged in user
+  useEffect(() => {
+    if (house.userId === JSON.stringify(sessionUser.userId)) {
+      setIsMine(true);
+    }
+  }, [house.userId, sessionUser.userId]);
 
   // When card mounts, fetch respective agency, image, and saved status
   useEffect(() => {
@@ -78,7 +72,7 @@ function ListingHouseCard({ house }) {
         if (idsArr) {
           setIsSaved(idsArr.includes(parseInt(house.houseId)));
         }
-        setUserSavedHouses(idsArr);
+        // setUserSavedHouses(idsArr);
       } catch (error) {
         console.log("Error fetching the saved house ids:", error);
       }
@@ -103,8 +97,8 @@ function ListingHouseCard({ house }) {
     navigate(`/listing/${house.houseId}`);
   };
 
-  // Handle image click to toggle the house in the saved list
-  const handleImageClick = async (e) => {
+  // Toggle house in the saved list
+  const handleImageSaveClick = async (e) => {
     e.stopPropagation(); // Prevent navigation on click
     try {
       // If house is in saved list
@@ -121,6 +115,12 @@ function ListingHouseCard({ house }) {
     }
   };
 
+  // Click to go to house editmode (when belonging to logged in user)
+  const handleImageEditClick = async (e) => {
+    e.stopPropagation(); // Prevent navigation on click
+    navigate(`/edit/${house.houseId}`);
+  };
+
   return (
     <>
       <div
@@ -128,27 +128,52 @@ function ListingHouseCard({ house }) {
         onClick={handleClick}
       >
         {/* Image (left) */}
-        <div className="relative mr-4 group" onClick={handleImageClick}>
-          <img
-            src={priImage ? priImage : missingImg}
-            alt={JSON.stringify(priImage)}
-            className="object-cover rounded-xl h-48 w-64 group-hover:brightness-50 transition duration-300"
-          />
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
-            {isSaved ? (
-              <FavoriteOutlined className="text-rosered-0" fontSize="large" />
-            ) : (
-              <FavoriteBorderOutlined className="text-rosered-0" fontSize="large" />
-            )}
-          </div>
-        </div>
+        {isMine ? (
+          <>
+            {/* House belongs to logged in user */}
+            <div className="relative mr-4 group" onClick={handleImageEditClick}>
+              <img
+                src={priImage ? priImage : missingImg}
+                alt={JSON.stringify(priImage)}
+                className="object-cover rounded-xl h-48 w-64 transition duration-300"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300 bg-thorn-0 rounded-xl">
+                <HStack>
+                  <EditOutlined className="text-beige-0" fontSize="large" />
+                  <p className="text-beige-0">Edit</p>
+                </HStack>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* House does NOT belong to logged in user */}
+            <div className="relative mr-4 group" onClick={handleImageSaveClick}>
+              <img
+                src={priImage ? priImage : missingImg}
+                alt={JSON.stringify(priImage)}
+                className="object-cover rounded-xl h-48 w-64 group-hover:brightness-50 transition duration-300"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                {isSaved ? (
+                  <FavoriteOutlined className="text-rosered-0" fontSize="large" />
+                ) : (
+                  <FavoriteBorderOutlined className="text-rosered-0" fontSize="large" />
+                )}
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Content (right) */}
         <div className="flex flex-col justify-between h-full w-full">
           {/* Title, Catchphrase, Icons & Estate Group */}
           <div className="flex items-start justify-between">
             <div>
-              <h3>{house.title}</h3>
+              <HStack spacing={4}>
+                <h3>{house.title}</h3>
+                {isMine ? <Badge variant="thornFilled">Listed by You</Badge> : <></>}
+              </HStack>
               <p className="mb-2">{houseCatchphrase(house)}</p>
               <HStack spacing={0}>
                 {parseInt(house.internet) && <IconTextBlock type="internet" textHidden={true} />}
