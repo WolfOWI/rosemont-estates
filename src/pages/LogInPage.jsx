@@ -29,7 +29,7 @@ import {
 } from "@chakra-ui/react";
 
 // Internal Components
-import Navbar from "../components/navigation/Navbar"; // TODO Delete Later (Temporary)
+// -
 
 // Imagery
 import plantWallImg from "../assets/images/plant-wall-1.jpg";
@@ -152,8 +152,6 @@ function LogInPage() {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-      {/* TODO Delete Navbar Later */}
-      <Navbar />
     </>
   );
 }

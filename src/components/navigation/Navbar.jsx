@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Services
-// -
+import { getSession } from "../../services/authService";
 
 // Utility Functions
 // -
@@ -42,17 +42,11 @@ function Navbar({ transparent }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Fetch session info from the server
-    fetch("http://localhost/rosemont/backend/api/auth/getSession.php", {
-      method: "GET",
-      credentials: "include", // Include cookies in the request
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.sessionExists) {
-          setUser(data.sessionData);
-        }
-      });
+    const getLoggedInUser = async () => {
+      const session = await getSession();
+      setUser(session.sessionData);
+    };
+    getLoggedInUser();
   }, []);
 
   const handleLogout = () => {

@@ -21,21 +21,12 @@ import {
   EditableInput,
   EditableTextarea,
   EditablePreview,
-  useDisclosure,
 } from "@chakra-ui/react";
 import {
   PersonOutlined,
   AccountCircleOutlined,
   HouseOutlined,
-  ImageOutlined,
-  UploadFileOutlined,
-  PaymentsOutlined,
-  MeetingRoomOutlined,
-  ParkOutlined,
-  OtherHousesOutlined,
-  DeleteForeverOutlined,
   EditOutlined,
-  FavoriteOutlined,
   DeleteOutline,
   FavoriteBorderOutlined,
   LogoutOutlined,
@@ -46,6 +37,7 @@ import Navbar from "../components/navigation/Navbar";
 import MyHouseCard from "../components/house/MyHouseCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 import SavedHouseCard from "../components/house/SavedHouseCard";
+import Footer from "../components/navigation/Footer";
 
 // Imagery
 // -
@@ -350,6 +342,7 @@ function ProfilePage() {
           </div>
         </HStack>
       </div>
+      <Footer />
     </>
   );
 }

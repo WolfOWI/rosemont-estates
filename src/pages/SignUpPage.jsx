@@ -34,7 +34,7 @@ import {
 import { VisibilityOutlined, VisibilityOffOutlined } from "@mui/icons-material";
 
 // Internal Components
-import Navbar from "../components/navigation/Navbar";
+// -
 
 // Imagery
 import plantWallImg from "../assets/images/plant-wall-1.jpg";
@@ -215,8 +215,6 @@ function SignUpPage() {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-      {/* TODO Delete Navbar Later */}
-      <Navbar />
     </>
   );
 }

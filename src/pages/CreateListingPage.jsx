@@ -44,6 +44,7 @@ import AddressModal from "../components/overlays/AddressModal";
 import ImageUpload from "../components/input/ImageUpload";
 import RadioCard from "../components/input/RadioCard";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
+import Footer from "../components/navigation/Footer";
 
 // Imagery
 // -
@@ -745,6 +746,7 @@ function CreateListingPage() {
         </div>
       </div>
       <AddressModal isOpen={isOpen} onClose={onClose} handleAddressDone={handleAddressDone} />
+      <Footer />
     </>
   );
 }

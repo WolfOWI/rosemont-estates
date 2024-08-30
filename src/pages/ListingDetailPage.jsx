@@ -44,6 +44,7 @@ import {
 import Navbar from "../components/navigation/Navbar.jsx";
 import ImageCollection from "../components/visual/ImageCollection.jsx";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock.jsx";
+import Footer from "../components/navigation/Footer.jsx";
 
 // Imagery
 // -
@@ -384,6 +385,7 @@ function ListingDetailPage() {
           </div>
         </HStack>
       </div>
+      <Footer />
     </>
   );
 }

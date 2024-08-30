@@ -11,30 +11,12 @@ import { Link } from "react-router-dom";
 // -
 
 // Third-Party Components
-import {
-  VStack,
-  HStack,
-  FormControl,
-  RangeSlider,
-  RangeSliderTrack,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
-  Checkbox,
-  CheckboxGroup,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Button,
-} from "@chakra-ui/react";
-import { PriceCheckOutlined, BedOutlined, HouseOutlined, StarOutline } from "@mui/icons-material";
+import { VStack, Button } from "@chakra-ui/react";
 
 // Internal Components
 import Navbar from "../components/navigation/Navbar";
-import SearchBar from "../components/input/SearchBar";
-import PopoverForm from "../components/input/PopoverForm";
-import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 import RecentHouseCard from "../components/house/RecentHouseCard";
+import Footer from "../components/navigation/Footer";
 
 // Imagery
 import heroImg from "../assets/images/plant-wall-1.jpg";
@@ -112,6 +94,8 @@ function HomePage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }

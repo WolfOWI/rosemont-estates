@@ -42,6 +42,7 @@ import SearchBar from "../components/input/SearchBar";
 import PopoverForm from "../components/input/PopoverForm";
 import IconTextBlock from "../components/buildingblocks/IconTextBlock";
 import ListingHouseCard from "../components/house/ListingHouseCard";
+import Footer from "../components/navigation/Footer";
 
 // Imagery
 // -
@@ -404,7 +405,7 @@ function ListingsPage() {
 
   return (
     <>
-      <div className="bg-beige-0 w-full min-h-screen">
+      <div className="bg-beige-0 w-full min-h-screen pb-32">
         <Navbar />
         <div className="mt-8 mx-4 md:mx-16 lg:mx-32 xl:mx-64 2xl:mx-96">
           <SearchBar
@@ -796,6 +797,7 @@ function ListingsPage() {
           </VStack>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
