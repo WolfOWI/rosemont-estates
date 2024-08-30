@@ -41,20 +41,15 @@ function AdminClosedDealsDash() {
     fetchSessionUser();
   }, []);
 
-  // Fetch all submission entities & filter by pending
-  const fetchPendingSubmissions = useCallback(async () => {
+  // Fetch all sold/rented submission entities
+  const fetchSoldRentedSubmissions = useCallback(async () => {
     const allSubmissions = await fetchAllApprovedSoldRentedHouses();
-    // const filteredSubs = allSubmissions.filter((subm) => subm.submitStatus === "pending");
     setClosedSubs(allSubmissions);
   }, []);
 
   useEffect(() => {
-    fetchPendingSubmissions();
-  }, [fetchPendingSubmissions]);
-
-  // useEffect(() => {
-  //   console.log(closedSubs);
-  // }, [closedSubs]);
+    fetchSoldRentedSubmissions();
+  }, [fetchSoldRentedSubmissions]);
 
   // Filter house submissions based on logged in user, set to filteredHouseSubs
   const filterHouseSubmissions = useCallback(() => {
@@ -86,7 +81,7 @@ function AdminClosedDealsDash() {
   // Handle Relist Click
   const handleRelistClick = async (submission) => {
     // console.log("Relist clicked");
-    console.log(submission);
+    // console.log(submission);
 
     try {
       await updateHouseStringsByHouseId(submission.houseId, {

@@ -55,6 +55,7 @@ function CustomerCard({ type, interest, onDismiss, onMark }) {
   // console.log(type);
   // console.log(interest);
 
+  // When interest object is received, fetch agency & number of people interested in specific home (for alert dialog)
   useEffect(() => {
     const fetchAgency = async () => {
       try {
@@ -78,6 +79,7 @@ function CustomerCard({ type, interest, onDismiss, onMark }) {
     fetchAgency();
   }, [interest]);
 
+  // Mark as Text (Mark as Sold or Rented)
   let markAsText = "";
   let markAsIcon = "";
 
@@ -95,9 +97,6 @@ function CustomerCard({ type, interest, onDismiss, onMark }) {
       break;
   }
 
-  useEffect(() => {
-    console.log(numInterestInHouse);
-  }, [numInterestInHouse]);
   return (
     <>
       <div className="flex justify-between bg-beige-0 p-4 rounded-3xl mb-4">

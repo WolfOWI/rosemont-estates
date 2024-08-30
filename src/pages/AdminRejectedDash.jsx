@@ -4,19 +4,19 @@
 import { useEffect, useState, useCallback } from "react";
 
 // Services
-import { fetchAllSubmissions } from "../services/submissionService";
-import { getHouseById } from "../services/houseService";
+import { updateHouseStringsByHouseId, fetchAllRejectedHouses } from "../services/houseService";
 import { getSession } from "../services/authService";
+import { updateSubmissionByHouseId } from "../services/submissionService";
 
 // Utility Functions
 // -
 
 // Third-Party Components
-// -
+import { Wrap, WrapItem } from "@chakra-ui/react";
 
 // Internal Components
 import Sidebar from "../components/navigation/Sidebar";
-import PropertyAccordion from "../components/admin/PropertyAccordion";
+import RejectedHouseCard from "../components/admin/RejectedHouseCard";
 
 // Imagery
 // -
@@ -25,9 +25,8 @@ import PropertyAccordion from "../components/admin/PropertyAccordion";
 
 function AdminRejectedDash() {
   const [sessionUser, setSessionUser] = useState(null); // Logged in user details
-  const [pendingSubs, setPendingSubs] = useState([]); // Submissions entities (pending)
-  const [allHouseSubs, setAllHouseSubs] = useState([]); // All house entities (pending)
-  const [filteredHouseSubs, setFilteredHouseSubs] = useState([]); // Filtered real estate House Entities (pending)
+  const [rejectedSubs, setRejectedSubs] = useState([]); // Rejected submissions
+  const [filteredRejects, setFilteredRejects] = useState([]); // Filtered rejects (by logged in user real estate)
 
   // Fetch logged-in user data on mount, and store in sessionUser
   useEffect(() => {
@@ -40,60 +39,33 @@ function AdminRejectedDash() {
     fetchSessionUser();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("sessionUser");
-  //   console.log(sessionUser);
-  // }, [sessionUser]);
-
-  // Fetch all submission entities & filter by pending
-  const fetchPendingSubmissions = useCallback(async () => {
-    const allSubmissions = await fetchAllSubmissions();
-    const filteredSubs = allSubmissions.filter((subm) => subm.submitStatus === "pending");
-    setPendingSubs(filteredSubs);
+  // Fetch all rejected submissions
+  const fetchRejectedSubmissions = useCallback(async () => {
+    const rejectedHouseSubmissions = await fetchAllRejectedHouses();
+    setRejectedSubs(rejectedHouseSubmissions);
   }, []);
 
   useEffect(() => {
-    fetchPendingSubmissions();
-  }, [fetchPendingSubmissions]);
-
-  // Fetch house detail when pending submissions is received/changes, set to allHouseSubs
-  const fetchHouseDetails = useCallback(async () => {
-    if (pendingSubs.length > 0) {
-      const pendingHousePromises = pendingSubs.map((subm) => getHouseById(subm.houseId));
-      const allHouseDetails = await Promise.all(pendingHousePromises);
-      setAllHouseSubs(allHouseDetails);
-    }
-  }, [pendingSubs]);
+    fetchRejectedSubmissions();
+  }, [fetchRejectedSubmissions]);
 
   // Filter house submissions based on logged in user, set to filteredHouseSubs
   const filterHouseSubmissions = useCallback(() => {
-    if (sessionUser && allHouseSubs.length > 0) {
+    if (sessionUser && rejectedSubs.length > 0) {
       if (sessionUser.realEstateId === 1) {
-        setFilteredHouseSubs(allHouseSubs);
+        setFilteredRejects(rejectedSubs);
       } else {
-        const filteredHouseArr = allHouseSubs.filter(
+        const filteredHouseArr = rejectedSubs.filter(
           (house) => parseInt(house.realEstateId) === parseInt(sessionUser.realEstateId)
         );
-        setFilteredHouseSubs(filteredHouseArr);
+        setFilteredRejects(filteredHouseArr);
       }
     }
-  }, [sessionUser, allHouseSubs]);
-
-  useEffect(() => {
-    fetchHouseDetails();
-  }, [pendingSubs, fetchHouseDetails]);
+  }, [sessionUser, rejectedSubs]);
 
   useEffect(() => {
     filterHouseSubmissions();
-  }, [sessionUser, allHouseSubs, filterHouseSubmissions]);
-
-  // Handle approve / reject click
-  const handleDecision = (houseId) => {
-    setPendingSubs((prevSubs) => prevSubs.filter((sub) => sub.houseId !== JSON.stringify(houseId)));
-    setFilteredHouseSubs((prevHouses) =>
-      prevHouses.filter((house) => house.houseId !== JSON.stringify(houseId))
-    );
-  };
+  }, [sessionUser, rejectedSubs, filterHouseSubmissions]);
 
   // Handle real estate change (in sidebar)
   const handleRealEstateChange = () => {
@@ -104,18 +76,52 @@ function AdminRejectedDash() {
     fetchSessionUser();
   };
 
+  // Handle Reevaluate Click
+  const handleReevClick = async (submission) => {
+    console.log("Reevaluate clicked");
+    // console.log(submission);
+
+    // Change the submission status to "pending" (moves to "New Homes" on Admin Dash)
+    try {
+      await updateSubmissionByHouseId(submission.houseId, {
+        submitStatus: "pending",
+        decisionDate: "pending",
+      });
+      // Refresh the displayed items
+      setRejectedSubs((prevSubs) => prevSubs.filter((sub) => sub.houseId !== submission.houseId));
+      setFilteredRejects((prevSubs) =>
+        prevSubs.filter((sub) => sub.houseId !== submission.houseId)
+      );
+    } catch (error) {
+      console.log("Failed to update the submission status to pending: ", error);
+    }
+
+    // Set House Availability Status (as in, not sold/rented) to "available" (just in case)
+    try {
+      await updateHouseStringsByHouseId(submission.houseId, {
+        availabilityStatus: "available",
+      });
+    } catch (error) {
+      console.log("Failed to update the house status: ", error);
+    }
+  };
+
   return (
-    <div className="flex">
-      <Sidebar realEstateChange={handleRealEstateChange} />
-      <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
-        <h1 className="mb-2">Rejected Homes</h1>
-        <div className=" w-full h-screen">
-          {filteredHouseSubs.map((house) => (
-            <PropertyAccordion key={house.houseId} house={house} onDecision={handleDecision} />
-          ))}
+    <>
+      <div className="flex">
+        <Sidebar realEstateChange={handleRealEstateChange} />
+        <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
+          <h1 className="mb-2">{filteredRejects.length} Rejected Homes</h1>
+          <Wrap spacing={4}>
+            {filteredRejects.map((submission) => (
+              <WrapItem key={submission.houseId}>
+                <RejectedHouseCard submission={submission} onReev={handleReevClick} />
+              </WrapItem>
+            ))}
+          </Wrap>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
