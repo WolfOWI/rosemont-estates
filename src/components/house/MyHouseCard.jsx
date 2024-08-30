@@ -1,7 +1,7 @@
 // IMPORT
 // -----------------------------------------------------------
 // React & Hooks
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Services
@@ -11,7 +11,19 @@ import { getPrimaryImageByHouseId } from "../../services/houseService";
 // -
 
 // Third-Party Components
-import { HStack, VStack, Button } from "@chakra-ui/react";
+import {
+  HStack,
+  VStack,
+  Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { EditOutlined, DeleteOutline } from "@mui/icons-material";
 
 // Internal Components
@@ -24,6 +36,11 @@ import missingImg from "../../assets/images/missingImg.png";
 
 function MyHouseCard({ house, onDeleteClick }) {
   const [priImage, setPriImage] = useState(null);
+
+  // Confirmation Dialog Popup (For deletion of property)
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+
   const navigate = useNavigate();
 
   // When card mounts, get primary Image
@@ -109,7 +126,14 @@ function MyHouseCard({ house, onDeleteClick }) {
                 <Button leftIcon={<EditOutlined />} onClick={handleEditClick}>
                   Edit
                 </Button>
-                <Button leftIcon={<DeleteOutline />} variant="roseOutline" onClick={onDeleteClick}>
+                <Button
+                  leftIcon={<DeleteOutline />}
+                  variant="roseOutline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen();
+                  }}
+                >
                   Delete
                 </Button>
               </HStack>
@@ -117,6 +141,34 @@ function MyHouseCard({ house, onDeleteClick }) {
           </VStack>
         </div>
       </div>
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Warning
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to delete the {house.title} property? Is cannot be undone.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose} variant="thornOutline">
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  onDeleteClick(house.houseId);
+                }}
+                ml={3}
+                variant="roseFilled"
+              >
+                Delete Property
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 }

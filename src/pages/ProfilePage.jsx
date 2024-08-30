@@ -280,10 +280,7 @@ function ProfilePage() {
                       <MyHouseCard
                         key={house.houseId}
                         house={house}
-                        onDeleteClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteClick(house.houseId);
-                        }}
+                        onDeleteClick={handleDeleteClick}
                       />
                     ))}
                   </>

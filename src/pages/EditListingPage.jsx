@@ -163,15 +163,6 @@ function EditListingPage() {
                 <h2 className="mt-2 ml-4">Editing {formData.title}</h2>
               </div>
               <HStack>
-                <Button
-                  variant="roseOutlineDarker"
-                  size="lg"
-                  mt={4}
-                  leftIcon={<DeleteForeverOutlined />}
-                  // TODO  onClick={handleClear}
-                >
-                  Delete
-                </Button>
                 <Button size="lg" mt={4} leftIcon={<EditOutlined />} type="submit">
                   Save Changes
                 </Button>
