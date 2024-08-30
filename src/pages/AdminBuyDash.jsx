@@ -41,8 +41,6 @@ function AdminBuyDash() {
       setSessionUser(sessionDetails.sessionData);
     };
 
-    fetchSessionUser();
-
     const getAllInterested = async () => {
       const allInterested = await fetchFullInterestList();
       const interestedBuyersForSale = allInterested.filter(
@@ -51,6 +49,7 @@ function AdminBuyDash() {
       setAllInterestedArr(interestedBuyersForSale);
     };
 
+    fetchSessionUser();
     getAllInterested();
   }, []);
 
@@ -82,20 +81,6 @@ function AdminBuyDash() {
     }
   }, [sessionUser, allInterestedArr]);
 
-  // useEffect(() => {
-  //   console.log("sessionUser");
-  //   console.log(sessionUser);
-  // }, [sessionUser]);
-
-  // useEffect(() => {
-  //   console.log("All Interested:");
-  //   console.log(allInterestedArr);
-  // }, [allInterestedArr]);
-
-  // useEffect(() => {
-  //   console.log(sessionUserAgency);
-  // }, [sessionUserAgency]);
-
   // Handle real estate change (in sidebar)
   const handleRealEstateChange = () => {
     // console.log("realEstate change");
@@ -108,8 +93,8 @@ function AdminBuyDash() {
 
   // Handle Mark-as-Sold Click (customer card)
   const handleMarked = async (interest) => {
-    console.log("Mark-as-Sold clicked");
-    console.log(interest);
+    // console.log("Mark-as-Sold clicked");
+    // console.log(interest);
 
     try {
       await updateHouseStringsByHouseId(interest.houseId, {
