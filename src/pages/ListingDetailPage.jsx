@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 // Services
+import { getSession } from "../services/authService";
 import { getHouseById, getImagesByHouseId } from "../services/houseService";
 import { getAgencyById } from "../services/agencyService";
 import { addToSaved, getSavedHouseIdsByUserId, removeSavedHouse } from "../services/savedService";
@@ -58,7 +59,32 @@ function ListingDetailPage() {
   const [interestActive, setInterestActive] = useState(false);
   const [interestIsHovered, setInterestIsHovered] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [sessionUser, setSessionUser] = useState(null);
+  const [isMine, setIsMine] = useState(false); // State if house belongs to logged in user
   const navigate = useNavigate();
+
+  // On Page Mount
+  useEffect(() => {
+    // Get Logged in User Details
+    async function getLoggedInUser() {
+      try {
+        const sessionObj = await getSession();
+        setSessionUser(sessionObj.sessionData);
+      } catch (error) {
+        console.log("Couldn't get logged-in user details: ", error);
+      }
+    }
+    getLoggedInUser();
+  }, []);
+
+  // When sessionUser / house changes
+  useEffect(() => {
+    if (house) {
+      if (JSON.stringify(house.userId) === JSON.stringify(sessionUser.userId)) {
+        setIsMine(true);
+      }
+    }
+  }, [sessionUser, house]);
 
   useEffect(() => {
     const fetchHouseDetails = async () => {
@@ -175,9 +201,11 @@ function ListingDetailPage() {
       <div className="mt-4 mb-24 mx-2 md:mx-8 lg:mx-16 xl:mx-32 2xl:mx-64">
         <HStack>
           <IconButton as={Link} to="/listings" icon={<ArrowBack />} minW={12} />
-          <Button leftIcon={<EditOutlined />} variant="thornOutline" onClick={handleEditClick}>
-            Edit Listing
-          </Button>
+          {isMine && (
+            <Button leftIcon={<EditOutlined />} variant="thornOutline" onClick={handleEditClick}>
+              Edit Listing
+            </Button>
+          )}
         </HStack>
         {/* House Imagery */}
         <div className="mt-4">
@@ -195,7 +223,7 @@ function ListingDetailPage() {
               <p>{house.description}</p>
             </div>
             <VStack align="start">
-              <HStack>
+              <HStack mt={4}>
                 <LocationOnOutlined />
                 <p>{`${house.street}, ${house.suburb}, ${house.city}, ${house.province}, ${house.zip}`}</p>
               </HStack>
@@ -204,7 +232,7 @@ function ListingDetailPage() {
                 <p>Available from {house.availableDate}</p>
               </HStack>
             </VStack>
-            <HStack w="fit-content">
+            <HStack w="fit-content" mt={4}>
               <IconTextBlock
                 type="floorSize"
                 textHidden="true"
@@ -232,7 +260,7 @@ function ListingDetailPage() {
             </HStack>
           </div>
           {/* Price & Buttons (Left) */}
-          <div className="w-[20%]">
+          <div className="w-[20%] flex flex-col justify-between">
             <div className="bg-beige-M1 px-4 py-8 flex flex-col justify-center items-center rounded-xl">
               {house.sellType === "sell" ? (
                 <>
@@ -252,42 +280,52 @@ function ListingDetailPage() {
                 <div>Loading</div>
               )}
             </div>
-            <HStack w="full" mt={4}>
-              <Button
-                w="full"
-                leftIcon={
-                  interestActive ? (
-                    interestIsHovered ? (
-                      <ThumbDownAltOutlined />
-                    ) : (
-                      <CircleNotificationsOutlined />
-                    )
-                  ) : interestIsHovered ? (
-                    <EmailOutlined />
-                  ) : (
-                    <ThumbUpOutlined />
-                  )
-                }
-                onClick={handleInterestedClick}
-                onMouseEnter={() => setInterestIsHovered(true)}
-                onMouseLeave={() => setInterestIsHovered(false)}
-                variant={interestActive ? "activated" : "thornFilled"}
-              >
-                {interestActive
-                  ? interestIsHovered
-                    ? "Cancel Interest"
-                    : "Interest Sent"
-                  : interestIsHovered
-                  ? "Notify Agent"
-                  : "Show Interest"}
-              </Button>
-              <IconButton
-                icon={isSaved ? <FavoriteOutlined /> : <FavoriteBorderOutlined />}
-                minW={12}
-                variant="roseOutline"
-                onClick={handleHeartClick}
-              />
-            </HStack>
+            {isMine ? (
+              <>
+                <div className="bg-beige-M1 py-4 flex flex-col justify-center items-center rounded-xl mt-2">
+                  <p>Listed By You</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <HStack w="full" mt={4}>
+                  <Button
+                    w="full"
+                    leftIcon={
+                      interestActive ? (
+                        interestIsHovered ? (
+                          <ThumbDownAltOutlined />
+                        ) : (
+                          <CircleNotificationsOutlined />
+                        )
+                      ) : interestIsHovered ? (
+                        <EmailOutlined />
+                      ) : (
+                        <ThumbUpOutlined />
+                      )
+                    }
+                    onClick={handleInterestedClick}
+                    onMouseEnter={() => setInterestIsHovered(true)}
+                    onMouseLeave={() => setInterestIsHovered(false)}
+                    variant={interestActive ? "activated" : "thornFilled"}
+                  >
+                    {interestActive
+                      ? interestIsHovered
+                        ? "Cancel Interest"
+                        : "Interest Sent"
+                      : interestIsHovered
+                      ? "Notify Agent"
+                      : "Show Interest"}
+                  </Button>
+                  <IconButton
+                    icon={isSaved ? <FavoriteOutlined /> : <FavoriteBorderOutlined />}
+                    minW={12}
+                    variant="roseOutline"
+                    onClick={handleHeartClick}
+                  />
+                </HStack>
+              </>
+            )}
           </div>
         </div>
         {/* Interior, Exterior & Features */}

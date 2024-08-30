@@ -137,9 +137,9 @@ function ListingsPage() {
     loadHouses();
   }, []);
 
-  useEffect(() => {
-    console.log(sessionUser);
-  }, [sessionUser]);
+  // useEffect(() => {
+  //   console.log(sessionUser);
+  // }, [sessionUser]);
 
   // LOCATION SEARCH FILTERING
   // ----------------------------------------------------
