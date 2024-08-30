@@ -7,9 +7,11 @@ import { useState, useEffect } from "react";
 import {
   fetchFullInterestList,
   deleteInterestedByUserIdHouseId,
+  deleteInterestedByHouseId,
 } from "../services/interestedService";
 import { getSession } from "../services/authService";
 import { getAgencyById } from "../services/agencyService";
+import { updateHouseStringsByHouseId } from "../services/houseService";
 
 // Utility Functions
 // -
@@ -104,6 +106,32 @@ function AdminBuyDash() {
     fetchSessionUser();
   };
 
+  // Handle Mark-as-Sold Click (customer card)
+  const handleMarked = async (interest) => {
+    console.log("Mark-as-Sold clicked");
+    console.log(interest);
+
+    try {
+      await updateHouseStringsByHouseId(interest.houseId, {
+        availabilityStatus: "sold",
+      });
+    } catch (error) {
+      console.log("Failed to update the house status to sold: ", error);
+    }
+
+    try {
+      await deleteInterestedByHouseId(interest.houseId);
+      setAllInterestedArr((prevInterests) =>
+        prevInterests.filter((intr) => intr.houseId !== interest.houseId)
+      );
+      setFiltInterestArr((prevInterests) =>
+        prevInterests.filter((intr) => intr.houseId !== interest.houseId)
+      );
+    } catch (error) {
+      console.log("Failed to delete interested entities by houseId : ", error);
+    }
+  };
+
   // Handle dismiss click (customer card)
   const handleDismiss = async (userId, houseId) => {
     try {
@@ -145,6 +173,7 @@ function AdminBuyDash() {
               key={interest.interestedId}
               interest={interest}
               onDismiss={handleDismiss}
+              onMark={handleMarked}
             />
           ))}
         </div>

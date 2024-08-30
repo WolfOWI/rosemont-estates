@@ -28,7 +28,7 @@ export async function createInterested(houseId) {
 
 // READ FUNCTIONS
 // ----------------------------------------------------------------------------
-// Get Interested Entities
+// Get All Interested Entities
 export async function fetchInterested() {
   try {
     const response = await fetch(
@@ -47,6 +47,29 @@ export async function fetchInterested() {
     return interested;
   } catch (error) {
     console.error("Error fetching interested entities:", error);
+    throw error;
+  }
+}
+
+// Get Interested Entities By HouseId
+export async function fetchInterestedByHouseId(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/interested/getInterestedByHouseId.php?houseId=${houseId}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const interested = await response.json();
+    return interested;
+  } catch (error) {
+    console.error("Error fetching interested entities by house Id:", error);
     throw error;
   }
 }
@@ -106,7 +129,30 @@ export async function fetchFullInterestList() {
 // DELETE FUNCTIONS
 // ----------------------------------------------------------------------------
 // Delete interest by houseId (and logged in user id)
-export async function deleteInterested(houseId) {
+export async function deleteSessionUserInterestedByHouseId(houseId) {
+  try {
+    const response = await fetch(
+      `http://localhost/rosemont/backend/api/interested/deleteInterestedBySessionUserHouseId.php?houseId=${houseId}`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Couldn't delete interested entity");
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Failed to delete interested entity: ", error);
+    throw error;
+  }
+}
+
+// Delete interest by houseId only (can be multiple)
+export async function deleteInterestedByHouseId(houseId) {
   try {
     const response = await fetch(
       `http://localhost/rosemont/backend/api/interested/deleteInterestedByHouseId.php?houseId=${houseId}`,

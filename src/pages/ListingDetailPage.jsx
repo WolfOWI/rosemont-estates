@@ -11,7 +11,7 @@ import { addToSaved, getSavedHouseIdsByUserId, removeSavedHouse } from "../servi
 import {
   createInterested,
   fetchInterestedBySessionUserId,
-  deleteInterested,
+  deleteSessionUserInterestedByHouseId,
 } from "../services/interestedService.js";
 
 // Utility Functions
@@ -142,7 +142,7 @@ function ListingDetailPage() {
       createInterested(houseId);
       setInterestActive(true);
     } else {
-      deleteInterested(houseId);
+      deleteSessionUserInterestedByHouseId(houseId);
       setInterestActive(false);
     }
   };

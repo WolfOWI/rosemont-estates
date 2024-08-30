@@ -22,6 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 require '../../config/config.php';
 
+// Get logged-in user's ID
+$userId = $_SESSION['user']['userId'] ?? '';
+
 
 // Get the house ID from the query string
 $houseId = isset($_GET['houseId']) ? intval($_GET['houseId']) : null;
@@ -29,28 +32,28 @@ $houseId = isset($_GET['houseId']) ? intval($_GET['houseId']) : null;
 // When button is pressed (Cancel Interest button)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if ($houseId) {
-        $sql = "DELETE FROM interested WHERE houseId = ?";
+    if ($userId && $houseId) {
+        $sql = "DELETE FROM interested WHERE userId = ? AND houseId = ?";
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
             die("Prepare failed: " . $conn->error);
         }
 
-        $stmt->bind_param("i", $houseId);
+        $stmt->bind_param("ii", $userId, $houseId);
 
         if ($stmt->execute()) {
             if ($stmt->affected_rows > 0) {
                 echo json_encode(["message" => "Interest removed successfully"]);
             } else {
-                echo json_encode(["message" => "No interest found for this house"]);
+                echo json_encode(["message" => "No interest found for this user and house"]);
             }
         } else {
             echo json_encode(["message" => "Failed to remove interest"]);
         }
 
     } else {
-        echo json_encode(["message" => "HouseId not provided."]);
+        echo json_encode(["message" => "User not logged in or houseId not provided."]);
     }
 
     $stmt->close();

@@ -3,17 +3,30 @@
 // IMPORT
 // -----------------------------------------------------------
 // React & Hooks
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Services
 import { getAgencyById } from "../../services/agencyService";
+import { fetchInterestedByHouseId } from "../../services/interestedService";
 
 // Utility Functions
 import { formatPrice } from "../../utils/formatPrice";
 import logoMap from "../../utils/logoMap";
 
 // Third-Party Components
-import { Button, VStack, HStack } from "@chakra-ui/react";
+import {
+  Button,
+  VStack,
+  HStack,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   EmailOutlined,
   SellOutlined,
@@ -30,8 +43,14 @@ import {
 
 // -----------------------------------------------------------
 
-function CustomerCard({ type, interest, onDismiss }) {
+function CustomerCard({ type, interest, onDismiss, onMark }) {
+  // Confirmation Dialog Popup
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+
   const [agency, setAgency] = useState(null);
+
+  const [numInterestInHouse, setNumInterestInHouse] = useState(0);
 
   // console.log(type);
   // console.log(interest);
@@ -45,6 +64,17 @@ function CustomerCard({ type, interest, onDismiss }) {
         console.error("Failed to fetch agency:", error);
       }
     };
+
+    const getInterestedNumber = async () => {
+      try {
+        const numOfInterest = await fetchInterestedByHouseId(interest.houseId);
+        setNumInterestInHouse(numOfInterest.length);
+      } catch (error) {
+        console.log("Failed to fetch length of interested:", error);
+      }
+    };
+
+    getInterestedNumber();
     fetchAgency();
   }, [interest]);
 
@@ -64,6 +94,10 @@ function CustomerCard({ type, interest, onDismiss }) {
       markAsText = "Customer Type Invalid.";
       break;
   }
+
+  useEffect(() => {
+    console.log(numInterestInHouse);
+  }, [numInterestInHouse]);
   return (
     <>
       <div className="flex justify-between bg-beige-0 p-4 rounded-3xl mb-4">
@@ -111,7 +145,7 @@ function CustomerCard({ type, interest, onDismiss }) {
           <Button w="full" h={20} leftIcon={<EmailOutlined />}>
             Email {interest.firstName}
           </Button>
-          <Button w="full" h={14} leftIcon={markAsIcon} variant="thornOutline">
+          <Button w="full" h={14} leftIcon={markAsIcon} variant="thornOutline" onClick={onOpen}>
             {markAsText}
           </Button>
           <Button
@@ -127,6 +161,47 @@ function CustomerCard({ type, interest, onDismiss }) {
           </Button>
         </VStack>
       </div>
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              {markAsText}
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you would like to mark the {interest.title} property as{" "}
+              {interest.sellType === "sell" ? "sold" : "rented"}? This will remove{" "}
+              <span className="font-bold">
+                {numInterestInHouse === 1 ? (
+                  <>1 potential {interest.sellType === "sell" ? "buyer" : "tenant"}</>
+                ) : (
+                  <>
+                    {numInterestInHouse} potential{" "}
+                    {interest.sellType === "sell" ? "buyers" : "tenants"}
+                  </>
+                )}
+              </span>{" "}
+              from the list.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose} variant="thornOutline">
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  onMark(interest);
+                  onClose();
+                }}
+                ml={3}
+                variant="roseFilled"
+              >
+                {markAsText}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 }
