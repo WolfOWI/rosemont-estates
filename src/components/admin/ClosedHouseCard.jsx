@@ -1,7 +1,7 @@
 // IMPORT
 // -----------------------------------------------------------
 // React & Hooks
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Services
 import { getAgencyById } from "../../services/agencyService";
@@ -13,7 +13,19 @@ import { formatPrice } from "../../utils/formatPrice";
 import logoMap from "../../utils/logoMap";
 
 // Third-Party Components
-import { HStack, VStack, Button } from "@chakra-ui/react";
+import {
+  HStack,
+  VStack,
+  Button,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { ReplayOutlined } from "@mui/icons-material";
 
 // Internal Components
@@ -27,6 +39,10 @@ import missingImg from "../../assets/images/missingImg.png";
 function ClosedHouseCard({ submission, onRelist }) {
   const [agency, setAgency] = useState(null);
   const [priImage, setPriImage] = useState(null);
+
+  // Confirmation Dialog Popup
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   // When card mounts, fetch respective agency, image, and saved status
   useEffect(() => {
@@ -95,7 +111,8 @@ function ClosedHouseCard({ submission, onRelist }) {
               px={8}
               leftIcon={<ReplayOutlined />}
               onClick={() => {
-                onRelist(submission);
+                // onRelist(submission);
+                onOpen();
               }}
             >
               Relist Property
@@ -103,6 +120,34 @@ function ClosedHouseCard({ submission, onRelist }) {
           </div>
         </div>
       </div>
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Relist Property
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you would like to set the {submission.title} property as available?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose} variant="thornOutline">
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  onRelist(submission);
+                }}
+                ml={3}
+                variant="roseFilled"
+              >
+                Relist
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 }

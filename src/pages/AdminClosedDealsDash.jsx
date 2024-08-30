@@ -1,7 +1,7 @@
 // IMPORT
 // -----------------------------------------------------------
 // React & Hooks
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 // Services
 import {
@@ -102,19 +102,21 @@ function AdminClosedDealsDash() {
   };
 
   return (
-    <div className="flex">
-      <Sidebar realEstateChange={handleRealEstateChange} />
-      <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
-        <h1 className="mb-2">{filteredHouseSubs.length} Closed Deals</h1>
-        <Wrap spacing={4}>
-          {filteredHouseSubs.map((submission) => (
-            <WrapItem key={submission.houseId}>
-              <ClosedHouseCard submission={submission} onRelist={handleRelistClick} />
-            </WrapItem>
-          ))}
-        </Wrap>
+    <>
+      <div className="flex">
+        <Sidebar realEstateChange={handleRealEstateChange} />
+        <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
+          <h1 className="mb-2">{filteredHouseSubs.length} Closed Deals</h1>
+          <Wrap spacing={4}>
+            {filteredHouseSubs.map((submission) => (
+              <WrapItem key={submission.houseId}>
+                <ClosedHouseCard submission={submission} onRelist={handleRelistClick} />
+              </WrapItem>
+            ))}
+          </Wrap>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

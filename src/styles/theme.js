@@ -55,6 +55,16 @@ const Button = {
         borderColor: "rosered.0",
       },
     },
+    roseFilled: {
+      fontSize: "14",
+      height: 12,
+      bg: "rosered.M1",
+      color: "beige.0",
+      _hover: {
+        bg: "rosered.P2",
+        color: "beige.0",
+      },
+    },
     lightFilled: {
       fontSize: "14",
       height: 12,
