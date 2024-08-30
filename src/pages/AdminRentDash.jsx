@@ -92,8 +92,8 @@ function AdminRentDash() {
 
   // Handle Mark-as-Rented Click (customer card)
   const handleMarked = async (interest) => {
-    console.log("Mark-as-Rented clicked");
-    console.log(interest);
+    // console.log("Mark-as-Rented clicked");
+    // console.log(interest);
 
     try {
       await updateHouseStringsByHouseId(interest.houseId, {

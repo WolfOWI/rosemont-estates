@@ -78,7 +78,7 @@ function AdminRejectedDash() {
 
   // Handle Reevaluate Click
   const handleReevClick = async (submission) => {
-    console.log("Reevaluate clicked");
+    // console.log("Reevaluate clicked");
     // console.log(submission);
 
     // Change the submission status to "pending" (moves to "New Homes" on Admin Dash)
@@ -111,7 +111,9 @@ function AdminRejectedDash() {
       <div className="flex">
         <Sidebar realEstateChange={handleRealEstateChange} />
         <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
-          <h1 className="mb-2">{filteredRejects.length} Rejected Homes</h1>
+          <h1 className="mb-2">
+            {filteredRejects.length} Rejected Home{filteredRejects.length === 1 ? "" : "s"}
+          </h1>
           <Wrap spacing={4}>
             {filteredRejects.map((submission) => (
               <WrapItem key={submission.houseId}>

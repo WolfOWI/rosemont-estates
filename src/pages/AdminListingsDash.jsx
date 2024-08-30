@@ -108,7 +108,9 @@ function AdminListingsDash() {
     <div className="flex">
       <Sidebar realEstateChange={handleRealEstateChange} />
       <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
-        <h1 className="mb-2">New Homes</h1>
+        <h1 className="mb-2">
+          {filteredHouseSubs.length} New Home{filteredHouseSubs.length === 1 ? "" : "s"}
+        </h1>
         <div className=" w-full h-screen">
           {filteredHouseSubs.map((house) => (
             <PropertyAccordion key={house.houseId} house={house} onDecision={handleDecision} />

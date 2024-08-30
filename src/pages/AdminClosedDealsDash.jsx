@@ -83,6 +83,7 @@ function AdminClosedDealsDash() {
     // console.log("Relist clicked");
     // console.log(submission);
 
+    // Set the house availability status to "available" (not sold/rented)
     try {
       await updateHouseStringsByHouseId(submission.houseId, {
         availabilityStatus: "available",
@@ -101,7 +102,9 @@ function AdminClosedDealsDash() {
       <div className="flex">
         <Sidebar realEstateChange={handleRealEstateChange} />
         <div className="flex flex-col mx-8 mt-8 ml-[18rem] w-full">
-          <h1 className="mb-2">{filteredHouseSubs.length} Closed Deals</h1>
+          <h1 className="mb-2">
+            {filteredHouseSubs.length} Closed Deal{filteredHouseSubs.length === 1 ? "" : "s"}
+          </h1>
           <Wrap spacing={4}>
             {filteredHouseSubs.map((submission) => (
               <WrapItem key={submission.houseId}>
