@@ -36,7 +36,7 @@
 
 - [Table of Contents](#table-of-contents)
 - [About the Project](#about-the-project)
-  - [Project Description](#project-description)
+  - [What is Rosemont Estates?](#what-is-rosemont-estates)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -55,16 +55,12 @@
   - [Admin Closed Deals](#admin-closed-deals)
   - [Admin Rejected Homes](#admin-rejected-homes)
 - [Concept Process](#concept-process)
-  - [Ideation](#ideation)
-  - [Wireframes](#wireframes)
-  - [User-flow](#user-flow)
+  - [Ideation \& Wireframing](#ideation--wireframing)
+  - [ER Diagram](#er-diagram)
 - [Development Process](#development-process)
   - [Implementation Process](#implementation-process)
     - [Highlights](#highlights)
     - [Challenges](#challenges)
-  - [Reviews \& Testing](#reviews--testing)
-    - [Feedback from Reviews](#feedback-from-reviews)
-    - [Unit Tests](#unit-tests)
   - [Future Implementation](#future-implementation)
 - [Final Outcome](#final-outcome)
   - [Mockups](#mockups)
@@ -74,7 +70,6 @@
 - [Authors](#authors)
 - [License](#license)
 - [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 
 <!--PROJECT DESCRIPTION-->
 
@@ -84,7 +79,7 @@
 
 ![image1][image1]
 
-### Project Description
+### What is Rosemont Estates?
 
 Rosemont Estates is a luxury real estate platform designed to connect discerning buyers and renters with the most exquisite properties on the market. Whether you're looking for a serene getaway, a stately mansion, or an elegant modern home, Rosemont Estates offers a curated selection of high-end properties to meet every need. Our platform provides a seamless experience for users to browse, compare, and connect with agents, ensuring that every transaction is handled with the utmost professionalism and care.
 
@@ -172,162 +167,131 @@ Here are the steps to clone this repository, set up the MySQL database, and run 
 
 By following these steps, you will have the Rosemont Estates project fully set up and running on your local machine. This setup ensures that your MySQL database is correctly configured.
 
-<!-- FEATURES AND FUNCTIONALITY-->
-<!-- You can add the links to all of your imagery at the bottom of the file as references -->
-
 ## Features and Functionality
 
 ### Login & Signup
 
-Description of Feature
+The Login and Signup feature allows users to create an account or log in to the Rosemont Estates platform. Users can sign up as either a regular user or an agent, with the platform customising their experience accordingly. Once logged in, users can access personalised features, such as managing their listings or browsing potential properties.
 
 ![feature1][fimage1]
 ![feature2][fimage2]
 
 ### Home
 
-Description of Feature
+The Home page serves as the central hub for users, featuring a welcoming hero section, a brief introduction to the platform, and quick links to browse listings, view user profiles, and more.
 
 ![feature3][fimage3]
 
 ### Listing (With Filtering)
 
-Description of Feature
+The Listing feature provides users with a comprehensive view of all available properties. Users can apply filters based on a text search of location (suburbs, cities, provinces, zip codes) max & min price range, number of interior spaces, number of exterior areas, and home features to narrow down their search and find properties that meet their specific needs. The filtering is responsive and updates in real-time as users adjust their preferences.
 
 ![feature4][fimage4]
 ![feature5][fimage5]
 
 ### Individual Listing
 
-Description of Feature
+The Individual Listing page offers detailed information about a specific property, including high-resolution images (between 1 and 5, which would dynamically change layout), price, property features, and more. Users can also save the property to their favorites or notify the agent directly from this page using the "Show Interest" button.
 
 ![feature6][fimage6]
 
 ### Edit Listing
 
-Description of Feature
+The Edit Listing feature is available to users who have created property listings. It allows them to modify their own property details, update images, and change availability status. This ensures that property information remains accurate and up-to-date.
 
 ![feature7][fimage7]
 
 ### Create Listing
 
-Description of Feature
+The Create Listing feature enables users to add new properties to the Rosemont Estates platform. Once submitted, the property will be sent to the admins for approval, and will have a "Pending" status on the user's profile page.
 
 ![feature8][fimage8]
 
 ### Profile
 
-Description of Feature
+The Profile page allows users to manage their account information, view saved (favourited) properties, and access their listings. It provides a personalised space for users to keep track of their interactions with the platform and update their contact details as needed.
 
 ![feature9][fimage9]
 
 ### Admin New Listings Dash
 
-Description of Feature
+The Admin New Listings Dash is designed for agents and admin users to manage newly submitted property listings. From this dashboard, they can review, approve, or reject listings, ensuring that only verified properties are published on the platform.
 
 ![feature10][fimage10]
 
 ### Admin Potential Buyers
 
-Description of Feature
+This feature allows agents and admin users to view and manage potential buyers interested in properties listed for sale (users that clicked on the "Interested" button). Agents can contact interested buyers directly with the email button, dismiss an interest, or mark a property as sold, which would delete all interests of any user in that respective property.
 
 ![feature11][fimage11]
 
 ### Admin Potential Tenants
 
-Description of Feature
+Similar to the Potential Buyers feature, the Admin Potential Tenants section helps agents manage renters interested in properties available to rent.
 
 ![feature12][fimage12]
 
 ### Admin Closed Deals
 
-Description of Feature
+The Admin Closed Deals feature provides a record of all successfully closed property deals. Agents can review the history of sales and rentals, ensuring that all transactions are properly documented and finalised, and also relist the property.
 
 ![feature13][fimage13]
 
 ### Admin Rejected Homes
 
-Description of Feature
+The Admin Rejected Homes feature allows agents and admins to review properties that were submitted but not approved for listing. Here, the admin/agent can request a reevaluation, which will move it back to the main admin listings screen. Furthermore, admins and agents can easily change their real estate in the admin sidebar, which would filter the listings/buyers/renters by real estate agency.
 
 ![feature14][fimage14]
 ![feature15][fimage15]
 
-<!-- CONCEPT PROCESS -->
-<!-- Briefly explain your concept ideation process -->
-
 ## Concept Process
 
-The `Conceptual Process` is the set of actions, activities and research that was done when starting this project.
+The `Conceptual Process` consisted of visual research (including research colour, design elements, typography, etc.), high-fidelity wireframing (to be used as reference for development), and planning the architecture of the Reosemont Estates website.
 
-### Ideation
+### Ideation & Wireframing
 
 ![image5][image5]
 <br>
 ![image6][image6]
 
-### Wireframes
-
-![image7][image7]
-
-### User-flow
+### ER Diagram
 
 ![image8][image8]
 
-<!-- DEVELOPMENT PROCESS -->
+Certainly! Here's the text for the "Development Process" section that you can copy and paste into your README file:
+
+---
 
 ## Development Process
 
-The `Development Process` is the technical implementations and functionality done in the frontend and backend of the application.
+The Development Process involved the technical implementation of both the frontend and backend of the Rosemont Estates application. This section highlights the key functionalities developed, challenges faced, and solutions implemented.
 
 ### Implementation Process
 
-<!-- stipulate all of the functionality you included in the project -->
-
-- Made use of both `functionality` to implement a specific feature.
-- `MVC/MVVM` design architecture implemented.
-- `Plugin` for this.
-- ETC.
+- Implemented user authentication and session management using PHP and MySQL to ensure secure login and role-based access.
+- Developed dynamic filtering functionality for property listings, allowing users to search by location, price range, number of rooms, exterior areas and features.
+- Created a responsive frontend using React, Tailwind and Chakra UI, ensuring a seamless user experience across devices.
+- Integrated a custom email button feature, allowing direct communication between potential buyers/tenants and agents.
+- Designed and implemented the admin dashboard with features for managing property listings, potential buyers, and tenants, as well as handling rejected and closed deals.
+- Set up role-based page access controls to ensure that users and agents have appropriate permissions across different sections of the site (such as editing buttons only appearing for users who own specific properties)
 
 #### Highlights
 
-<!-- stipulated the highlight you experienced with the project -->
-
-- Sunshine.
-- Rainbows.
+- Successfully implemented a fully functional role-based access control system, ensuring that users only have access to the appropriate sections of the site.
+- Developed a comprehensive filtering system for property listings, providing users with powerful tools to find the properties that match their needs.
+- Added dynamic design rendering changes, depending on content (such as houses with 1-5 images)
 
 #### Challenges
 
-<!-- stipulated the challenges you faced with the project and why you think you faced it or how you think you'll solve it (if not solved) -->
+- **State Synchronisation:** One of the primary challenges was synchronising state across multiple components, particularly when managing session data. This issue was addressed by implementing a centralised state management approach, often within the parent component or page, to ensure consistency and reliability across the application.
 
-- Bugs.
-- Bugs.
-
-### Reviews & Testing
-
-<!-- stipulate how you've conducted testing in the form of peer reviews, feedback and also functionality testing, like unit tests (if applicable) -->
-
-#### Feedback from Reviews
-
-`Peer Reviews` were conducted by my fellow students and lecturer. The following feedback I found useful:
-
-- Feedback one.
-- Feedback two.
-
-#### Unit Tests
-
-`Unit Tests` were conducted to establish working functionality. Here are all the tests that were ran:
-
-- Test 1 of this functionality
-- Test 2 of this functionality
+- **React-PHP Integration:** Integrating React with PHP posed several difficulties, especially in maintaining seamless communication between the frontend and backend. Although the process was complex and at times frustrating, it provided valuable insights into managing the interoperability between different programming environments. Continuous debugging and testing were essential in overcoming these hurdles and ensuring a smooth integration.
 
 ### Future Implementation
 
-<!-- stipulate functionality and improvements that can be implemented in the future. -->
-
-- Future 1.
-- Future 2.
-
-<!-- MOCKUPS -->
+- **Enhanced Analytics**: Implementing analytics features for admin users to track property views, user interactions, and other key metrics.
+- **Automated Property Valuation**: Integrating an AI-based system for estimating property values based on market trends.
+- **Advanced Filtering Options**: Adding more detailed filtering options, such as neighborhood amenities, or proximity to public transportation.
 
 ## Final Outcome
 
@@ -343,7 +307,7 @@ The `Development Process` is the technical implementations and functionality don
 
 To see a run through of the application, click below:
 
-[View Demonstration](path/to/video/demonstration)
+[View Demonstration](https://youtu.be/K2DtZRP9LBY?si=4abhtoUpneIFh21x)
 
 <!-- ROADMAP -->
 
@@ -367,7 +331,7 @@ Contributions are what makes the open-source community such an amazing place to 
 
 ## Authors
 
-- **Your Name & Surname** - [WolfOWI](https://github.com/WolfOWI)
+- **Wolf Botha** - [WolfOWI](https://github.com/WolfOWI)
 
 <!-- LICENSE -->
 
@@ -379,45 +343,32 @@ Distributed under the MIT License. See `LICENSE` for more information.\
 
 ## Contact
 
-- **Your Name & Surname** - [email@address](mailto:email@address) - [@instagram_handle](https://www.instagram.com/instagram_handle/)
+- **Wolf Botha** - [wolfmeyerbotha@gmail.com](mailto:wolfmeyerbotha@gmail.com)
 - **Project Link** - https://github.com/WolfOWI/rosemont-estates
-
-<!-- ACKNOWLEDGEMENTS -->
-
-## Acknowledgements
-
-<!-- all resources that you used and Acknowledgements here -->
-
-- [Resource Name](path/to/resource)
-- [Resource Name](path/to/resource)
-- [Resource Name](path/to/resource)
-- [Resource Name](path/to/resource)
-- [Resource Name](path/to/resource)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[image1]: /path/to/image.png
+[image1]: src/assets/mockups/macbook_mockup.png
 [fimage1]: src/assets/mockups/01login.png
 [fimage2]: src/assets/mockups/02signup.png
 [fimage3]: src/assets/mockups/03home.png
-[fimage4]: /path/to/image.png
-[fimage5]: /path/to/image.png
-[fimage6]: /path/to/image.png
-[fimage7]: /path/to/image.png
-[fimage8]: /path/to/image.png
-[fimage9]: /path/to/image.png
-[fimage10]: /path/to/image.png
-[fimage11]: /path/to/image.png
-[fimage12]: /path/to/image.png
-[fimage13]: /path/to/image.png
-[fimage14]: /path/to/image.png
-[fimage15]: /path/to/image.png
-[image5]: /path/to/image.png
-[image6]: /path/to/image.png
-[image7]: /path/to/image.png
-[image8]: /path/to/image.png
-[image9]: /path/to/image.png
-[image10]: /path/to/image.png
+[fimage4]: src/assets/mockups/04listings.png
+[fimage5]: src/assets/mockups/05filter.png
+[fimage6]: src/assets/mockups/06individual.png
+[fimage7]: src/assets/mockups/07edit.png
+[fimage8]: src/assets/mockups/08create.png
+[fimage9]: src/assets/mockups/09profile.png
+[fimage10]: src/assets/mockups/10adminListings.png
+[fimage11]: src/assets/mockups/11potBuyers.png
+[fimage12]: src/assets/mockups/12potTenants.png
+[fimage13]: src/assets/mockups/13closedDeals.png
+[fimage14]: src/assets/mockups/14RejectedHomes.png
+[fimage15]: src/assets/mockups/15agencyChange.png
+[image5]: src/assets/mockups/LoginDesign.jpg
+[image6]: src/assets/mockups/HomeDesign.jpg
+[image8]: src/assets/mockups/rosemontERD.png
+[image9]: src/assets/mockups/imac_light_mockup.png
+[image10]: src/assets/mockups/imac_dark_mockup.png
 
 <!-- Refer to https://shields.io/ for more information and options about the shield links at the top of the ReadMe file -->
 
