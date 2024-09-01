@@ -1,70 +1,314 @@
-# Getting Started with Create React App
+<!-- Repository Information & Links-->
+<br />
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![GitHub repo size](https://img.shields.io/github/repo-size/WolfOWI/rosemont-estates?color=%000000)
+![GitHub watchers](https://img.shields.io/github/watchers/WolfOWI/rosemont-estates?color=%000000)
+![GitHub language count](https://img.shields.io/github/languages/count/WolfOWI/rosemont-estates?color=%000000)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/WolfOWI/rosemont-estates?color=%000000)
+[![Behance][behance-shield]][behance-url]
 
-## Available Scripts
+<!-- HEADER SECTION -->
+<h5 align="center" style="padding:0;margin:0;">Wolf Botha</h5>
+<h5 align="center" style="padding:0;margin:0;">21100255</h5>
+<h6 align="center">Development 200 Term 3 - 2024</h6>
+</br>
+<p align="center">
 
-In the project directory, you can run:
+  <a href="https://github.com/WolfOWI/rosemont-estates">
+    <img src="src/assets/logos/rosemont_emblem.svg" alt="Logo" width="140" height="140">
+  </a>
+  
+  <h3 align="center">Rosemont Estates</h3>
 
-### `npm start`
+  <p align="center">
+    Short Project Slogan / Description <br>
+      <a href="https://github.com/WolfOWI/rosemont-estates"><strong>Explore the docs »</strong></a>
+   <br />
+   <br />
+   <a href="path/to/demonstration/video">View Demo</a>
+    ·
+    <a href="https://github.com/WolfOWI/rosemont-estates/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/WolfOWI/rosemont-estates/issues">Request Feature</a>
+</p>
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Table of Contents](#table-of-contents)
+- [About the Project](#about-the-project)
+  - [Project Description](#project-description)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [How to install](#how-to-install)
+  - [Installation](#installation)
+- [Features and Functionality](#features-and-functionality)
+  - [Feature 1](#feature-1)
+  - [Feature 2](#feature-2)
+  - [Feature 3](#feature-3)
+- [Concept Process](#concept-process)
+  - [Ideation](#ideation)
+  - [Wireframes](#wireframes)
+  - [User-flow](#user-flow)
+- [Development Process](#development-process)
+  - [Implementation Process](#implementation-process)
+    - [Highlights](#highlights)
+    - [Challenges](#challenges)
+  - [Reviews \& Testing](#reviews--testing)
+    - [Feedback from Reviews](#feedback-from-reviews)
+    - [Unit Tests](#unit-tests)
+  - [Future Implementation](#future-implementation)
+- [Final Outcome](#final-outcome)
+  - [Mockups](#mockups)
+  - [Video Demonstration](#video-demonstration)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [Authors](#authors)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<!--PROJECT DESCRIPTION-->
 
-### `npm test`
+## About the Project
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<!-- header image of project -->
 
-### `npm run build`
+![image1][image1]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Project Description
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A nice introduction to this amazing project of mine.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Built With
 
-### `npm run eject`
+- [Technology Name](path/to/technology/website)
+- [Technology Name](path/to/technology/website)
+- [Technology Name](path/to/technology/website)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<!-- GETTING STARTED -->
+<!-- Make sure to add appropriate information about what prerequesite technologies the user would need and also the steps to install your project on their own mashines -->
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
 
-## Learn More
+Ensure that you have the latest version of [Software](path/to/where/they/can/download/software) installed on your machine. The [Plugin](path/to/where/they/can/download/plugin) plugin will also be required.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### How to install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Installation
 
-### Code Splitting
+Here are a couple of ways to clone this repo:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1.  Software </br>
+    `Android Studio` -> `File` -> `New` -> `From Version Control` -> `Git`</br>
+    Enter `https://github.com/WolfOWI/rosemont-estates.git` into the URL field and press the `Clone` button.
 
-### Analyzing the Bundle Size
+2.  Clone Repository </br>
+    Run the following in the command-line to clone the project:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    ```sh
+    git clone https://github.com/WolfOWI/rosemont-estates.git
+    ```
 
-### Making a Progressive Web App
+        Open `Software` and select `File | Open...` from the menu. Select cloned directory and press `Open` button
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3.  Install Dependencies </br>
+    Run the following in the command-line to install all the required dependencies:
 
-### Advanced Configuration
+    ```sh
+    npm install
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+4.  Get a free API Key at [https://example.com](https://example.com) and enter it in the `config.js` file:
+    ```js
+    const API_KEY = "ENTER YOUR API";
+    ```
 
-### Deployment
+<!-- FEATURES AND FUNCTIONALITY-->
+<!-- You can add the links to all of your imagery at the bottom of the file as references -->
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Features and Functionality
 
-### `npm run build` fails to minify
+![image2][image2]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Feature 1
+
+Description of Feature
+
+![image3][image3]
+
+### Feature 2
+
+Description of Feature
+
+![image4][image4]
+
+### Feature 3
+
+Description of Feature
+
+![image5][image5]
+
+<!-- CONCEPT PROCESS -->
+<!-- Briefly explain your concept ideation process -->
+
+## Concept Process
+
+The `Conceptual Process` is the set of actions, activities and research that was done when starting this project.
+
+### Ideation
+
+![image5][image5]
+<br>
+![image6][image6]
+
+### Wireframes
+
+![image7][image7]
+
+### User-flow
+
+![image8][image8]
+
+<!-- DEVELOPMENT PROCESS -->
+
+## Development Process
+
+The `Development Process` is the technical implementations and functionality done in the frontend and backend of the application.
+
+### Implementation Process
+
+<!-- stipulate all of the functionality you included in the project -->
+
+- Made use of both `functionality` to implement a specific feature.
+- `MVC/MVVM` design architecture implemented.
+- `Plugin` for this.
+- ETC.
+
+#### Highlights
+
+<!-- stipulated the highlight you experienced with the project -->
+
+- Sunshine.
+- Rainbows.
+
+#### Challenges
+
+<!-- stipulated the challenges you faced with the project and why you think you faced it or how you think you'll solve it (if not solved) -->
+
+- Bugs.
+- Bugs.
+
+### Reviews & Testing
+
+<!-- stipulate how you've conducted testing in the form of peer reviews, feedback and also functionality testing, like unit tests (if applicable) -->
+
+#### Feedback from Reviews
+
+`Peer Reviews` were conducted by my fellow students and lecturer. The following feedback I found useful:
+
+- Feedback one.
+- Feedback two.
+
+#### Unit Tests
+
+`Unit Tests` were conducted to establish working functionality. Here are all the tests that were ran:
+
+- Test 1 of this functionality
+- Test 2 of this functionality
+
+### Future Implementation
+
+<!-- stipulate functionality and improvements that can be implemented in the future. -->
+
+- Future 1.
+- Future 2.
+
+<!-- MOCKUPS -->
+
+## Final Outcome
+
+### Mockups
+
+![image9][image9]
+<br>
+![image10][image10]
+
+<!-- VIDEO DEMONSTRATION -->
+
+### Video Demonstration
+
+To see a run through of the application, click below:
+
+[View Demonstration](path/to/video/demonstration)
+
+<!-- ROADMAP -->
+
+## Roadmap
+
+See the [open issues](https://github.com/WolfOWI/rosemont-estates/issues) for a list of proposed features (and known issues).
+
+<!-- CONTRIBUTING -->
+
+## Contributing
+
+Contributions are what makes the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<!-- AUTHORS -->
+
+## Authors
+
+- **Your Name & Surname** - [WolfOWI](https://github.com/WolfOWI)
+
+<!-- LICENSE -->
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.\
+
+<!-- LICENSE -->
+
+## Contact
+
+- **Your Name & Surname** - [email@address](mailto:email@address) - [@instagram_handle](https://www.instagram.com/instagram_handle/)
+- **Project Link** - https://github.com/WolfOWI/rosemont-estates
+
+<!-- ACKNOWLEDGEMENTS -->
+
+## Acknowledgements
+
+<!-- all resources that you used and Acknowledgements here -->
+
+- [Resource Name](path/to/resource)
+- [Resource Name](path/to/resource)
+- [Resource Name](path/to/resource)
+- [Resource Name](path/to/resource)
+- [Resource Name](path/to/resource)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[image1]: /path/to/image.png
+[image2]: /path/to/image.png
+[image3]: /path/to/image.png
+[image4]: /path/to/image.png
+[image5]: /path/to/image.png
+[image6]: /path/to/image.png
+[image7]: /path/to/image.png
+[image8]: /path/to/image.png
+[image9]: /path/to/image.png
+[image10]: /path/to/image.png
+
+<!-- Refer to https://shields.io/ for more information and options about the shield links at the top of the ReadMe file -->
+
+[behance-shield]: https://img.shields.io/badge/-Behance-black.svg?style=flat-square&logo=behance&colorB=555
+[behance-url]: https://www.behance.net/wolfbotha
