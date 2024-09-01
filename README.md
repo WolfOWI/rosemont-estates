@@ -21,7 +21,7 @@
   <h3 align="center">Rosemont Estates</h3>
 
   <p align="center">
-    Short Project Slogan / Description <br>
+    Discover Your Luxury Dream Home with Rosemont Estates<br>
       <a href="https://github.com/WolfOWI/rosemont-estates"><strong>Explore the docs »</strong></a>
    <br />
    <br />
@@ -153,7 +153,14 @@ Here are the steps to clone this repository, set up the MySQL database, and run 
        ```
        Replace `your_username` with your MySQL username and enter your password when prompted.
 
-4. **Run the Frontend Server**:
+4. **Run Backend Server**:
+
+   - Ensure that your local server (like Apache or Nginx) is running and configured to serve PHP files.
+   - Place the project files in your server’s root directory (e.g., `htdocs` for XAMPP or `www` for WAMP/MAMP).
+   - Make sure the server points to the correct directory where the project is stored.
+   - Open your browser and navigate to `http://localhost/rosemont-estates` to verify that the backend server is correctly serving the application.
+
+5. **Run the Frontend Server**:
 
    - After installing the dependencies, run the following command to start the frontend server:
      ```sh
@@ -161,7 +168,7 @@ Here are the steps to clone this repository, set up the MySQL database, and run 
      ```
    - The frontend server should now be running on `http://localhost:3000`.
 
-5. **Access the Application**:
+6. **Access the Application**:
 
    - Open your web browser and go to `http://localhost:3000`.
    - You should see the homepage of the Rosemont Estates application.
@@ -366,4 +373,8 @@ Distributed under the MIT License. See `LICENSE` for more information.\
 [image8]: src/assets/mockups/rosemontERD.png
 [image9]: src/assets/mockups/imac_light_mockup.png
 [image10]: src/assets/mockups/imac_dark_mockup.png
+
+<!-- Refer to https://shields.io/ for more information and options about the shield links at the top of the ReadMe file -->
+
+[behance-shield]: https://img.shields.io/badge/-Behance-black.svg?style=flat-square&logo=behance&colorB=555
 [behance-url]: https://www.behance.net/wolfbotha
