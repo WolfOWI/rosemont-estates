@@ -2,7 +2,7 @@
 // -----------------------------------------------------------
 // React & Hooks
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Services
 import { fetchAllHouses } from "../services/houseService";
@@ -29,6 +29,8 @@ import founderImg from "../assets/images/rosemont_founder.png";
 function HomePage() {
   const [houses, setHouses] = useState([]);
   const [featHouses, setFeatHouses] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getHouses = async () => {
@@ -161,7 +163,13 @@ function HomePage() {
         <div className="w-full h-40 bg-beige flex justify-center items-center mt-16 bg-beige-M1">
           <h3 className="">
             The home of your dreams is just a{" "}
-            <Button mx={2} leftIcon={<HouseOutlined />}>
+            <Button
+              mx={2}
+              leftIcon={<HouseOutlined />}
+              onClick={() => {
+                navigate("/listings");
+              }}
+            >
               Click
             </Button>{" "}
             away.

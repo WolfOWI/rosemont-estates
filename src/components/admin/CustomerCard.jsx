@@ -141,7 +141,13 @@ function CustomerCard({ type, interest, onDismiss, onMark }) {
         </div>
         {/* Right Side (Buttons) */}
         <VStack minWidth="20%" justify="space-between">
-          <Button w="full" h={20} leftIcon={<EmailOutlined />}>
+          <Button
+            as="a"
+            href={`mailto:${interest.email}`}
+            w="full"
+            h={20}
+            leftIcon={<EmailOutlined />}
+          >
             Email {interest.firstName}
           </Button>
           <Button w="full" h={14} leftIcon={markAsIcon} variant="thornOutline" onClick={onOpen}>
