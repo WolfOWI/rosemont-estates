@@ -79,12 +79,12 @@ function RejectedHouseCard({ submission, onReev }) {
           <div className="w-full flex justify-between items-end">
             {submission.sellType === "sell" ? (
               <VStack align="start" spacing={0}>
-                <p className="text-sm font-bold text-thorn-0">Sold for</p>
+                <p className="text-sm font-bold text-thorn-0">Was on sale for</p>
                 <h3 className="text-thorn-0 font-bold font-alt">{formatPrice(submission.price)}</h3>
               </VStack>
             ) : (
               <VStack align="start" spacing={0}>
-                <p className="text-sm font-bold text-thorn-0">Renting for</p>
+                <p className="text-sm font-bold text-thorn-0">Was renting for</p>
                 <h3 className="text-thorn-0 font-bold font-alt">
                   {formatPrice(submission.price)} /m
                 </h3>
