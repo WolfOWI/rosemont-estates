@@ -25,7 +25,7 @@
       <a href="https://github.com/WolfOWI/rosemont-estates"><strong>Explore the docs »</strong></a>
    <br />
    <br />
-   <a href="path/to/demonstration/video">View Demo</a>
+   <a href="https://youtu.be/K2DtZRP9LBY?si=4abhtoUpneIFh21x">View Demo</a>
     ·
     <a href="https://github.com/WolfOWI/rosemont-estates/issues">Report Bug</a>
     ·
@@ -40,12 +40,20 @@
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [How to install](#how-to-install)
   - [Installation](#installation)
 - [Features and Functionality](#features-and-functionality)
-  - [Feature 1](#feature-1)
-  - [Feature 2](#feature-2)
-  - [Feature 3](#feature-3)
+  - [Login \& Signup](#login--signup)
+  - [Home](#home)
+  - [Listing (With Filtering)](#listing-with-filtering)
+  - [Individual Listing](#individual-listing)
+  - [Edit Listing](#edit-listing)
+  - [Create Listing](#create-listing)
+  - [Profile](#profile)
+  - [Admin New Listings Dash](#admin-new-listings-dash)
+  - [Admin Potential Buyers](#admin-potential-buyers)
+  - [Admin Potential Tenants](#admin-potential-tenants)
+  - [Admin Closed Deals](#admin-closed-deals)
+  - [Admin Rejected Homes](#admin-rejected-homes)
 - [Concept Process](#concept-process)
   - [Ideation](#ideation)
   - [Wireframes](#wireframes)
@@ -78,16 +86,19 @@
 
 ### Project Description
 
-A nice introduction to this amazing project of mine.
+Rosemont Estates is a luxury real estate platform designed to connect discerning buyers and renters with the most exquisite properties on the market. Whether you're looking for a serene getaway, a stately mansion, or an elegant modern home, Rosemont Estates offers a curated selection of high-end properties to meet every need. Our platform provides a seamless experience for users to browse, compare, and connect with agents, ensuring that every transaction is handled with the utmost professionalism and care.
 
 ### Built With
 
-- [Technology Name](path/to/technology/website)
-- [Technology Name](path/to/technology/website)
-- [Technology Name](path/to/technology/website)
-
-<!-- GETTING STARTED -->
-<!-- Make sure to add appropriate information about what prerequesite technologies the user would need and also the steps to install your project on their own mashines -->
+- [React](https://react.dev)
+- [React Router](https://reactrouter.com/en/main)
+- [PHP](https://www.php.net/)
+- [MySQL](https://www.mysql.com/)
+- [Node.js](https://nodejs.org/en)
+- [Leaflet Geosearch](https://www.npmjs.com/package/leaflet-geosearch)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Chakra UI](https://v2.chakra-ui.com/)
+- [Material UI Icons](https://mui.com/material-ui/material-icons/)
 
 ## Getting Started
 
@@ -95,63 +106,151 @@ The following instructions will get you a copy of the project up and running on 
 
 ### Prerequisites
 
-Ensure that you have the latest version of [Software](path/to/where/they/can/download/software) installed on your machine. The [Plugin](path/to/where/they/can/download/plugin) plugin will also be required.
-
-### How to install
+Ensure that you have the latest version of [Node.js](https://nodejs.org/) installed on your machine.
 
 ### Installation
 
-Here are a couple of ways to clone this repo:
+Here are the steps to clone this repository, set up the MySQL database, and run the project locally:
 
-1.  Software </br>
-    `Android Studio` -> `File` -> `New` -> `From Version Control` -> `Git`</br>
-    Enter `https://github.com/WolfOWI/rosemont-estates.git` into the URL field and press the `Clone` button.
+1. **Clone the Repository**:
 
-2.  Clone Repository </br>
-    Run the following in the command-line to clone the project:
+   - Open GitHub Desktop or your terminal/command prompt.
+   - If using GitHub Desktop:
+     - Click on `File` -> `Clone repository...`.
+     - In the `URL` tab, enter `https://github.com/WolfOWI/rosemont-estates.git` and choose the local path where you want to save the repository.
+     - Click `Clone`.
+   - If using the terminal:
+     - Run the following command to clone the repository:
+       ```sh
+       git clone https://github.com/WolfOWI/rosemont-estates.git
+       ```
+   - Navigate to the cloned repository directory:
+     ```sh
+     cd rosemont-estates
+     ```
 
-    ```sh
-    git clone https://github.com/WolfOWI/rosemont-estates.git
-    ```
+2. **Install Dependencies**:
 
-        Open `Software` and select `File | Open...` from the menu. Select cloned directory and press `Open` button
+   - Ensure you are in the `root` directory inside the cloned repository.
+   - Run the following command to install all required dependencies:
+     ```sh
+     npm install
+     ```
 
-3.  Install Dependencies </br>
-    Run the following in the command-line to install all the required dependencies:
+3. **Set Up MySQL Database**:
 
-    ```sh
-    npm install
-    ```
+   - Ensure that you have MySQL installed on your machine. You can download it from [MySQL](https://www.mysql.com/).
+   - Open your MySQL client (like phpMyAdmin, MySQL Workbench, or the command line).
+   - Create a new database for the project:
+     ```sql
+     CREATE DATABASE rosemont_estates;
+     ```
+   - Import the database schema and data:
+     - If using phpMyAdmin:
+       - Open phpMyAdmin and select the `rosemont_estates` database.
+       - Click on the `Import` tab.
+       - Choose the SQL file located in the `database` directory of your cloned repository (`database/rosemont_estates.sql`).
+       - Click `Go` to import the database.
+     - If using the command line:
+       ```sh
+       mysql -u your_username -p rosemont_estates < database/rosemont_estates.sql
+       ```
+       Replace `your_username` with your MySQL username and enter your password when prompted.
 
-4.  Get a free API Key at [https://example.com](https://example.com) and enter it in the `config.js` file:
-    ```js
-    const API_KEY = "ENTER YOUR API";
-    ```
+4. **Run the Frontend Server**:
+
+   - After installing the dependencies, run the following command to start the frontend server:
+     ```sh
+     npm start
+     ```
+   - The frontend server should now be running on `http://localhost:3000`.
+
+5. **Access the Application**:
+
+   - Open your web browser and go to `http://localhost:3000`.
+   - You should see the homepage of the Rosemont Estates application.
+
+By following these steps, you will have the Rosemont Estates project fully set up and running on your local machine. This setup ensures that your MySQL database is correctly configured.
 
 <!-- FEATURES AND FUNCTIONALITY-->
 <!-- You can add the links to all of your imagery at the bottom of the file as references -->
 
 ## Features and Functionality
 
-![image2][image2]
-
-### Feature 1
+### Login & Signup
 
 Description of Feature
 
-![image3][image3]
+![feature1][fimage1]
+![feature2][fimage2]
 
-### Feature 2
-
-Description of Feature
-
-![image4][image4]
-
-### Feature 3
+### Home
 
 Description of Feature
 
-![image5][image5]
+![feature3][fimage3]
+
+### Listing (With Filtering)
+
+Description of Feature
+
+![feature4][fimage4]
+![feature5][fimage5]
+
+### Individual Listing
+
+Description of Feature
+
+![feature6][fimage6]
+
+### Edit Listing
+
+Description of Feature
+
+![feature7][fimage7]
+
+### Create Listing
+
+Description of Feature
+
+![feature8][fimage8]
+
+### Profile
+
+Description of Feature
+
+![feature9][fimage9]
+
+### Admin New Listings Dash
+
+Description of Feature
+
+![feature10][fimage10]
+
+### Admin Potential Buyers
+
+Description of Feature
+
+![feature11][fimage11]
+
+### Admin Potential Tenants
+
+Description of Feature
+
+![feature12][fimage12]
+
+### Admin Closed Deals
+
+Description of Feature
+
+![feature13][fimage13]
+
+### Admin Rejected Homes
+
+Description of Feature
+
+![feature14][fimage14]
+![feature15][fimage15]
 
 <!-- CONCEPT PROCESS -->
 <!-- Briefly explain your concept ideation process -->
@@ -298,9 +397,21 @@ Distributed under the MIT License. See `LICENSE` for more information.\
 <!-- MARKDOWN LINKS & IMAGES -->
 
 [image1]: /path/to/image.png
-[image2]: /path/to/image.png
-[image3]: /path/to/image.png
-[image4]: /path/to/image.png
+[fimage1]: src/assets/mockups/01login.png
+[fimage2]: src/assets/mockups/02signup.png
+[fimage3]: src/assets/mockups/03home.png
+[fimage4]: /path/to/image.png
+[fimage5]: /path/to/image.png
+[fimage6]: /path/to/image.png
+[fimage7]: /path/to/image.png
+[fimage8]: /path/to/image.png
+[fimage9]: /path/to/image.png
+[fimage10]: /path/to/image.png
+[fimage11]: /path/to/image.png
+[fimage12]: /path/to/image.png
+[fimage13]: /path/to/image.png
+[fimage14]: /path/to/image.png
+[fimage15]: /path/to/image.png
 [image5]: /path/to/image.png
 [image6]: /path/to/image.png
 [image7]: /path/to/image.png
