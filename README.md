@@ -1,10 +1,10 @@
 <!-- Repository Information & Links-->
 <br />
 
-![GitHub repo size](https://img.shields.io/github/repo-size/WolfOWI/rosemont-estates?color=%000000)
-![GitHub watchers](https://img.shields.io/github/watchers/WolfOWI/rosemont-estates?color=%000000)
-![GitHub language count](https://img.shields.io/github/languages/count/WolfOWI/rosemont-estates?color=%000000)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/WolfOWI/rosemont-estates?color=%000000)
+![GitHub repo size](https://img.shields.io/github/repo-size/WolfOWI/rosemont-estates?color=darkgreen)
+![GitHub watchers](https://img.shields.io/github/watchers/WolfOWI/rosemont-estates?color=darkgreen)
+![GitHub language count](https://img.shields.io/github/languages/count/WolfOWI/rosemont-estates?color=darkgreen)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/WolfOWI/rosemont-estates?color=darkgreen)
 [![Behance][behance-shield]][behance-url]
 
 <!-- HEADER SECTION -->
@@ -32,6 +32,7 @@
     <a href="https://github.com/WolfOWI/rosemont-estates/issues">Request Feature</a>
 </p>
 <!-- TABLE OF CONTENTS -->
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
@@ -258,10 +259,6 @@ The `Conceptual Process` consisted of visual research (including research colour
 
 ![image8][image8]
 
-Certainly! Here's the text for the "Development Process" section that you can copy and paste into your README file:
-
----
-
 ## Development Process
 
 The Development Process involved the technical implementation of both the frontend and backend of the Rosemont Estates application. This section highlights the key functionalities developed, challenges faced, and solutions implemented.
@@ -369,8 +366,4 @@ Distributed under the MIT License. See `LICENSE` for more information.\
 [image8]: src/assets/mockups/rosemontERD.png
 [image9]: src/assets/mockups/imac_light_mockup.png
 [image10]: src/assets/mockups/imac_dark_mockup.png
-
-<!-- Refer to https://shields.io/ for more information and options about the shield links at the top of the ReadMe file -->
-
-[behance-shield]: https://img.shields.io/badge/-Behance-black.svg?style=flat-square&logo=behance&colorB=555
 [behance-url]: https://www.behance.net/wolfbotha
